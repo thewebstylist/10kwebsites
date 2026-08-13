@@ -15,6 +15,10 @@ ranges are starting points, finalized from the approved footage and the flick te
 - **Tier:** Tier 1, single continuous shot (~6s), ~400vh hero.
 - **Mobile:** static composed hero (poster/ending frame + captions); scrub video plays on laptop/desktop.
 
+### Spend rules (user-set)
+- **No 4K images.** Generate stills at 1k (nano_banana_pro 1k ≈ 2 credits). 4K is not permitted.
+- Always preflight exact cost (`get_cost: true`) and get the user's explicit yes before spending.
+
 ### Hero starting frame (already generated)
 - Model: `nano_banana_pro`, 4K, 16:9. Cost: **4 credits**. Job id: `736ac7a4-b314-4cde-8637-74b08f4aeed4`. Output: 5504×3072 PNG.
 - Prompt (reuse / re-roll from this):
