@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flat to Form — image-to-3D engine comparison</title>
+<meta name="description" content="Three flat character illustrations reconstructed as interactive 3D meshes by three different image-to-3D engines.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307070a'/%3E%3Cpath d='M16 5 27 11.5v13L16 31 5 24.5v-13z' fill='none' stroke='%23ff7a34' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/three.module.js",
+    "three/addons/": "./vendor/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ── loading screen ─────────────────────────────────────────────── -->
+<div class="loader" id="loader">
+  <div class="loader__inner">
+    <p class="eyebrow">Reconstructing</p>
+    <h2 class="loader__name" id="loaderName">Vesper</h2>
+    <div class="loader__bar"><i id="loaderFill"></i></div>
+    <p class="loader__pct"><span id="loaderPct">0</span>%<span class="loader__note" id="loaderNote">decoding mesh</span></p>
+  </div>
+</div>
+
+<!-- ── stage ──────────────────────────────────────────────────────── -->
+<main class="stage">
+  <canvas id="scene"></canvas>
+
+  <!-- masthead -->
+  <header class="masthead">
+    <p class="eyebrow">Image → 3D · engine comparison</p>
+    <h1 class="display">Flat<em>to</em>Form</h1>
+    <p class="masthead__sub">One flat illustration per character. Three different reconstruction
+      engines. Same camera, same light, same scale — so the geometry has nowhere to hide.</p>
+  </header>
+
+  <!-- character switcher -->
+  <nav class="switcher" id="switcher" aria-label="Character"></nav>
+
+  <!-- source thumbnail -->
+  <figure class="source" id="source">
+    <img id="sourceImg" alt="" width="128" height="192" decoding="async">
+    <figcaption>
+      <span class="eyebrow">Source image</span>
+      <span class="source__meta" id="sourceMeta">2:3 · flat</span>
+    </figcaption>
+  </figure>
+
+  <!-- stats -->
+  <section class="stats" id="stats" aria-live="polite">
+    <div class="stats__head">
+      <span class="stats__idx" id="statIdx">01</span>
+      <div>
+        <h3 class="stats__name" id="statName">Vesper</h3>
+        <p class="stats__role" id="statRole">Deep-sea salvage diver</p>
+      </div>
+    </div>
+    <dl class="stats__grid">
+      <div><dt>Engine</dt><dd id="statEngine">—</dd></div>
+      <div><dt>Cost</dt><dd id="statCost">—</dd></div>
+      <div><dt>Triangles</dt><dd id="statTris">—</dd></div>
+      <div><dt>Vertices</dt><dd id="statVerts">—</dd></div>
+      <div><dt>File</dt><dd id="statSize">—</dd></div>
+      <div><dt>Draw calls</dt><dd id="statDraws">—</dd></div>
+    </dl>
+    <p class="stats__settings" id="statSettings">—</p>
+  </section>
+
+  <!-- controls -->
+  <section class="controls">
+    <div class="control">
+      <span class="eyebrow">Surface</span>
+      <div class="modes" id="modes" role="group" aria-label="Surface mode">
+        <button type="button" data-mode="texture" class="is-active">Texture</button>
+        <button type="button" data-mode="clay">Clay</button>
+        <button type="button" data-mode="normals">Mesh</button>
+      </div>
+    </div>
+    <div class="control">
+      <label class="eyebrow" for="dis">Disintegrate <span class="control__val" id="disVal">0.00</span></label>
+      <input type="range" id="dis" min="0" max="1" step="0.001" value="0" aria-describedby="disHint">
+      <p class="control__hint" id="disHint">Every triangle pushed out along its own vector.</p>
+    </div>
+  </section>
+
+  <p class="hint" id="hint">Drag to orbit · scroll to zoom</p>
+</main>
+
+<!-- grain + vignette -->
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

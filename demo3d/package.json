@@ -1,0 +1,27 @@
+{
+  "name": "flat-to-form",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Image-to-3D engine comparison viewer — three characters, three engines, one camera.",
+  "scripts": {
+    "fixtures": "node scripts/make-fixtures.mjs",
+    "inspect": "node scripts/inspect.mjs",
+    "compress": "scripts/compress.sh",
+    "thumbs": "node scripts/thumbs.mjs",
+    "build": "scripts/build.sh",
+    "serve": "http-server -p 8123 -c-1 .",
+    "serve:dist": "http-server -p 8124 -c-1 dist",
+    "verify": "node scripts/verify.mjs",
+    "all": "npm run compress && npm run thumbs && npm run build"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "^4.4.2",
+    "@gltf-transform/core": "^4.4.2",
+    "@gltf-transform/extensions": "^4.4.2",
+    "meshoptimizer": "^0.25.0",
+    "sharp": "^0.34.0",
+    "three": "^0.185.1"
+  },
+  "//": "verify.mjs also needs playwright; it is expected to be provided by the environment (globally installed) or added here with `npm i -D playwright`."
+}
