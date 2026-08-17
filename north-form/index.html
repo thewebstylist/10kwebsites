@@ -838,12 +838,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .footer-word{
   font-family:'Space Grotesk',sans-serif;
   font-weight:600;
-  font-size:clamp(56px,13vw,220px);
-  line-height:.84;
-  letter-spacing:-.05em;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
+  /* one continuous wordmark: the halves used to be pushed apart with
+     space-between, which opened a gap in the middle of the word */
+  font-size:clamp(24px,3.25vw,55px);
+  line-height:.9;
+  letter-spacing:-.045em;
+  white-space:nowrap;
 }
 .footer-word .slash{color:var(--accent)}
 .contact-link{
@@ -920,7 +920,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .project-media{aspect-ratio:4/3}
   .project-media:after{left:12px;bottom:12px;padding:8px 14px;font-size:10px}
   .cinematic-copy{left:5vw;right:5vw;bottom:6vh;max-width:none}
-  .footer-word{flex-direction:column;align-items:flex-start}
   .plan{padding:26px 22px}
   .archive-row .a-type{display:none}
 }
@@ -1471,10 +1470,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     </div>
   </div>
 
-  <div class="footer-word mt-[12vh]">
-    <span>NORTH<span class="slash">/</span></span>
-    <span>FORM</span>
-  </div>
+  <div class="footer-word mt-[12vh]">NORTH<span class="slash">/</span>FORM</div>
 
   <div class="rule-inv mono mt-[6vh] pt-[22px] flex flex-wrap justify-between gap-6 text-muted">
     <span>© 2026 NORTH/FORM AS</span>
@@ -1958,21 +1954,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   var archiveImg     = document.getElementById('archivePreviewImg');
   var archiveList    = document.getElementById('archiveList');
 
-  if (archiveList && isDesktop) {
-    archiveList.querySelectorAll('.archive-row').forEach(function (row) {
-      row.addEventListener('mouseenter', function () {
-        archiveList.classList.add('is-hovering');
-        var src = row.getAttribute('data-preview');
-        if (src && archiveImg.getAttribute('src') !== src) archiveImg.setAttribute('src', src);
-        gsap.to(archivePreview, { opacity: 1, duration: .4, ease: 'power2.out' });
-        gsap.fromTo(archiveImg, { scale: 1.14 }, { scale: 1, duration: .9, ease: 'power4.out' });
-      });
-      row.addEventListener('mouseleave', function () {
-        archiveList.classList.remove('is-hovering');
-        gsap.to(archivePreview, { opacity: 0, duration: .35, ease: 'power2.out' });
-      });
-    });
-  }
+  /* Hover state for both the archive preview and the cursor label is resolved
+     further down, from whatever sits under the pointer. See HOVER STATE. */
 
   /* ============================================================
      SECTION 8 — CINEMATIC  (scale 1.12 → 1, card rotation 18 / xPercent 120)
@@ -2069,10 +2052,69 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   var cx = mx, cy = my;
   var px = mx, py = my;
 
+  var hoverDirty = true;
+
   window.addEventListener('mousemove', function (e) {
     mx = e.clientX;
     my = e.clientY;
+    hoverDirty = true;
   }, { passive: true });
+
+  /* ------------------------------------------------------------
+     HOVER STATE
+
+     Derived from whatever sits under the pointer, not tracked with
+     mouseenter/mouseleave pairs. mouseleave never fires when a node is
+     removed or re-parented while the pointer is over it, and
+     ScrollTrigger re-parents into a pin-spacer every time the hero pins
+     or unpins. With enter/leave the cursor label and the archive
+     preview would then stay on screen permanently, following the mouse
+     with no way to dismiss them.
+
+     Re-resolving is self-healing: whatever went wrong, the next pointer
+     move or scroll corrects it.
+     ------------------------------------------------------------ */
+  var hoverTarget = null;
+  var previewRow  = null;
+
+  function applyCursor(el) {
+    if (el === hoverTarget) return;
+    hoverTarget = el;
+    if (el) {
+      cursorText.textContent = el.getAttribute('data-cursor') || 'View';
+      gsap.to(cursor, { opacity: 1, scale: 1, duration: .45, ease: 'power3.out' });
+    } else {
+      gsap.to(cursor, { opacity: 0, scale: .6, duration: .35, ease: 'power3.out' });
+    }
+  }
+
+  function applyPreview(row) {
+    if (row === previewRow) return;
+    previewRow = row;
+    if (!archiveList || !archivePreview) return;
+    if (row) {
+      archiveList.classList.add('is-hovering');
+      var src = row.getAttribute('data-preview');
+      if (src && archiveImg.getAttribute('src') !== src) archiveImg.setAttribute('src', src);
+      gsap.to(archivePreview, { opacity: 1, duration: .4, ease: 'power2.out' });
+      gsap.fromTo(archiveImg, { scale: 1.14 }, { scale: 1, duration: .9, ease: 'power4.out' });
+    } else {
+      archiveList.classList.remove('is-hovering');
+      gsap.to(archivePreview, { opacity: 0, duration: .35, ease: 'power2.out' });
+    }
+  }
+
+  function resolveHover() {
+    // both followers are pointer-events:none, so they never occlude the hit test
+    var el = document.elementFromPoint(mx, my);
+    applyCursor(el ? el.closest('[data-cursor]') : null);
+    applyPreview(el ? el.closest('.archive-row') : null);
+  }
+
+  function clearHover() {
+    applyCursor(null);
+    applyPreview(null);
+  }
 
   function renderCursor() {
     cx += (mx - cx) * .14;
@@ -2084,6 +2126,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
       py += (my - py) * .09;
       archivePreview.style.transform = 'translate(' + px + 'px,' + py + 'px) translate(-50%,-50%)';
     }
+
+    if (hoverDirty) { hoverDirty = false; resolveHover(); }
     requestAnimationFrame(renderCursor);
   }
 
@@ -2091,16 +2135,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     gsap.set(cursor, { scale: .6 });
     requestAnimationFrame(renderCursor);
 
-    document.querySelectorAll('[data-cursor],[data-project-media]').forEach(function (el) {
-      var label = el.getAttribute('data-cursor') || 'View';
-      el.addEventListener('mouseenter', function () {
-        cursorText.textContent = label;
-        gsap.to(cursor, { opacity: 1, scale: 1, duration: .45, ease: 'power3.out' });
-      });
-      el.addEventListener('mouseleave', function () {
-        gsap.to(cursor, { opacity: 0, scale: .6, duration: .35, ease: 'power3.out' });
-      });
-    });
+    // scrolling changes what is under a stationary pointer, so re-resolve too
+    if (lenis) lenis.on('scroll', function () { hoverDirty = true; });
+    window.addEventListener('scroll', function () { hoverDirty = true; }, { passive: true });
+
+    // pointer left the window entirely, or the tab lost focus
+    document.addEventListener('mouseleave', clearHover);
+    window.addEventListener('blur', clearHover);
   }
 
   /* ============================================================
