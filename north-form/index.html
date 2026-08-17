@@ -952,7 +952,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         muted
         playsinline
         preload="metadata"
-        data-aura-video-preset="play-once"
+        data-aura-video-preset="scroll-scrub"
         poster="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
         <source src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/generated-videos/8bd0314a-9525-4a13-996e-2c37cbd9e514/1784436357607-9c22882e-f726-4971-b85d-f7b5276000ff.mp4" type="video/mp4" />
       </video>
@@ -1627,42 +1627,89 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   }
   gsap.set('#hero .ln', { yPercent: 110 });
 
-  /* hero-media parallax — scrub: true (per source) */
-  gsap.to('#heroMedia', {
-    yPercent: 16,
-    scale: 1.06,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: true
-    }
-  });
+  /* ------------------------------------------------------------
+     HERO SCROLL BEHAVIOUR
 
-  gsap.to('#heroWord', {
-    yPercent: 42,
-    opacity: 0.15,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: true
-    }
-  });
+     Desktop: the hero pins and the video is scrubbed frame by frame
+     from the scroll position — it plays forward as you scroll down and
+     backward as you scroll up. Driving currentTime never calls play(),
+     so this also works where autoplay is blocked (sandboxed iframes,
+     low-power mode). Everything stays on scrub: true, per the source.
 
-  gsap.to('#heroTopcopy', {
-    yPercent: -60,
-    opacity: 0,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#hero',
-      start: 'top top',
-      end: '60% top',
-      scrub: true
+     Mobile: no pin and no scrub. Seeking during a touch scroll is
+     jittery on phones, so the clip simply loops in view.
+     ------------------------------------------------------------ */
+  var heroVideoEl = document.getElementById('heroVideo');
+
+  function heroScrubbed() {
+    var dur = heroVideoEl.duration;
+    if (!dur || !isFinite(dur)) return false;
+
+    heroVideoEl.pause();
+    var last = -1;
+
+    var tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: '+=150%',
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        scrub: true,
+        onUpdate: function (self) {
+          // stop just shy of the end; seeking to exact duration can blank the frame
+          var t = self.progress * (dur - 0.05);
+          if (Math.abs(t - last) < 0.008) return;
+          last = t;
+          if (heroVideoEl.readyState >= 1) heroVideoEl.currentTime = t;
+        }
+      }
+    });
+
+    tl.to('#heroTopcopy', { yPercent: -60, opacity: 0, ease: 'none', duration: .55 }, 0)
+      .to('#heroWord',    { yPercent: 42, opacity: .15, ease: 'none', duration: 1 }, 0)
+      .to('#heroMedia',   { scale: 1.05, ease: 'none', duration: 1 }, 0);
+
+    ScrollTrigger.refresh();
+    return true;
+  }
+
+  function heroParallax() {
+    /* fallback: the original non-pinned treatment */
+    gsap.to('#heroMedia', {
+      yPercent: 16, scale: 1.06, ease: 'none',
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to('#heroWord', {
+      yPercent: 42, opacity: 0.15, ease: 'none',
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to('#heroTopcopy', {
+      yPercent: -60, opacity: 0, ease: 'none',
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: '60% top', scrub: true }
+    });
+  }
+
+  var heroWired = false;
+  function wireHero(useScrub) {
+    if (heroWired) return;
+    heroWired = useScrub ? heroScrubbed() : false;
+    if (!heroWired) { heroParallax(); heroWired = true; }
+  }
+
+  if (isDesktop && !reduced && heroVideoEl) {
+    if (heroVideoEl.readyState >= 1) {
+      wireHero(true);
+    } else {
+      heroVideoEl.addEventListener('loadedmetadata', function () { wireHero(true); }, { once: true });
+      // if metadata never arrives (blocked host, decode failure) the hero
+      // must not be left inert — fall back to the parallax treatment
+      setTimeout(function () { wireHero(false); }, 6000);
     }
-  });
+  } else {
+    wireHero(false);
+  }
 
   /* ============================================================
      MEDIA BEHAVIOUR — aura video presets
@@ -1673,11 +1720,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     v.playsInline = true;
   });
 
-  /* play-once: hero fires as soon as it can, never loops */
+  /* scroll-scrub: desktop drives currentTime from scroll (see HERO SCROLL
+     BEHAVIOUR below). On mobile, and wherever scrubbing is not wired up,
+     the clip just loops so the hero is never a frozen still. */
   (function () {
-    var once = document.querySelectorAll('[data-aura-video-preset="play-once"]');
-    once.forEach(function (v) {
-      v.loop = false;
+    var scrubbed = document.querySelectorAll('[data-aura-video-preset="scroll-scrub"]');
+    scrubbed.forEach(function (v) {
+      if (isDesktop && !reduced) { v.loop = false; return; }
+      v.loop = true;
       var kick = function () {
         var p = v.play();
         if (p && p.catch) p.catch(function () {});

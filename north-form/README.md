@@ -66,10 +66,40 @@ Deliberately not uniform, matching the source:
 
 Videos are `muted playsinline preload="metadata"`.
 
-- Hero: `data-aura-video-preset="play-once"` — plays once, never loops.
+- Hero: `data-aura-video-preset="scroll-scrub"`. On desktop the hero pins for
+  150% of viewport height and the video's `currentTime` is driven straight from
+  scroll position — forward as you scroll down, backward as you scroll up.
+  Nothing calls `play()`, so it also works where autoplay is blocked. On mobile
+  it loops instead, because seeking during a touch scroll is jittery on phones.
 - Project 01: `data-aura-video-preset="loop-in-view"` — an IntersectionObserver
   (threshold .25) plays it in view and pauses it out of view.
 - Cinematic: static image, scale 1.12 → 1 on scrub.
+
+### Re-encode the hero for scrubbing
+
+**The hosted hero mp4 currently carries a single keyframe for the entire clip.**
+Scrubbing seeks to arbitrary timestamps, and every seek has to decode forward
+from the nearest keyframe — with one keyframe that means decoding from frame
+zero every time, which stutters badly. Re-encode with a dense keyframe interval
+and replace the hosted file:
+
+```sh
+# every frame seekable — largest, smoothest
+ffmpeg -i hero.mp4 -an -c:v libx264 -preset slow -crf 23 -g 1 \
+       -pix_fmt yuv420p -movflags +faststart hero-scrub.mp4
+
+# keyframe every 6 frames — about 40% smaller, still smooth at 24fps
+ffmpeg -i hero.mp4 -an -c:v libx264 -preset slow -crf 23 -g 6 \
+       -pix_fmt yuv420p -movflags +faststart hero-scrub.mp4
+```
+
+Audio is stripped because every video on the page is muted. Adding a WebM/VP9
+`<source>` above the mp4 is worth doing if you can host a second file: it is
+smaller at equal quality and seeks faster.
+
+The supplied clips are **832×1104 portrait**, 4 and 6 seconds. That is why
+`.hero-media` sets `object-position: 50% 22%` — a wide viewport crops portrait
+footage hard, and centred framing lands on the subject's chin.
 
 ## Asset note
 
