@@ -75,7 +75,10 @@ Videos are `muted playsinline preload="metadata"`.
   it loops instead, because seeking during a touch scroll is jittery on phones.
 - Project 01: `data-aura-video-preset="loop-in-view"` — an IntersectionObserver
   (threshold .25) plays it in view and pauses it out of view.
-- Cinematic: static image, scale 1.12 → 1 on scrub.
+- Cinematic closer: `data-aura-video-preset="loop-in-view"`, autoplaying on a
+  loop under the same scale 1.12 → 1 scrub. Scene cuts are fine here precisely
+  because it is not scrubbed — the viewer is not driving the playhead, so a cut
+  reads as editing rather than as the page glitching.
 
 ### Why the hero is encoded the way it is
 
@@ -113,7 +116,7 @@ Nothing is fetched from a third-party host any more.
 | `mohawk.jpg` | orange monarchs | project 02, the colour moment |
 | `koi-man.jpg` | underwater, mono | project 03 |
 | `afro.jpg` | white ground | project 04, contrast against the paper section |
-| `koi-blonde-a.jpg` | wide, deep negative space | cinematic background |
+| `cinematic.mp4` | 1284x716, 10s, colour | looping closer behind the final section |
 | 8 x 800px stills | mono portraits | capability hovers and archive previews |
 
 Three of the uploads are screenshots of the site rather than content and are
@@ -126,6 +129,19 @@ the page is muted. Total shipped media is about 6MB.
 
 To swap any slot, change the `src` (or `data-preview`) to another file in
 `assets/`. The mapping lives in one place per slot, so nothing else moves.
+
+## Gradients
+
+`--grad-bar` and `--grad-dot` run from `--accent` to `--teal`. Because those two
+are complementary, a straight two-stop blend desaturates to a muddy olive
+(#686a5e) halfway across, so both ramps route through rust (#a2452b) and slate
+(#3a6f80) instead. Every stop clears 3:1 against `--ink`, which is the bar for
+the ticker's large type.
+
+`--grad-dot` is radial with the orange thrown to the top-left edge, so the
+cursor label's 10px text still sits on teal at 4.60:1 rather than on the
+gradient's weaker middle. The scroll-progress bar carries no text, so it takes
+the full ramp.
 
 ## Colour contrast
 

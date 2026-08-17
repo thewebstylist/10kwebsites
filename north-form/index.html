@@ -49,6 +49,11 @@ tailwind.config = {
   --accent:#c24f20;
   --teal:#0f869b;      /* brand accent, complementary to --accent (189deg vs 18deg) */
   --teal-lift:#1199b1; /* same hue lifted, for small text on dark grounds */
+  /* Orange and teal are complementary, so a straight blend desaturates to a
+     muddy olive at the midpoint. These ramps route through rust and slate
+     instead, and every stop clears 3:1 against --ink for large text. */
+  --grad-bar:linear-gradient(90deg,#c24f20 0%,#a2452b 26%,#3a6f80 62%,#0f869b 100%);
+  --grad-dot:radial-gradient(120% 120% at 18% 12%,#c24f20 0%,#0f869b 58%);
   --line:rgba(11,11,11,.18);
   --line-inv:rgba(239,238,233,.18);
   --ease:cubic-bezier(.22,1,.36,1);
@@ -148,7 +153,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   position:fixed;
   top:0;left:0;right:0;
   height:3px;
-  background:var(--accent);
+  background:var(--grad-bar);
   transform:scaleX(0);
   transform-origin:0 50%;
   z-index:995;
@@ -277,7 +282,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   top:0;left:0;
   width:82px;height:82px;
   border-radius:999px;
-  background:var(--teal);
+  /* orange is thrown to the top-left edge so the centred label still sits on
+     teal, where ink reads at 4.60:1 rather than the gradient's weaker middle */
+  background:var(--grad-dot);
   color:var(--ink);
   z-index:200;
   pointer-events:none;
@@ -449,7 +456,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ticker-wrap{overflow-x:clip}
 .ticker{
   position:relative;
-  background:var(--teal);
+  background:var(--grad-bar);
   color:var(--ink);
   transform:rotate(-1.2deg);
   margin-left:-2%;
@@ -731,7 +738,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   inset:0;
   will-change:transform;
 }
-.cinematic-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.12)}
+.cinematic-bg img,.cinematic-bg video{width:100%;height:100%;object-fit:cover;transform:scale(1.12)}
 .cinematic-sticky:after{
   content:'';
   position:absolute;
@@ -1325,7 +1332,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   <section class="cinematic" id="cinematic">
     <div class="cinematic-sticky">
       <div class="cinematic-bg" id="cinematicBg">
-        <img src="./assets/koi-blonde-a.jpg" alt="" loading="lazy" />
+        <video
+          muted playsinline loop preload="metadata"
+          data-aura-video-preset="loop-in-view"
+          poster="./assets/cinematic-poster.jpg">
+          <source src="./assets/cinematic.mp4" type="video/mp4" />
+        </video>
       </div>
 
       <div class="cinematic-copy">
@@ -1929,7 +1941,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   /* ============================================================
      SECTION 8 — CINEMATIC  (scale 1.12 → 1, card rotation 18 / xPercent 120)
      ============================================================ */
-  gsap.fromTo('#cinematicBg img',
+  gsap.fromTo('#cinematicBg img, #cinematicBg video',
     { scale: 1.12 },
     {
       scale: 1,

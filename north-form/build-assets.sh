@@ -12,6 +12,7 @@ mkdir -p "$OUT"
 
 VID_A=$SRC/butterfly-bw.mp4                                              # hero: single continuous take
 VID_B=$SRC/hf_20260817_072322_13e8a1f5-9f48-4f66-b93b-2289899abbd6.mp4   # project 01: steady
+VID_C=$SRC/hf_20260817_072319_f13204ff-d49c-4a45-88a1-f5506d26ed12.mp4   # closer: cuts are fine, it only loops
 
 img () {  # src, name, width
   $FF -y -loglevel error -i "$1" -vf "scale=$3:-2" -q:v 3 "$OUT/$2.jpg"
@@ -51,6 +52,11 @@ $FF -y -loglevel error -i "$VID_B" -an -vf "scale=1280:-2" -c:v libx264 -preset 
 # posters must match their clip or the first paint flashes the wrong image
 $FF -y -loglevel error -ss 0.2 -i "$VID_A" -frames:v 1 -vf "scale=1280:-2" -q:v 3 "$OUT/hero-poster.jpg"
 $FF -y -loglevel error -ss 0.2 -i "$VID_B" -frames:v 1 -vf "scale=1280:-2" -q:v 3 "$OUT/project-01-poster.jpg"
+
+# the closer autoplays and loops, so it never seeks and needs no dense GOP
+$FF -y -loglevel error -i "$VID_C" -an -vf "scale=1280:-2" -c:v libx264 -preset slow \
+    -crf 26 -pix_fmt yuv420p -movflags +faststart "$OUT/cinematic.mp4"
+$FF -y -loglevel error -ss 0.2 -i "$VID_C" -frames:v 1 -vf "scale=1280:-2" -q:v 3 "$OUT/cinematic-poster.jpg"
 
 printf "  %-22s %s\n" hero.mp4 "$(du -h "$OUT/hero.mp4" | cut -f1)"
 printf "  %-22s %s\n" project-01.mp4 "$(du -h "$OUT/project-01.mp4" | cut -f1)"
