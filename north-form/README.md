@@ -23,7 +23,9 @@ transitions) lives in the `<style>` block, because those values are the design.
 
 ```css
 --ink:#0b0b0b;  --paper:#efeee9;  --muted:#a5a59f;
---accent:#c24f20;  --acid:#d7ff45;
+--accent:#c24f20;     /* orange, hue 18deg  */
+--teal:#0f869b;       /* brand accent, hue 189deg — complementary to --accent */
+--teal-lift:#1199b1;  /* same hue lifted, for small text on dark grounds */
 --line:rgba(11,11,11,.18);
 ```
 
@@ -104,7 +106,7 @@ Nothing is fetched from a third-party host any more.
 
 | File | From | Used for |
 |---|---|---|
-| `hero.mp4` | 1284x716, 10s | scroll-scrubbed hero, `-g 6` for seeking |
+| `hero.mp4` | 832x1104, 6s, mono | scroll-scrubbed hero, `-g 6` for seeking |
 | `project-01.mp4` | 1284x716, 10s | project 01, loops in view |
 | `hero-poster.jpg` / `project-01-poster.jpg` | frame 0 of each clip | first paint |
 | `gown.jpg` | full-length figure | `.intro-portrait`, suits the 3:4 angled frame |
@@ -114,9 +116,27 @@ Nothing is fetched from a third-party host any more.
 | `koi-blonde-a.jpg` | wide, deep negative space | cinematic background |
 | 8 x 800px stills | mono portraits | capability hovers and archive previews |
 
+Three of the uploads are screenshots of the site rather than content and are
+deliberately not built; `build-assets.sh` records what every source picture
+actually is, since the Higgsfield filenames are opaque.
+
 Images are JPEG q3: 1600px for anything full-width, 800px for cards and the
 320x400 archive previews. Videos are stripped of audio, since every video on
 the page is muted. Total shipped media is about 6MB.
 
 To swap any slot, change the `src` (or `data-preview`) to another file in
 `assets/`. The mapping lives in one place per slot, so nothing else moves.
+
+## Colour contrast
+
+The brand accent is a fill as often as it is text, so both directions were
+checked rather than assumed:
+
+| Pair | Ratio | Verdict |
+|---|---|---|
+| `--ink` on `--teal` (ticker, archive hover, buttons, badge) | 4.60:1 | passes AA |
+| `--teal` on `#101010` (capability hover heading, large) | 4.44:1 | passes AA large |
+| `--teal` on `#111` at 11px (dark-card price) | 4.41:1 | **fails** — uses `--teal-lift` at 5.59:1 |
+
+That last row is why `--teal-lift` exists. It is the same 189deg hue raised in
+lightness, so it reads as one colour while clearing AA at small sizes.
