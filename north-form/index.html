@@ -3,8 +3,36 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>NORTH/FORM — Creative Studio</title>
-<meta name="description" content="NORTH/FORM is an independent design studio building brand systems, motion and digital product for companies that intend to be remembered." />
+<title>NORTH/FORM | Design Studio Demo by Sterling Creations Ai</title>
+<meta name="description" content="NORTH/FORM is an independent design studio building brand systems, motion and digital product for companies that intend to be remembered. A demo by Sterling Creations Ai." />
+
+<!-- ===================================================================
+     SOCIAL PREVIEW
+
+     og:url and og:image MUST be absolute URLs. Facebook and LinkedIn will
+     not resolve a relative path, and link previews silently fall back to
+     bare text. Replace https://YOUR-DOMAIN.com below with the real origin
+     before going live — those are the only two lines that need editing.
+     =================================================================== -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="NORTH/FORM" />
+<meta property="og:title" content="NORTH/FORM | Design Studio Demo by Sterling Creations Ai" />
+<meta property="og:description" content="An independent design studio building brand systems, motion and digital product for companies that intend to be remembered." />
+<meta property="og:url" content="https://YOUR-DOMAIN.com/" />
+<meta property="og:image" content="https://YOUR-DOMAIN.com/assets/og-image.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="NORTH/FORM wordmark over a monochrome portrait wreathed in butterflies." />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="NORTH/FORM | Design Studio Demo by Sterling Creations Ai" />
+<meta name="twitter:description" content="An independent design studio building brand systems, motion and digital product for companies that intend to be remembered." />
+<meta name="twitter:image" content="https://YOUR-DOMAIN.com/assets/og-image.jpg" />
+<meta name="twitter:image:alt" content="NORTH/FORM wordmark over a monochrome portrait wreathed in butterflies." />
+
+<meta name="theme-color" content="#0b0b0b" />
+<link rel="apple-touch-icon" href="./assets/og-image.jpg" />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0b'/%3E%3Cpath d='M20 6 L12 26' stroke='%23c24f20' stroke-width='4'/%3E%3C/svg%3E">
 
@@ -799,6 +827,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    FOOTER
    ============================================================ */
 .site-footer{background:var(--ink);color:var(--paper);padding:12vh 4vw 4vh}
+.contact-phone{
+  /* the vanity number is 26 characters — at the email's size it wraps mid
+     parenthetical, so it steps down and never breaks */
+  font-size:clamp(20px,2.4vw,38px);
+  white-space:nowrap;
+}
+.credit-link{color:var(--paper);border-bottom:1px solid rgba(239,238,233,.35);padding-bottom:1px;transition:color .35s var(--ease),border-color .35s var(--ease)}
+.credit-link:hover{color:var(--teal-lift);border-color:var(--teal-lift)}
 .footer-word{
   font-family:'Space Grotesk',sans-serif;
   font-weight:600;
@@ -1407,12 +1443,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         <div class="mt-3">(07) Contact</div>
       </div>
       <div class="mt-[34px]">
-        <a href="mailto:studio@northform.co" class="contact-link">studio@northform.co</a>
+        <a href="mailto:info@sterlingcreations.ai" class="contact-link">info@sterlingcreations.ai</a>
       </div>
       <div class="mt-5">
-        <a href="tel:+4721000000" class="contact-link text-muted">+47 21 00 00 00</a>
+        <a href="tel:+18559327895" class="contact-link contact-phone text-muted">855-WEB-STYLIST (932-7895)</a>
       </div>
-      <a href="mailto:studio@northform.co" class="btn-solid mono mt-[46px] !bg-teal !text-ink">
+      <a href="mailto:info@sterlingcreations.ai" class="btn-solid mono mt-[46px] !bg-teal !text-ink">
         <span class="cross"></span> Start a project
       </a>
     </div>
@@ -1442,7 +1478,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   <div class="rule-inv mono mt-[6vh] pt-[22px] flex flex-wrap justify-between gap-6 text-muted">
     <span>© 2026 NORTH/FORM AS</span>
-    <span>Fictional studio — imagery by NORTH/FORM</span>
+    <span>Site Design by <a href="https://sterlingcreations.ai" target="_blank" rel="noopener" class="credit-link">SterlingCreations.Ai</a></span>
     <span>All rights reserved</span>
   </div>
 </footer>

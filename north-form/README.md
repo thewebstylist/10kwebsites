@@ -130,6 +130,18 @@ the page is muted. Total shipped media is about 6MB.
 To swap any slot, change the `src` (or `data-preview`) to another file in
 `assets/`. The mapping lives in one place per slot, so nothing else moves.
 
+## Social preview
+
+`assets/og-image.jpg` is the hero rendered at 1200x630 (the 1.91:1 ratio the
+platforms expect), captured at 2x and downscaled so the wordmark stays sharp.
+Regenerate it by loading the page at 1440x756, parking the hero video at about
+2.15s, screenshotting, and scaling to 1200x630.
+
+**Before going live, replace `https://YOUR-DOMAIN.com` in the two `og:url` /
+`og:image` tags with the real origin.** Facebook and LinkedIn will not resolve
+a relative `og:image`; the preview silently degrades to plain text. The
+placeholder is deliberately obvious so it fails loudly rather than quietly.
+
 ## Gradients
 
 `--grad-bar` and `--grad-dot` run from `--accent` to `--teal`. Because those two
@@ -156,3 +168,13 @@ checked rather than assumed:
 
 That last row is why `--teal-lift` exists. It is the same 189deg hue raised in
 lightness, so it reads as one colour while clearing AA at small sizes.
+
+## A note on the Tailwind CDN
+
+The CDN build is a JIT that reads class names from the DOM at runtime, so the
+site always picks up new utilities. Anything that *precompiles* Tailwind
+against a snapshot of the html (the offline preview build does) goes stale the
+moment a utility is renamed — the class disappears from the stylesheet and the
+element silently loses that style with no console error. Renaming `acid` to
+`teal` did exactly that to the two `!bg-teal` buttons. If you add a build step,
+recompile on every change rather than caching the css.
