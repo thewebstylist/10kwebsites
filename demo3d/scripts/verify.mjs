@@ -22,8 +22,13 @@ const errors = [];
 const failedRequests = [];
 const consoleLog = [];
 
+// This sandbox ships a prebuilt Chromium at a fixed path; CI installs its own
+// via `playwright install`, where letting Playwright resolve it is correct.
+const { existsSync } = await import('node:fs');
+const LOCAL_CHROME = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium';
+
 const browser = await chromium.launch({
-  executablePath: '/opt/pw-browsers/chromium',
+  ...(existsSync(LOCAL_CHROME) ? { executablePath: LOCAL_CHROME } : {}),
   args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader',
          '--disable-dev-shm-usage', '--no-sandbox'],
 });

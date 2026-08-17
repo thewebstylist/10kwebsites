@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Image-to-3D engine comparison viewer — three characters, three engines, one camera.",
+  "description": "Image-to-3D engine comparison viewer \u2014 three characters, three engines, one camera.",
   "scripts": {
     "fixtures": "node scripts/make-fixtures.mjs",
     "inspect": "node scripts/inspect.mjs",
@@ -21,7 +21,7 @@
     "@gltf-transform/extensions": "^4.4.2",
     "meshoptimizer": "^0.25.0",
     "sharp": "^0.34.0",
-    "three": "^0.185.1"
-  },
-  "//": "verify.mjs also needs playwright; it is expected to be provided by the environment (globally installed) or added here with `npm i -D playwright`."
+    "three": "^0.185.1",
+    "playwright": "^1.56.1"
+  }
 }

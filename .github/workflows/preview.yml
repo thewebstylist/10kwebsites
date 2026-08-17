@@ -1,0 +1,97 @@
+name: Flat to Form — build & preview
+
+# Builds demo3d and publishes dist/ to GitHub Pages.
+#
+# Raw engine GLBs live in demo3d/assets/raw/ (gitignored, too heavy to track).
+# When they are present the workflow compresses them; when they are not it
+# falls back to whatever is already committed in demo3d/assets/glb/, so the
+# preview is always deployable.
+
+on:
+  push:
+    branches: ['claude/character-image-to-3d-demo-o2s6dk']
+    paths: ['demo3d/**', '.github/workflows/preview.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: demo3d
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: demo3d/package-lock.json
+
+      - run: npm ci
+
+      - name: Compress raw engine output (if present)
+        run: |
+          shopt -s nullglob
+          raw=(assets/raw/*.glb)
+          if [ ${#raw[@]} -gt 0 ]; then
+            echo "::group::inspect (raw)"
+            node scripts/inspect.mjs assets/raw
+            echo "::endgroup::"
+            ./scripts/compress.sh
+          else
+            echo "no assets/raw/*.glb — using the committed assets/glb/"
+          fi
+
+      - name: Thumbnails
+        run: |
+          shopt -s nullglob
+          src=(assets/img/*-src.png)
+          if [ ${#src[@]} -gt 0 ]; then node scripts/thumbs.mjs; fi
+
+      - name: Inspect shipped meshes
+        run: node scripts/inspect.mjs assets/glb | tee "$GITHUB_STEP_SUMMARY"
+
+      - name: Build dist
+        run: ./scripts/build.sh
+
+      - name: Verify in a real browser
+        run: |
+          npx --yes http-server -p 8123 -c-1 --silent dist &
+          for i in $(seq 1 30); do
+            curl -sf -o /dev/null http://127.0.0.1:8123/index.html && break
+            sleep 1
+          done
+          npx playwright install --with-deps chromium
+          node scripts/verify.mjs http://127.0.0.1:8123 ../.verify
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verify-screenshots
+          path: .verify/
+          if-no-files-found: ignore
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: demo3d/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
