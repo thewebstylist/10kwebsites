@@ -75,44 +75,48 @@ Videos are `muted playsinline preload="metadata"`.
   (threshold .25) plays it in view and pauses it out of view.
 - Cinematic: static image, scale 1.12 → 1 on scrub.
 
-### Re-encode the hero for scrubbing
+### Why the hero is encoded the way it is
 
-**The hosted hero mp4 currently carries a single keyframe for the entire clip.**
-Scrubbing seeks to arbitrary timestamps, and every seek has to decode forward
-from the nearest keyframe — with one keyframe that means decoding from frame
-zero every time, which stutters badly. Re-encode with a dense keyframe interval
-and replace the hosted file:
+Scrubbing seeks to arbitrary timestamps, and every seek decodes forward from
+the nearest keyframe. The Higgsfield export carries a single keyframe for the
+whole clip, so seeking it directly decodes from frame zero every time and
+stutters. `assets/hero.mp4` is therefore re-encoded with a keyframe every six
+frames — a quarter second at 24fps — which seeks cleanly without the size
+blow-up of an all-intra encode:
 
 ```sh
-# every frame seekable — largest, smoothest
-ffmpeg -i hero.mp4 -an -c:v libx264 -preset slow -crf 23 -g 1 \
-       -pix_fmt yuv420p -movflags +faststart hero-scrub.mp4
-
-# keyframe every 6 frames — about 40% smaller, still smooth at 24fps
-ffmpeg -i hero.mp4 -an -c:v libx264 -preset slow -crf 23 -g 6 \
-       -pix_fmt yuv420p -movflags +faststart hero-scrub.mp4
+ffmpeg -i source.mp4 -an -vf scale=1280:-2 -c:v libx264 -preset slow \
+       -crf 24 -g 6 -pix_fmt yuv420p -movflags +faststart hero.mp4
 ```
 
-Audio is stripped because every video on the page is muted. Adding a WebM/VP9
-`<source>` above the mp4 is worth doing if you can host a second file: it is
-smaller at equal quality and seeks faster.
+Rebuild the whole asset folder from the originals with
+`scratchpad/build-assets.sh`. Audio is stripped throughout, since every video
+on the page is muted.
 
-The supplied clips are **832×1104 portrait**, 4 and 6 seconds. That is why
-`.hero-media` sets `object-position: 50% 22%` — a wide viewport crops portrait
-footage hard, and centred framing lands on the subject's chin.
+If you re-export the hero from Higgsfield, re-encode it the same way or the
+scrub will stutter.
 
-## Asset note
+## Assets
 
-The brief supplied three URLs (hero video, project 01 video, cinematic
-background) plus a reference to portraits "#8, #9, #11, #13, #15, #16, #20,
-#22, #38, #39" from a Source Inventory that was not included. Every image slot
-therefore points at the one supplied image URL — the cinematic background —
-so nothing is invented and nothing is a stock substitute. The slots that want
-their own portrait once those URLs are available:
+The site ships its own media from `north-form/assets/`, built from the
+originals in `reference/assets/` (Higgsfield exports, kept as the archive).
+Nothing is fetched from a third-party host any more.
 
-- `.intro-portrait` in the studio section
-- `.project-media` for projects 02, 03, 04
-- `.cap-row .image` ×4 in capabilities
-- `data-preview` on the 8 `.archive-row` items
+| File | From | Used for |
+|---|---|---|
+| `hero.mp4` | 1284x716, 10s | scroll-scrubbed hero, `-g 6` for seeking |
+| `project-01.mp4` | 1284x716, 10s | project 01, loops in view |
+| `hero-poster.jpg` / `project-01-poster.jpg` | frame 0 of each clip | first paint |
+| `gown.jpg` | full-length figure | `.intro-portrait`, suits the 3:4 angled frame |
+| `mohawk.jpg` | orange monarchs | project 02, the colour moment |
+| `koi-man.jpg` | underwater, mono | project 03 |
+| `afro.jpg` | white ground | project 04, contrast against the paper section |
+| `koi-blonde-a.jpg` | wide, deep negative space | cinematic background |
+| 8 x 800px stills | mono portraits | capability hovers and archive previews |
 
-Swapping any of them is a one-line `src` / `data-preview` change.
+Images are JPEG q3: 1600px for anything full-width, 800px for cards and the
+320x400 archive previews. Videos are stripped of audio, since every video on
+the page is muted. Total shipped media is about 6MB.
+
+To swap any slot, change the `src` (or `data-preview`) to another file in
+`assets/`. The mapping lives in one place per slot, so nothing else moves.

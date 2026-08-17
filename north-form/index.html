@@ -346,9 +346,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hero-media video,.hero-media img{
   width:100%;height:100%;
   object-fit:cover;
-  /* the footage is 832x1104 portrait, so a wide viewport crops it hard;
-     bias upward to hold the subject's face instead of centring on the chin */
-  object-position:50% 22%;
+  /* footage is 1284x716 landscape and the subject is centred, so a plain
+     centre crop holds on every viewport */
+  object-position:50% 50%;
   transform:scale(1.06);
 }
 .hero-media:after{
@@ -907,7 +907,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 <!-- ============ ARCHIVE PREVIEW (z-150) ============ -->
 <div class="archive-preview" id="archivePreview" aria-hidden="true">
-  <img id="archivePreviewImg" src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="" />
+  <img id="archivePreviewImg" src="./assets/butterfly-w.jpg" alt="" />
 </div>
 
 <!-- ============ HEADER (z-90) ============ -->
@@ -953,8 +953,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         playsinline
         preload="metadata"
         data-aura-video-preset="scroll-scrub"
-        poster="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
-        <source src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/generated-videos/8bd0314a-9525-4a13-996e-2c37cbd9e514/1784436357607-9c22882e-f726-4971-b85d-f7b5276000ff.mp4" type="video/mp4" />
+        poster="./assets/hero-poster.jpg">
+        <source src="./assets/hero.mp4" type="video/mp4" />
       </video>
     </div>
 
@@ -1009,7 +1009,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <div class="grid12 items-end mt-[11vh]">
       <div class="intro-portrait col-start-1 col-span-4" data-reveal>
         <img
-          src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg"
+          src="./assets/gown.jpg"
           alt="NORTH/FORM studio portrait" loading="lazy" />
       </div>
 
@@ -1070,8 +1070,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         <video
           muted playsinline preload="metadata" loop
           data-aura-video-preset="loop-in-view"
-          poster="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
-          <source src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/generated-videos/8bd0314a-9525-4a13-996e-2c37cbd9e514/1784436916049-996a1369-4925-4293-9614-7cc8a1164acb.mp4" type="video/mp4" />
+          poster="./assets/project-01-poster.jpg">
+          <source src="./assets/project-01.mp4" type="video/mp4" />
         </video>
       </a>
       <div class="project-info">
@@ -1088,7 +1088,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
     <article class="project">
       <a class="project-media" href="#work" data-cursor="View" data-project-media>
-        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="Kestrel Field" loading="lazy" />
+        <img src="./assets/mohawk.jpg" alt="Kestrel Field" loading="lazy" />
       </a>
       <div class="project-info">
         <span class="project-index mono">(02)</span>
@@ -1104,7 +1104,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
     <article class="project">
       <a class="project-media" href="#work" data-cursor="View" data-project-media>
-        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="Atrium Ferro" loading="lazy" />
+        <img src="./assets/koi-man.jpg" alt="Atrium Ferro" loading="lazy" />
       </a>
       <div class="project-info">
         <span class="project-index mono">(03)</span>
@@ -1120,7 +1120,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
     <article class="project">
       <a class="project-media" href="#work" data-cursor="View" data-project-media>
-        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="Vessel Studio" loading="lazy" />
+        <img src="./assets/afro.jpg" alt="Vessel Studio" loading="lazy" />
       </a>
       <div class="project-info">
         <span class="project-index mono">(04)</span>
@@ -1155,7 +1155,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         <h3>Brand systems</h3>
         <p>Marks, type programmes, colour, tone and the governance that keeps them intact three years after handover.</p>
         <div class="image">
-          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="" loading="lazy" />
+          <img src="./assets/butterfly-m.jpg" alt="" loading="lazy" />
         </div>
       </div>
       <div class="cap-row" data-cursor="Explore">
@@ -1163,7 +1163,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         <h3>Motion direction</h3>
         <p>Title systems, launch films and the small interface gestures that decide whether a product feels expensive.</p>
         <div class="image">
-          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="" loading="lazy" />
+          <img src="./assets/albino.jpg" alt="" loading="lazy" />
         </div>
       </div>
       <div class="cap-row" data-cursor="Explore">
@@ -1171,7 +1171,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         <h3>Digital product</h3>
         <p>Design systems, prototypes and front end built with engineers in the room from the first week.</p>
         <div class="image">
-          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="" loading="lazy" />
+          <img src="./assets/smoke.jpg" alt="" loading="lazy" />
         </div>
       </div>
       <div class="cap-row" data-cursor="Explore">
@@ -1179,7 +1179,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         <h3>Editorial &amp; print</h3>
         <p>Annual reports, monographs and packaging where paper stock is a design decision, not a procurement one.</p>
         <div class="image">
-          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="" loading="lazy" />
+          <img src="./assets/butterfly-w.jpg" alt="" loading="lazy" />
         </div>
       </div>
     </div>
@@ -1266,49 +1266,49 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     </div>
 
     <div class="archive-list" id="archiveList">
-      <a class="archive-row" href="#archive" data-preview="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
+      <a class="archive-row" href="#archive" data-preview="./assets/koi-blonde-b.jpg">
         <div class="a-year mono">2026</div>
         <div class="a-name">Meridian Rail</div>
         <div class="a-type mono">Wayfinding</div>
         <div class="a-go"><span class="cross"></span></div>
       </a>
-      <a class="archive-row" href="#archive" data-preview="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
+      <a class="archive-row" href="#archive" data-preview="./assets/koi-blonde-c.jpg">
         <div class="a-year mono">2025</div>
         <div class="a-name">Fjord &amp; Sons</div>
         <div class="a-type mono">Identity</div>
         <div class="a-go"><span class="cross"></span></div>
       </a>
-      <a class="archive-row" href="#archive" data-preview="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
+      <a class="archive-row" href="#archive" data-preview="./assets/koi-red-a.jpg">
         <div class="a-year mono">2025</div>
         <div class="a-name">Northbound Press</div>
         <div class="a-type mono">Editorial</div>
         <div class="a-go"><span class="cross"></span></div>
       </a>
-      <a class="archive-row" href="#archive" data-preview="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
+      <a class="archive-row" href="#archive" data-preview="./assets/koi-red-b.jpg">
         <div class="a-year mono">2024</div>
         <div class="a-name">Ostro Systems</div>
         <div class="a-type mono">Product</div>
         <div class="a-go"><span class="cross"></span></div>
       </a>
-      <a class="archive-row" href="#archive" data-preview="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
+      <a class="archive-row" href="#archive" data-preview="./assets/smoke.jpg">
         <div class="a-year mono">2024</div>
         <div class="a-name">Lantern Bay Hotel</div>
         <div class="a-type mono">Brand</div>
         <div class="a-go"><span class="cross"></span></div>
       </a>
-      <a class="archive-row" href="#archive" data-preview="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
+      <a class="archive-row" href="#archive" data-preview="./assets/albino.jpg">
         <div class="a-year mono">2023</div>
         <div class="a-name">Cinder Athletics</div>
         <div class="a-type mono">Campaign</div>
         <div class="a-go"><span class="cross"></span></div>
       </a>
-      <a class="archive-row" href="#archive" data-preview="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
+      <a class="archive-row" href="#archive" data-preview="./assets/butterfly-m.jpg">
         <div class="a-year mono">2023</div>
         <div class="a-name">Rift Publishing</div>
         <div class="a-type mono">Type design</div>
         <div class="a-go"><span class="cross"></span></div>
       </a>
-      <a class="archive-row" href="#archive" data-preview="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg">
+      <a class="archive-row" href="#archive" data-preview="./assets/gown.jpg">
         <div class="a-year mono">2022</div>
         <div class="a-name">Solvei Interiors</div>
         <div class="a-type mono">Art direction</div>
@@ -1323,7 +1323,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   <section class="cinematic" id="cinematic">
     <div class="cinematic-sticky">
       <div class="cinematic-bg" id="cinematicBg">
-        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/df48517c-b34b-4aa2-b653-96984538305d/3840w.jpg" alt="" loading="lazy" />
+        <img src="./assets/koi-blonde-a.jpg" alt="" loading="lazy" />
       </div>
 
       <div class="cinematic-copy">
@@ -1428,7 +1428,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   <div class="rule-inv mono mt-[6vh] pt-[22px] flex flex-wrap justify-between gap-6 text-muted">
     <span>© 2026 NORTH/FORM AS</span>
-    <span>Fictional studio — built as a design exercise</span>
+    <span>Fictional studio — imagery by NORTH/FORM</span>
     <span>All rights reserved</span>
   </div>
 </footer>
@@ -1817,6 +1817,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   /* ============================================================
      SECTION 4 — SELECTED WORK  (scrub: 1)
      ============================================================ */
+  /* The sticky head is meant to ride over the project media on difference
+     blend. Past the last project there is nothing left to blend against and it
+     simply collides with the copy, so retire it as the section runs out. */
+  gsap.to('.projects-head', {
+    opacity: 0,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.projects',
+      start: 'bottom 80%',
+      end: 'bottom 45%',
+      scrub: true
+    }
+  });
+
   gsap.utils.toArray('.project').forEach(function (project) {
     var media = project.querySelector('.project-media');
     var info  = project.querySelector('.project-info');
