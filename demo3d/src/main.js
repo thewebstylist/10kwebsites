@@ -368,6 +368,27 @@ window.__app = {
   ),
   get camera() { return camera.position.toArray(); },
   get turntable() { return turntable.rotation.y; },
+  // Tuning aid for the per-character yaw offset. Every engine picks its own
+  // "front", and the offset has to be applied before the bounding-box
+  // normalisation — so this drops the cached mesh and reloads through the
+  // real path rather than spinning the group after the fact, which would
+  // walk an off-centre figure off the turntable axis.
+  //
+  //   __app.setYaw(90)   → try 90°, then write `yaw: Math.PI / 2` into
+  //                        src/characters.js for that character
+  setYaw(degrees) {
+    if (!currentDef) return null;
+    currentDef.yaw = (degrees * Math.PI) / 180;
+    cache.get(currentDef.id)?.dispose();
+    cache.delete(currentDef.id);
+    if (current) { turntable.remove(current.group); current = null; }
+    const i = CHARACTERS.indexOf(currentDef);
+    currentDef = null;
+    select(i);
+    return `${currentDef?.id ?? CHARACTERS[i].id}: yaw ${degrees}°  →  yaw: ${(degrees * Math.PI / 180).toFixed(4)}`;
+  },
+  get yaw() { return currentDef ? (currentDef.yaw * 180) / Math.PI : null; },
+
   get materials() {
     if (!current) return null;
     return [...new Set(current.group.children.map((m) => m.material.type))];
