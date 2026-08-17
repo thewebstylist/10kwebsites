@@ -878,7 +878,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   /* 12-column editorial grid collapses to a plain flex column */
   .grid12{display:flex;flex-direction:column;gap:28px;align-items:stretch !important}
   .grid12 > *{width:100%;max-width:none}
-  .projects-head{top:80px}
+  /* the sticky head is a desktop flourish: it rides over the media column on
+     difference blend. Stacked to one column there is nothing beside it to
+     blend against, so it just sits on the copy — let it scroll away instead. */
+  .projects-head{position:static;mix-blend-mode:normal;color:var(--ink);margin-bottom:4vh}
   /* project grid collapses to a plain flex column */
   .project{display:flex;flex-direction:column;align-items:stretch;gap:22px;padding:6vh 0}
   .project:nth-of-type(odd) .project-media,
@@ -899,7 +902,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .archive-row .a-type{grid-column:1/span 5}
   .archive-row .a-go{grid-column:6/span 1;grid-row:2}
   .cinematic{height:180vh}
-  .cinematic-card{position:relative;right:auto;top:auto;width:auto;margin:12vh 4vw 0;transform:none !important;opacity:1 !important}
+  .cinematic-card{position:relative;right:auto;top:auto;width:auto;margin:12vh 5vw 0}
   .cursor-label,.archive-preview{display:none}
   .project-media,.cap-row,.archive-row{cursor:pointer}
   .diagonal-top{clip-path:none}
@@ -1490,6 +1493,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   gsap.registerPlugin(ScrollTrigger);
 
+  /* Mobile browsers resize the viewport when the address bar hides, which
+     would otherwise refresh every pinned trigger mid-scroll and make the
+     pinned hero jump. */
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var isDesktop = window.matchMedia('(min-width: 901px)').matches;
 
@@ -1682,23 +1690,53 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
      so this also works where autoplay is blocked (sandboxed iframes,
      low-power mode). Everything stays on scrub: true, per the source.
 
-     Mobile: no pin and no scrub. Seeking during a touch scroll is
-     jittery on phones, so the clip simply loops in view.
+     Mobile does the same thing, with three concessions to phones: a
+     shorter pin, a coarser seek threshold so a touch flick does not queue
+     a seek per frame, and a priming step. iOS will not decode a frame
+     until the element has been played once, so a muted play()/pause() on
+     the first opportunity unlocks it; without that, seeking on iOS shows
+     the poster and nothing else.
      ------------------------------------------------------------ */
   var heroVideoEl = document.getElementById('heroVideo');
+
+  /* iOS keeps a video undecoded until it has played once, so seeking a
+     never-played element paints nothing. A muted play() immediately followed
+     by pause() unlocks the decoder without the clip ever visibly running. */
+  function primeForSeeking(v) {
+    var pr = v.play();
+    if (pr && pr.then) {
+      pr.then(function () { v.pause(); v.currentTime = 0; })
+        .catch(function () {
+          // autoplay refused (low power mode): unlock on the first touch instead
+          var once = function () {
+            v.play().then(function () { v.pause(); }).catch(function () {});
+            window.removeEventListener('touchstart', once);
+            window.removeEventListener('pointerdown', once);
+          };
+          window.addEventListener('touchstart', once, { once: true, passive: true });
+          window.addEventListener('pointerdown', once, { once: true });
+        });
+    } else {
+      v.pause();
+    }
+  }
 
   function heroScrubbed() {
     var dur = heroVideoEl.duration;
     if (!dur || !isFinite(dur)) return false;
 
-    heroVideoEl.pause();
+    primeForSeeking(heroVideoEl);
+    heroVideoEl.loop = false;
     var last = -1;
+    // a touch flick fires far more scroll events than a wheel; a coarser
+    // threshold keeps the decoder from queueing a seek it cannot service
+    var epsilon = isDesktop ? 0.008 : 0.03;
 
     var tl = gsap.timeline({
       scrollTrigger: {
         trigger: '#hero',
         start: 'top top',
-        end: '+=150%',
+        end: isDesktop ? '+=150%' : '+=110%',
         pin: true,
         pinSpacing: true,
         anticipatePin: 1,
@@ -1706,7 +1744,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         onUpdate: function (self) {
           // stop just shy of the end; seeking to exact duration can blank the frame
           var t = self.progress * (dur - 0.05);
-          if (Math.abs(t - last) < 0.008) return;
+          if (Math.abs(t - last) < epsilon) return;
           last = t;
           if (heroVideoEl.readyState >= 1) heroVideoEl.currentTime = t;
         }
@@ -1744,7 +1782,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     if (!heroWired) { heroParallax(); heroWired = true; }
   }
 
-  if (isDesktop && !reduced && heroVideoEl) {
+  if (!reduced && heroVideoEl) {
     if (heroVideoEl.readyState >= 1) {
       wireHero(true);
     } else {
@@ -1766,13 +1804,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     v.playsInline = true;
   });
 
-  /* scroll-scrub: desktop drives currentTime from scroll (see HERO SCROLL
-     BEHAVIOUR below). On mobile, and wherever scrubbing is not wired up,
-     the clip just loops so the hero is never a frozen still. */
+  /* scroll-scrub: currentTime is driven from scroll on every viewport (see
+     HERO SCROLL BEHAVIOUR below). Only reduced-motion falls back to a plain
+     loop, so the hero is never a frozen still. */
   (function () {
     var scrubbed = document.querySelectorAll('[data-aura-video-preset="scroll-scrub"]');
     scrubbed.forEach(function (v) {
-      if (isDesktop && !reduced) { v.loop = false; return; }
+      if (!reduced) { v.loop = false; return; }
       v.loop = true;
       var kick = function () {
         var p = v.play();
@@ -1948,6 +1986,62 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   });
 
   /* ============================================================
+     SECTION MOTION
+
+     A single reveal used by everything that previously just appeared:
+     the engagement cards, the archive rows, the FAQ, the footer. One
+     helper rather than a tween per section keeps the easing and the
+     stagger rhythm identical across the page, which is what makes it
+     read as one designed motion system instead of scattered effects.
+
+     Reveals run once. Replaying them on every pass up and down the page
+     turns scrolling into strobing, and the continuous life comes from
+     the scrubbed parallax instead.
+     ============================================================ */
+  function reveal(target, opts) {
+    opts = opts || {};
+    gsap.utils.toArray(target).forEach(function (el) {
+      var items = opts.children ? el.querySelectorAll(opts.children) : [el];
+      if (!items.length) return;
+      /* fromTo, never from. A bare gsap.from() records the element's current
+         value as its destination, and if ScrollTrigger.refresh() lands after
+         the from-state has been applied it records 0 — the tween then runs to
+         completion and leaves the element invisible. Explicit end values are
+         idempotent no matter how often the trigger refreshes. */
+      gsap.fromTo(items,
+        { y: opts.y != null ? opts.y : 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: opts.duration || 1.05,
+          ease: opts.ease || 'power3.out',
+          stagger: opts.stagger != null ? opts.stagger : 0.08,
+          overwrite: 'auto',
+          scrollTrigger: { trigger: el, start: opts.start || 'top 88%', once: true }
+        });
+    });
+  }
+
+  reveal('#engagement .grid12, #archive .grid12', { children: ':scope > *', stagger: .1 });
+  reveal('#faq .grid12 > div:first-child');
+  reveal('.plans',        { children: '.plan',        y: 44, stagger: .12, duration: 1.15 });
+  reveal('.archive-list', { children: '.archive-row', y: 22, stagger: .045, duration: .85 });
+  reveal('.faq-item',     { y: 24, stagger: .06, duration: .8, start: 'top 92%' });
+  reveal('.site-footer .grid12', { children: ':scope > *', stagger: .1 });
+  reveal('.footer-word',  { y: 34, duration: 1.1 });
+
+  /* Phones get no hover, so the only way the imagery reads as alive is on
+     scroll. Every project frame drifts inside its own crop. */
+  if (!isDesktop) {
+    gsap.utils.toArray('.project-media img, .project-media video').forEach(function (m) {
+      gsap.fromTo(m, { yPercent: -4 }, {
+        yPercent: 4, ease: 'none',
+        scrollTrigger: { trigger: m, start: 'top bottom', end: 'bottom top', scrub: 1 }
+      });
+    });
+  }
+
+  /* ============================================================
      SECTION 7 — ARCHIVE preview follow
      ============================================================ */
   var archivePreview = document.getElementById('archivePreview');
@@ -1988,6 +2082,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
           end: 'center center',
           scrub: 1
         }
+      }
+    );
+  } else {
+    /* the card sits in flow on phones, so it rises rather than flying in from
+       off-canvas — same gesture, scaled to the space available */
+    gsap.fromTo('#cinematicCard',
+      { y: 60, rotation: 4, opacity: 0 },
+      {
+        y: 0, rotation: 0, opacity: 1,
+        duration: 1.1, ease: 'power3.out',
+        scrollTrigger: { trigger: '#cinematicCard', start: 'top 90%' }
       }
     );
   }

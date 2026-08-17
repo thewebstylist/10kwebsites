@@ -68,11 +68,21 @@ Deliberately not uniform, matching the source:
 
 Videos are `muted playsinline preload="metadata"`.
 
-- Hero: `data-aura-video-preset="scroll-scrub"`. On desktop the hero pins for
-  150% of viewport height and the video's `currentTime` is driven straight from
-  scroll position — forward as you scroll down, backward as you scroll up.
-  Nothing calls `play()`, so it also works where autoplay is blocked. On mobile
-  it loops instead, because seeking during a touch scroll is jittery on phones.
+- Hero: `data-aura-video-preset="scroll-scrub"`. The hero pins and the video's
+  `currentTime` is driven straight from scroll position — forward as you scroll
+  down, backward as you scroll up. Nothing calls `play()`, so it also works
+  where autoplay is blocked.
+
+  Phones do the same with three concessions: the pin is 110% of viewport
+  height instead of 150%, the seek threshold is 0.03s instead of 0.008s so a
+  touch flick does not queue a seek per frame, and the video is primed with a
+  muted `play()`/`pause()` pair. That last one is not optional on iOS: Safari
+  leaves a video undecoded until it has played once, so seeking a never-played
+  element paints the poster and nothing else. If autoplay is refused (low power
+  mode) the priming retries on the first touch.
+
+  `ScrollTrigger.config({ ignoreMobileResize: true })` stops the address bar
+  hiding from refreshing every pinned trigger mid-scroll.
 - Project 01: `data-aura-video-preset="loop-in-view"` — an IntersectionObserver
   (threshold .25) plays it in view and pauses it out of view.
 - Cinematic closer: `data-aura-video-preset="loop-in-view"`, autoplaying on a
@@ -178,3 +188,23 @@ moment a utility is renamed — the class disappears from the stylesheet and the
 element silently loses that style with no console error. Renaming `acid` to
 `teal` did exactly that to the two `!bg-teal` buttons. If you add a build step,
 recompile on every change rather than caching the css.
+
+## Section motion
+
+One `reveal()` helper drives every section entrance — engagement cards,
+archive rows, FAQ, footer — so the easing and stagger rhythm are identical
+across the page. That shared rhythm is what makes it read as one motion system
+rather than a pile of separate effects. Reveals run once; replaying them on
+every pass turns scrolling into strobing, and the continuous life comes from
+the scrubbed parallax instead.
+
+**Use `fromTo`, not `from`, for anything with a ScrollTrigger.** A bare
+`gsap.from()` records the element's current value as its destination. If a
+`ScrollTrigger.refresh()` lands after the from-state has been applied, it
+records the from-value as the end value: the tween then runs to completion and
+leaves the element permanently invisible, with no error anywhere. That bug hit
+the archive rows and is why the helper is explicit at both ends.
+
+On phones the projects head is not sticky. It is meant to ride over the media
+column on difference blend, and stacked to a single column there is nothing
+beside it to blend against, so it just sits on the copy.
