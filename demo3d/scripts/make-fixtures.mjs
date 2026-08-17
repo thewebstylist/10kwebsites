@@ -268,17 +268,17 @@ async function writeGLB(path, geo, maps, name) {
 
 const SPECS = [
   {
-    file: '01-vesper.glb', name: 'vesper', target: 184000, seed: 11,
+    file: '01-kage.glb', name: 'kage', target: 184000, seed: 11,
     opts: {}, maps: ['baseColor'],
     palette: [[62, 96, 104], [176, 118, 66], [206, 168, 96]],
   },
   {
-    file: '02-kiro.glb', name: 'kiro', target: 800000, seed: 23,
+    file: '02-tetsu.glb', name: 'tetsu', target: 800000, seed: 23,
     opts: { chunky: true, ears: true }, maps: ['baseColor', 'normal', 'orm'],
     palette: [[92, 104, 58], [186, 152, 92], [226, 216, 196]],
   },
   {
-    file: '03-ansel9.glb', name: 'ansel9', target: 250000, seed: 37,
+    file: '03-kin.glb', name: 'kin', target: 250000, seed: 37,
     opts: {}, maps: ['baseColor', 'orm'],
     palette: [[218, 212, 200], [148, 116, 74], [255, 138, 60]],
   },
