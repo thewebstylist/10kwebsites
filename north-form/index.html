@@ -346,6 +346,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hero-media video,.hero-media img{
   width:100%;height:100%;
   object-fit:cover;
+  /* the footage is 832x1104 portrait, so a wide viewport crops it hard;
+     bias upward to hold the subject's face instead of centring on the chin */
+  object-position:50% 22%;
   transform:scale(1.06);
 }
 .hero-media:after{
