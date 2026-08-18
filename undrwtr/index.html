@@ -994,10 +994,12 @@ var gNum = gauge.querySelector('#g-num');
 var gHead = gauge.querySelector('#g-head');
 var lastDepthText = '', lastDepthAt = 0;
 
-function updateGauge(p, now){
-  if (now - lastDepthAt < 100) return;      // ~10Hz
+function updateGauge(p, now, force){
+  // ~10Hz while moving, but the terminal write always lands: without `force`
+  // the throttle can swallow the last frame and the meter parks at 2,995.
+  if (!force && now - lastDepthAt < 100) return;
   lastDepthAt = now;
-  var d = Math.round(depthAt(p)/5)*5;
+  var d = Math.max(0, Math.round(depthAt(p)/5)*5);   // Math.max also kills -0
   var txt = d.toLocaleString('en-US');
   if (txt !== lastDepthText){
     lastDepthText = txt;
@@ -1051,7 +1053,7 @@ function tick(now){
 
   var gaugeOn = d.onScreen && dRect.top <= 4 && dRect.bottom > window.innerHeight - 4;
   if (gaugeOn !== gauge.classList.contains('on')) gauge.classList.toggle('on', gaugeOn);
-  if (gaugeOn) updateGauge(d.shown, now);
+  if (gaugeOn) updateGauge(d.shown, now, !moving);   // forced once the scrub settles
 
   if (moving){ rafId = requestAnimationFrame(tick); }
   else { rafId = null; lastTick = 0; }
