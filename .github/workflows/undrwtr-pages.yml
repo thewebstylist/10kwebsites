@@ -1,0 +1,105 @@
+name: Build and deploy UNDRWTR
+
+on:
+  push:
+    branches: [claude/abyss-scroll-cinematic-4a55v0]
+    paths:
+      - 'undrwtr/**'
+      - '.github/workflows/undrwtr-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  CDN: https://d8j0ntlcm91z4.cloudfront.net/user_2vQdbkYJJTfppgV7PaStt9K0SSy
+  CLIP_DROP: hf_20260817_233811_c5a392dd-5815-4fa7-971d-a40b05da5926.mp4
+  CLIP_DESCENT: hf_20260817_233823_daa98a25-7eb3-46ef-8ed1-227ae1b203f7.mp4
+  CLIP_LUME: hf_20260818_001019_a7b6d9af-592f-4c7a-bb3a-ad1fc03d2967.mp4
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Fetch the approved clips
+        run: |
+          set -euo pipefail
+          mkdir -p raw
+          curl -fsSL --retry 3 --retry-delay 2 -o raw/drop.mp4    "$CDN/$CLIP_DROP"
+          curl -fsSL --retry 3 --retry-delay 2 -o raw/descent.mp4 "$CDN/$CLIP_DESCENT"
+          curl -fsSL --retry 3 --retry-delay 2 -o raw/lume.mp4    "$CDN/$CLIP_LUME"
+          ls -la raw
+          for f in drop descent lume; do
+            ffprobe -v error -select_streams v:0 \
+              -show_entries stream=width,height,nb_frames -of csv=p=0 "raw/$f.mp4"
+          done
+
+      - name: Cut 150 frames per chapter
+        run: |
+          set -euo pipefail
+          mkdir -p _site/frames _site/assets
+          for f in drop descent lume; do
+            mkdir -p "_site/frames/$f"
+            ffmpeg -v error -i "raw/$f.mp4" \
+              -vf "fps=150/10.041667,scale=1600:-2" -vsync 0 \
+              -frames:v 150 -q:v 3 "_site/frames/$f/frame_%04d.jpg"
+            n=$(ls "_site/frames/$f" | wc -l)
+            echo "$f -> $n frames, $(du -sh _site/frames/$f | cut -f1)"
+            if [ "$n" -ne 150 ]; then echo "::error::$f produced $n frames, expected 150"; exit 1; fi
+            test -f "_site/frames/$f/frame_0001.jpg" || { echo "::error::$f missing frame_0001.jpg"; exit 1; }
+            test -f "_site/frames/$f/frame_0150.jpg" || { echo "::error::$f missing frame_0150.jpg"; exit 1; }
+          done
+
+      - name: Build the mobile loop videos and posters
+        run: |
+          set -euo pipefail
+          for f in drop descent lume; do
+            ffmpeg -v error -i "raw/$f.mp4" -vf "scale=1280:-2" \
+              -c:v libx264 -crf 30 -preset slow -pix_fmt yuv420p \
+              -movflags +faststart -an "_site/assets/loop-$f.mp4"
+            ffmpeg -v error -i "raw/$f.mp4" -frames:v 1 -vf "scale=1600:-2" \
+              -q:v 4 "_site/assets/poster-$f.jpg"
+          done
+          ls -la _site/assets
+
+      - name: Assemble the site
+        run: |
+          set -euo pipefail
+          cp undrwtr/index.html _site/index.html
+          URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/"
+          # DEPLOY STEP: og tags need absolute URLs, which only exist now
+          sed -i "s|<meta property=\"og:url\" content=\"\">|<meta property=\"og:url\" content=\"${URL}\">|" _site/index.html
+          sed -i "s|content=\"assets/poster-descent.jpg\"|content=\"${URL}assets/poster-descent.jpg\"|" _site/index.html
+          touch _site/.nojekyll
+          grep -o 'og:url[^>]*' _site/index.html
+          du -sh _site
+          find _site -maxdepth 2 -type d | sort
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
