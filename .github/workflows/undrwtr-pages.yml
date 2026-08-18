@@ -86,9 +86,29 @@ jobs:
           du -sh _site
           find _site -maxdepth 2 -type d | sort
 
+      - name: Verify in a real browser
+        run: |
+          set -euo pipefail
+          npm init -y >/dev/null 2>&1
+          npm i --no-audit --no-fund playwright@1.49.1 >/dev/null
+          npx playwright install --with-deps chromium >/dev/null
+          python3 -m http.server 8080 --directory _site >/tmp/serve.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8080/ >/dev/null && break; sleep 1; done
+          node undrwtr/verify.mjs | tee /tmp/verify.log
+        env:
+          BASE_URL: http://127.0.0.1:8080
+
+      - name: Publish the verification summary
+        if: always()
+        run: |
+          {
+            echo '## UNDRWTR self-test'
+            echo '```'
+            cat /tmp/verify.log 2>/dev/null || echo 'verification did not run'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
