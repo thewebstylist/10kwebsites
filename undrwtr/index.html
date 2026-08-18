@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ABYSS Mark II. Rated for the Dark</title>
+<meta name="description" content="ABYSS Mark II. A titanium dive watch rated to three thousand meters. Scroll to sink it from sunlit water into the midnight zone.">
+<meta name="theme-color" content="#0E3A5C">
+<meta property="og:title" content="ABYSS Mark II. Rated for the Dark">
+<meta property="og:description" content="A titanium dive watch rated to three thousand meters. Scroll to sink it.">
+<meta property="og:type" content="website">
+<!-- DEPLOY STEP: patch og:image and og:url with the live absolute URL -->
+<meta property="og:image" content="assets/poster-descent.jpg">
+<meta property="og:url" content="">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23B8FF9E' stroke-width='2'/%3E%3Ccircle cx='16' cy='7' r='1.8' fill='%23B8FF9E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ABYSS Mark II, tokens
+   ============================================================ */
+:root{
+  --sunlit:#0E3A5C;
+  --twilight:#071B30;
+  --midnight:#000000;
+  --bone:#E9EDEA;
+  --bone-dim:#9BA6A6;
+  --lume:#B8FF9E;
+  --titanium:#8E9A9C;
+  --hairline:rgba(233,237,234,.14);
+  --hairline-strong:rgba(233,237,234,.3);
+  --page-bg:#0E3A5C;
+
+  --display:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --tshadow:0 1px 2px rgba(2,8,14,.95),0 3px 12px rgba(2,8,14,.8),0 10px 44px rgba(2,8,14,.82);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:hidden;overflow-x:clip}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--page-bg);
+  color:var(--bone);
+  font-family:var(--body);
+  font-weight:400;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  transition:background-color .18s linear;
+}
+img,canvas,video{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:400}
+p{margin:0}
+
+/* The page is one environment: a single fixed field behind everything. */
+.field{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -10%,rgba(120,220,255,.10),transparent 60%),
+    radial-gradient(ellipse 90% 60% at 50% 110%,rgba(0,0,0,.5),transparent 70%);
+  opacity:.9;
+}
+.field::after{
+  content:"";position:absolute;inset:-50%;
+  background-image:radial-gradient(rgba(255,255,255,.5) .5px,transparent .5px);
+  background-size:3px 3px;
+  opacity:.022;
+  animation:drift 90s linear infinite;
+}
+@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-120px,0)}}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:200;
+  background:var(--lume);color:#04140a;padding:.7rem 1.1rem;
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-decoration:none;
+}
+.skip:focus{left:1rem;top:1rem}
+
+:focus-visible{outline:2px solid var(--lume);outline-offset:3px}
+
+/* ============================================================
+   Preloader
+   ============================================================ */
+#loader{
+  position:fixed;inset:0;z-index:120;
+  background:#04121d;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1.6rem;
+  transition:opacity .9s var(--ease),visibility .9s;
+}
+#loader.done{opacity:0;visibility:hidden}
+.ld-mark{
+  font-family:var(--display);font-size:clamp(2.4rem,7vw,4.2rem);
+  letter-spacing:.24em;text-indent:.24em;color:var(--bone);
+  opacity:.92;
+}
+.ld-bar{
+  width:min(280px,54vw);height:1px;background:var(--hairline);position:relative;overflow:hidden;
+}
+.ld-bar i{
+  position:absolute;inset:0 auto 0 0;width:0%;background:var(--lume);
+  box-shadow:0 0 12px rgba(184,255,158,.6);
+  transition:width .25s linear;
+}
+.ld-pct{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;color:var(--lume);
+}
+.ld-note{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(--bone-dim);
+  text-transform:uppercase;
+}
+
+/* ============================================================
+   Nav
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:1rem;
+  padding:1.1rem clamp(1rem,4vw,2.6rem);
+  mix-blend-mode:normal;
+  transition:background-color .4s var(--ease),backdrop-filter .4s var(--ease);
+}
+.nav.solid{background:rgba(3,10,16,.55);backdrop-filter:blur(14px)}
+.nav-mark{
+  font-family:var(--display);font-size:1.18rem;letter-spacing:.3em;text-indent:.3em;
+  text-decoration:none;text-shadow:var(--tshadow);
+}
+.nav-links{display:flex;gap:clamp(.9rem,2.4vw,2rem);align-items:baseline}
+.nav-links a{
+  font-family:var(--mono);font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;
+  text-decoration:none;color:var(--bone-dim);
+  transition:color .3s var(--ease);
+  text-shadow:var(--tshadow);
+}
+.nav-links a:hover{color:var(--bone)}
+.nav-links a.reserve{color:var(--lume)}
+@media (max-width:640px){.nav-links a:not(.reserve){display:none}}
+
+/* ============================================================
+   Chapters (pinned scrub stages)
+   ============================================================ */
+main{position:relative;z-index:1}
+.chapter{position:relative}
+#hero{height:420vh}
+#descent{height:1000vh}
+#lume{height:420vh}
+
+.stage{
+  position:sticky;top:0;height:100vh;height:100svh;
+  overflow:hidden;
+}
+.stage canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  transform:translateZ(0);will-change:transform;
+}
+.stage .loopvid{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;
+}
+/* Base scrim: no frame is ever raw behind the page. */
+.scrim{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 125% 95% at 50% 45%,rgba(3,10,16,0) 34%,rgba(3,10,16,.6) 100%);
+}
+.vignette-top{
+  position:absolute;left:0;right:0;top:0;height:34vh;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(3,10,16,.62),transparent);
+}
+
+/* Caption bands */
+.band{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:0 clamp(1.2rem,5vw,3rem);
+  opacity:0;
+  text-shadow:var(--tshadow);
+  pointer-events:none;
+}
+.band::before{
+  content:"";position:absolute;inset:-4%;pointer-events:none;
+  opacity:calc(.25 + .75*var(--k,1));
+  background:radial-gradient(ellipse 76% 64% at 50% 50%,rgba(2,8,14,.66) 0%,rgba(2,8,14,.44) 46%,rgba(2,8,14,0) 76%);
+}
+.band > *{position:relative}
+
+.overline{
+  font-family:var(--mono);font-size:clamp(.6rem,1.1vw,.72rem);
+  letter-spacing:.34em;text-transform:uppercase;color:var(--bone-dim);
+  margin-bottom:clamp(1rem,2.4vh,1.8rem);
+}
+.display{
+  font-family:var(--display);
+  font-size:clamp(4.4rem,20vw,17rem);
+  line-height:.86;
+  letter-spacing:.02em;
+  margin:0;
+}
+.display .c{display:inline-block}
+.lede{
+  font-size:clamp(.92rem,1.5vw,1.05rem);
+  color:var(--bone-dim);
+  max-width:34ch;
+  margin-top:clamp(1.1rem,2.6vh,2rem);
+}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+/* character entrance: drift-down (echoes the fall) */
+.c{
+  --kc:clamp(0,(var(--k,0) - var(--th,0))*2.7,1);
+  opacity:var(--kc);
+  transform:translateY(calc((1 - var(--kc)) * -26px));
+}
+/* word entrance for callouts: rise */
+.w{
+  display:inline-block;
+  --kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);
+  opacity:var(--kc);
+  transform:translateY(calc((1 - var(--kc)) * 14px));
+}
+
+/* Scroll cue */
+.cue{
+  position:absolute;left:50%;bottom:3.4vh;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--bone-dim);pointer-events:none;
+  text-shadow:var(--tshadow);
+}
+.cue i{display:block;width:1px;height:38px;background:linear-gradient(to bottom,var(--lume),transparent);opacity:.8}
+@media (max-height:600px){.cue{display:none}}
+
+/* ============================================================
+   Signature element: the depth rail + live meter
+   ============================================================ */
+.gauge{
+  position:fixed;z-index:50;
+  right:clamp(.9rem,2.6vw,2.2rem);
+  top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;gap:.85rem;
+  opacity:0;visibility:hidden;
+  transition:opacity .7s var(--ease),visibility .7s;
+  pointer-events:none;
+}
+.gauge.on{opacity:1;visibility:visible}
+.gauge-read{
+  text-align:right;
+  font-family:var(--mono);
+  line-height:1;
+}
+.gauge-num{
+  display:block;
+  font-size:clamp(1.5rem,3.6vw,2.5rem);
+  font-weight:500;
+  color:var(--lume);
+  letter-spacing:.02em;
+  text-shadow:0 0 22px rgba(184,255,158,.35);
+  font-variant-numeric:tabular-nums;
+}
+.gauge-unit{
+  display:block;margin-top:.5rem;
+  font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--bone-dim);
+}
+.gauge-rail{
+  position:relative;width:1px;height:min(46vh,340px);
+  background:linear-gradient(to bottom,transparent,var(--hairline) 12%,var(--hairline) 88%,transparent);
+}
+.gauge-rail .tick{
+  position:absolute;right:0;width:9px;height:1px;background:var(--hairline-strong);
+}
+.gauge-rail .tick.major{width:17px;background:rgba(233,237,234,.42)}
+.gauge-rail .head{
+  position:absolute;right:-3px;width:7px;height:7px;border-radius:50%;
+  background:var(--lume);box-shadow:0 0 14px rgba(184,255,158,.85);
+  transform:translateY(-50%);
+  transition:top .12s linear;
+}
+@media (max-width:760px),(max-height:560px){.gauge{display:none}}
+
+/* ============================================================
+   Descent callouts with hairline lume leader lines
+   ============================================================ */
+.callout{
+  position:absolute;
+  opacity:0;pointer-events:none;
+  text-shadow:var(--tshadow);
+  max-width:min(30ch,42vw);
+}
+.callout .co-depth{
+  font-family:var(--mono);font-size:clamp(.66rem,1.2vw,.8rem);
+  letter-spacing:.24em;color:var(--lume);
+  display:block;margin-bottom:.55rem;
+}
+.callout .co-text{
+  font-family:var(--display);
+  font-size:clamp(1.5rem,3.4vw,2.7rem);
+  line-height:1.1;
+  display:block;
+}
+.callout .co-sub{
+  display:block;margin-top:.55rem;
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--lume);
+}
+.callout .leader{
+  position:absolute;height:1px;
+  background:linear-gradient(to right,rgba(184,255,158,.85),rgba(184,255,158,0));
+  transform-origin:left center;
+  transform:scaleX(var(--k,0));
+}
+.callout.left{left:clamp(1.2rem,7vw,6rem);text-align:left}
+.callout.left .leader{left:0;bottom:-14px;width:min(240px,26vw)}
+.callout.right{right:clamp(1.2rem,7vw,6rem);text-align:right}
+.callout.right .leader{
+  right:0;bottom:-14px;width:min(240px,26vw);
+  transform-origin:right center;
+  background:linear-gradient(to left,rgba(184,255,158,.85),rgba(184,255,158,0));
+}
+#co-200{top:22vh}
+#co-1000{top:44vh}
+#co-3000{top:30vh}
+@media (max-width:760px){
+  .callout{max-width:min(28ch,78vw)}
+  .callout.left,.callout.right{left:1.2rem;right:1.2rem;text-align:left}
+  .callout.right .leader{left:0;right:auto;transform-origin:left center;
+    background:linear-gradient(to right,rgba(184,255,158,.85),rgba(184,255,158,0))}
+}
+
+/* ============================================================
+   Sections below the journey
+   ============================================================ */
+.sect{
+  position:relative;z-index:2;
+  background:var(--midnight);
+  padding:clamp(5rem,14vh,10rem) clamp(1.2rem,6vw,4rem);
+}
+.wrap{max-width:1180px;margin:0 auto}
+.kicker{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--lume);margin-bottom:1.6rem;display:block;
+}
+.h2{
+  font-family:var(--display);
+  font-size:clamp(2.1rem,6vw,4.4rem);
+  line-height:1.02;
+}
+
+/* reveal on enter */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
+.in .rv,.rv.in{opacity:1;transform:none}
+.in .rv:nth-child(2){transition-delay:.09s}
+.in .rv:nth-child(3){transition-delay:.18s}
+.in .rv:nth-child(4){transition-delay:.27s}
+.in.done .rv{transition-delay:0s}
+
+/* --- Specs: minimal grid, hairline dividers --- */
+#specs .spec-head{
+  display:grid;grid-template-columns:1fr;gap:1.4rem;
+  padding-bottom:clamp(2.4rem,6vh,4rem);
+}
+.spec-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  border-top:1px solid var(--hairline);
+}
+.spec{
+  padding:clamp(1.8rem,4vh,2.8rem) 0;
+  border-bottom:1px solid var(--hairline);
+  padding-right:clamp(1rem,3vw,3rem);
+}
+.spec + .spec{border-left:1px solid var(--hairline);padding-left:clamp(1rem,3vw,3rem)}
+@media (max-width:900px){.spec + .spec{border-left:0;padding-left:0}}
+.spec dt{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--bone-dim);margin-bottom:.9rem;
+}
+.spec dd{
+  margin:0;
+  font-family:var(--display);
+  font-size:clamp(1.3rem,2.4vw,1.9rem);
+  line-height:1.16;
+}
+.spec .spec-note{
+  display:block;margin-top:.7rem;
+  font-family:var(--body);font-size:.83rem;color:var(--bone-dim);line-height:1.6;
+}
+
+/* --- The one interactive moment: charge the lume --- */
+.lume-lab{
+  margin-top:clamp(3rem,8vh,5.5rem);
+  border:1px solid var(--hairline);
+  padding:clamp(1.6rem,4vw,3rem);
+  display:grid;grid-template-columns:1fr auto;gap:clamp(1.4rem,4vw,3rem);align-items:center;
+}
+@media (max-width:760px){.lume-lab{grid-template-columns:1fr}}
+.lume-lab h3{font-family:var(--display);font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.1}
+.lume-lab p{margin-top:.8rem;color:var(--bone-dim);font-size:.9rem;max-width:44ch}
+.dial{
+  position:relative;width:clamp(140px,26vw,190px);aspect-ratio:1;justify-self:center;
+  border-radius:50%;
+  border:1px solid var(--hairline-strong);
+  display:grid;place-items:center;
+  cursor:pointer;
+  touch-action:none;
+  background:radial-gradient(circle at 50% 50%,rgba(184,255,158,calc(.06*var(--charge,0))),transparent 68%);
+}
+.dial::before{
+  content:"";position:absolute;inset:-6px;border-radius:50%;
+  box-shadow:0 0 60px rgba(184,255,158,.55);
+  opacity:calc(var(--charge,0)*.9);
+  pointer-events:none;
+}
+.dial .pip{
+  position:absolute;top:8px;left:50%;width:8px;height:8px;border-radius:50%;
+  transform:translateX(-50%);
+  background:rgba(184,255,158,calc(.18 + .82*var(--charge,0)));
+  box-shadow:0 0 calc(14px*var(--charge,0)) rgba(184,255,158,.9);
+}
+.dial .mk{
+  position:absolute;width:3px;height:13px;border-radius:2px;
+  left:50%;top:14px;transform-origin:50% calc(clamp(140px,26vw,190px)/2 - 14px);
+  background:rgba(184,255,158,calc(.14 + .86*var(--charge,0)));
+  box-shadow:0 0 calc(10px*var(--charge,0)) rgba(184,255,158,.75);
+}
+.dial-label{
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--bone-dim);text-align:center;
+}
+.dial-label b{display:block;color:var(--lume);font-weight:500;margin-top:.3rem;font-variant-numeric:tabular-nums}
+
+/* --- CTA --- */
+#cta{border-top:1px solid var(--hairline)}
+.cta-inner{max-width:640px}
+.form{
+  margin-top:clamp(2rem,5vh,3rem);
+  display:flex;gap:.7rem;flex-wrap:wrap;align-items:stretch;
+}
+.form input[type=email]{
+  flex:1 1 260px;min-width:0;
+  background:transparent;
+  border:1px solid var(--hairline-strong);
+  color:var(--bone);
+  font-family:var(--mono);font-size:.82rem;letter-spacing:.06em;
+  padding:.95rem 1.1rem;
+  border-radius:0;
+}
+.form input[type=email]::placeholder{color:rgba(155,166,166,.7)}
+.form input[type=email]:focus{border-color:var(--lume);outline:none}
+.btn{
+  border:1px solid var(--lume);
+  background:var(--lume);color:#04140a;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+  padding:.95rem 1.6rem;cursor:pointer;
+  text-shadow:none;
+  transition:background-color .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease);
+}
+.btn:hover{background:transparent;color:var(--lume);box-shadow:0 0 26px rgba(184,255,158,.22)}
+@media (pointer:coarse){.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center}}
+.smallprint{
+  margin-top:1.5rem;font-size:.76rem;color:var(--bone-dim);line-height:1.7;max-width:52ch;
+}
+.form-ok{
+  margin-top:1.4rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;
+  color:var(--lume);display:none;
+}
+.form-ok.on{display:block}
+
+/* --- Footer --- */
+footer{
+  position:relative;z-index:2;background:var(--midnight);
+  border-top:1px solid var(--hairline);
+  padding:clamp(2.4rem,6vh,3.6rem) clamp(1.2rem,6vw,4rem);
+  display:flex;gap:1.4rem;justify-content:space-between;flex-wrap:wrap;align-items:baseline;
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--bone-dim);
+  text-transform:uppercase;
+}
+footer .fiction{text-transform:none;letter-spacing:.04em;max-width:56ch;line-height:1.7}
+
+/* ============================================================
+   Static hero mode (phones, portrait tablets, reduced motion)
+   ============================================================ */
+@media (max-width:720px),
+       (orientation:portrait) and (max-width:1024px),
+       (orientation:portrait) and (pointer:coarse),
+       (orientation:landscape) and (pointer:coarse) and (max-height:560px),
+       (prefers-reduced-motion:reduce){
+  /* Static mode: the chapters become normal flow panels, each with its clip
+     looping behind, over one flat deep blue. No canvas, no scrub, no scroll math. */
+  .chapter{height:auto}
+  .stage{
+    position:relative;height:auto;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    background:var(--twilight);
+    padding:clamp(4rem,12vh,7rem) 0;
+  }
+  .stage canvas{display:none}
+  .stage .loopvid{display:block;position:absolute;inset:0;height:100%}
+  body{background:var(--twilight)}
+  .band{
+    position:relative;inset:auto;opacity:1;
+    padding-top:clamp(2rem,6vh,4rem);padding-bottom:clamp(2rem,6vh,4rem);
+  }
+  .band::before{opacity:.62}
+  .band .c,.band .w{opacity:1;transform:none}
+  .callout-wrap{
+    position:relative;z-index:2;
+    padding:clamp(2rem,7vh,4rem) clamp(1.2rem,6vw,3rem);
+    display:flex;flex-direction:column;gap:clamp(2.4rem,8vh,4.5rem);
+  }
+  .callout{position:relative;opacity:1;top:auto;margin:0;max-width:34ch}
+  .callout .leader{transform:scaleX(1);position:relative;display:block;margin-top:1rem;bottom:auto;width:min(240px,50vw)}
+  .cue{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;transition-delay:0s!important;
+  }
+  .rv{opacity:1!important;transform:none!important}
+}
+body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}
+</style>
+</head>
+<body>
+<div class="field" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<div id="loader">
+  <div class="ld-mark">ABYSS</div>
+  <div class="ld-bar"><i id="ld-fill"></i></div>
+  <div class="ld-pct" id="ld-pct">0%</div>
+  <div class="ld-note">Flooding the chamber</div>
+</div>
+
+<nav class="nav" id="nav">
+  <a class="nav-mark" href="#top">ABYSS</a>
+  <div class="nav-links">
+    <a href="#descent">Descent</a>
+    <a href="#lume">Lume</a>
+    <a href="#specs">Specs</a>
+    <a href="#cta" class="reserve">Reserve</a>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+  <span id="top"></span>
+
+  <!-- ========== 1. HERO: the drop ========== -->
+  <section class="chapter" id="hero" data-seq="drop">
+    <div class="stage">
+      <canvas data-canvas="drop" aria-hidden="true"></canvas>
+      <video class="loopvid" data-loop="drop" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+      <div class="scrim" aria-hidden="true"></div>
+      <div class="vignette-top" aria-hidden="true"></div>
+
+      <div class="band" data-band="0" data-range="0,0.62" data-ramp="0.05">
+        <span class="overline">Mark II. Rated for the dark.</span>
+        <h1 class="display" data-split="char">ABYSS</h1>
+        <p class="lede">Titanium. Three thousand meters. It goes where the light stops.</p>
+      </div>
+
+      <div class="band" data-band="1" data-range="0.66,1">
+        <span class="overline">The drop</span>
+        <p class="display" style="font-size:clamp(2rem,6.5vw,5rem);line-height:1.04" data-split="word">Everything below is dark.</p>
+        <p class="lede">Keep scrolling. You are the depth gauge.</p>
+      </div>
+
+      <div class="cue" aria-hidden="true"><span>Scroll to sink</span><i></i></div>
+    </div>
+  </section>
+
+  <!-- ========== 2. THE DESCENT ========== -->
+  <section class="chapter" id="descent" data-seq="descent">
+    <div class="stage">
+      <canvas data-canvas="descent" aria-hidden="true"></canvas>
+      <video class="loopvid" data-loop="descent" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+      <div class="scrim" aria-hidden="true"></div>
+
+      <div class="callout-wrap">
+        <div class="callout left" id="co-200" data-range="0.24,0.42">
+          <span class="co-depth">200 M</span>
+          <span class="co-text" data-split="word">Sunlight ends.</span>
+          <i class="leader" aria-hidden="true"></i>
+        </div>
+
+        <div class="callout right" id="co-1000" data-range="0.56,0.74">
+          <span class="co-depth">1,000 M</span>
+          <span class="co-text" data-split="word">Twilight zone.</span>
+          <i class="leader" aria-hidden="true"></i>
+        </div>
+
+        <div class="callout left" id="co-3000" data-range="0.86,1">
+          <span class="co-depth">3,000 M</span>
+          <span class="co-text" data-split="word">Midnight zone.</span>
+          <span class="co-sub">Still ticking.</span>
+          <i class="leader" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 3. THE LUME ========== -->
+  <section class="chapter" id="lume" data-seq="lume">
+    <div class="stage">
+      <canvas data-canvas="lume" aria-hidden="true"></canvas>
+      <video class="loopvid" data-loop="lume" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+      <div class="scrim" aria-hidden="true"></div>
+
+      <div class="band" data-band="0" data-range="0,0.55" data-ramp="0.05">
+        <span class="overline">The lume</span>
+        <p class="display" style="font-size:clamp(2.2rem,7vw,5.6rem);line-height:1.02" data-split="word">No light reaches here.</p>
+        <p class="lede">So the watch brought its own.</p>
+      </div>
+
+      <div class="band" data-band="1" data-range="0.6,1">
+        <p class="display" style="font-size:clamp(1.9rem,5.4vw,4.2rem);line-height:1.06" data-split="word">Nine hours of glow on one minute of light.</p>
+        <p class="lede">Swiss Super LumiNova X1, applied by hand, four layers deep.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4. SPECS ========== -->
+  <section class="sect" id="specs">
+    <div class="wrap">
+      <div class="spec-head">
+        <span class="kicker rv">Specification</span>
+        <h2 class="h2 rv">Built to be believed<br>at three thousand meters.</h2>
+      </div>
+
+      <dl class="spec-grid">
+        <div class="spec">
+          <dt>Case</dt>
+          <dd>Grade 5 titanium
+            <span class="spec-note">Forged, brushed, then bead blasted so it stops reflecting anything. 44 mm across, 15.2 mm deep.</span>
+          </dd>
+        </div>
+        <div class="spec">
+          <dt>Crystal</dt>
+          <dd>3.9 mm sapphire
+            <span class="spec-note">Domed and anti reflective on the inside face only, so the outside stays scratch hard.</span>
+          </dd>
+        </div>
+        <div class="spec">
+          <dt>Gas escape</dt>
+          <dd>Automatic helium valve
+            <span class="spec-note">At nine o'clock. Vents saturation gas on the way up without you touching it.</span>
+          </dd>
+        </div>
+        <div class="spec">
+          <dt>Depth</dt>
+          <dd>3,000 meters
+            <span class="spec-note">Rated to 3,000. Pressure tested to 3,750 and held there for 48 hours.</span>
+          </dd>
+        </div>
+        <div class="spec">
+          <dt>Movement</dt>
+          <dd>ABYSS cal. 3K
+            <span class="spec-note">Automatic, 68 hour reserve, chronometer certified after casing, not before.</span>
+          </dd>
+        </div>
+        <div class="spec">
+          <dt>Lume</dt>
+          <dd>Super LumiNova X1
+            <span class="spec-note">Four hand applied layers on the markers, hands, and the bezel pip.</span>
+          </dd>
+        </div>
+      </dl>
+
+      <div class="lume-lab">
+        <div>
+          <h3>Charge the lume.</h3>
+          <p>Press and hold. That is all it takes down there: one minute of light, then hours of it giving the light back. Let go and watch it hold.</p>
+        </div>
+        <div class="dial" id="dial" role="button" tabindex="0" aria-label="Press and hold to charge the lume">
+          <span class="pip" aria-hidden="true"></span>
+          <span class="dial-label">Charge<b id="charge-read">0%</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 5. CTA ========== -->
+  <section class="sect" id="cta">
+    <div class="wrap cta-inner">
+      <span class="kicker rv">Reserve</span>
+      <h2 class="h2 rv">Reserve the Mark II</h2>
+      <form class="form rv" id="reserve-form" novalidate>
+        <label class="sr-only" for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+        <button class="btn" type="submit">Hold one</button>
+      </form>
+      <p class="form-ok" id="form-ok">Held. We write once, when it ships.</p>
+      <p class="smallprint rv">First run of 300 pieces. No deposit today and no card needed. One email when the run opens, one when yours ships, nothing else ever. Leave any time in one click.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>ABYSS &middot; Mark II</span>
+  <span class="fiction">ABYSS is a fictional brand created as a design piece. The watch, the specifications, and the imagery are invented, and the imagery is AI generated. Nothing here is for sale.</span>
+  <span>Rated for the dark</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   Config
+   ============================================================ */
+var SEQ = {
+  drop:    { dir:'frames/drop',    count:150, loop:'assets/loop-drop.mp4'    },
+  descent: { dir:'frames/descent', count:150, loop:'assets/loop-descent.mp4' },
+  lume:    { dir:'frames/lume',    count:150, loop:'assets/loop-lume.mp4'    }
+};
+var ORDER = ['drop','descent','lume'];
+
+/* The five static-hero gates. These strings must match the CSS exactly. */
+var GATES = [
+  '(max-width: 720px)',
+  '(orientation: portrait) and (max-width: 1024px)',
+  '(orientation: portrait) and (pointer: coarse)',
+  '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
+  '(prefers-reduced-motion: reduce)'
+];
+var MQLS = GATES.map(function(q){ return matchMedia(q); });
+function staticMode(){ return MQLS.some(function(m){ return m.matches; }); }
+
+var clamp = function(v,lo,hi){ return v<lo?lo:(v>hi?hi:v); };
+var smoothstep = function(p,e0,e1){
+  var t = clamp((p-e0)/(e1-e0),0,1);
+  return t*t*(3-2*t);
+};
+var lerp = function(a,b,t){ return a+(b-a)*t; };
+
+/* ============================================================
+   Palette interpolation for the page background
+   ============================================================ */
+var SUNLIT=[14,58,92], TWILIGHT=[7,27,48], MIDNIGHT=[0,0,0];
+function mixRGB(a,b,t){
+  return [Math.round(lerp(a[0],b[0],t)),Math.round(lerp(a[1],b[1],t)),Math.round(lerp(a[2],b[2],t))];
+}
+function depthColor(p){
+  // #0E3A5C -> #071B30 -> #000000, synced to the descent
+  return p < 0.5 ? mixRGB(SUNLIT,TWILIGHT,p/0.5) : mixRGB(TWILIGHT,MIDNIGHT,(p-0.5)/0.5);
+}
+
+/* ============================================================
+   Depth mapping: truthful 0 to 3,000 M, paced by ocean zone
+   so each callout lands on a readable stretch of scroll.
+   ============================================================ */
+function depthAt(p){
+  if (p <= 0.30) return (p/0.30)*200;                     // sunlit
+  if (p <= 0.65) return 200 + ((p-0.30)/0.35)*800;        // twilight
+  return 1000 + ((p-0.65)/0.35)*2000;                     // midnight
+}
+
+/* ============================================================
+   Text splitting (seeded, so it is identical on every load)
+   ============================================================ */
+function rng(seed){
+  var s = seed>>>0;
+  return function(){ s = (s*1664525 + 1013904223)>>>0; return s/4294967296; };
+}
+function splitText(el, mode, seed){
+  var text = el.textContent.trim();
+  var r = rng(seed);
+  var sr = document.createElement('span');
+  sr.className = 'sr-only';
+  sr.textContent = text;
+  var vis = document.createElement('span');
+  vis.setAttribute('aria-hidden','true');
+  var words = text.split(/\s+/);
+  words.forEach(function(word,wi){
+    var w = document.createElement('span');
+    w.className = 'w';
+    if (mode === 'char'){
+      w.style.setProperty('--th', 0);
+      for (var i=0;i<word.length;i++){
+        var c = document.createElement('span');
+        c.className = 'c';
+        c.textContent = word[i];
+        c.style.setProperty('--th', (i/Math.max(1,word.length)*0.4 + r()*0.08).toFixed(3));
+        w.appendChild(c);
+      }
+      w.style.setProperty('--kc',1);
+      w.style.opacity = 1;
+      w.style.transform = 'none';
+    } else {
+      w.textContent = word;
+      w.style.setProperty('--th', (wi/Math.max(1,words.length)*0.45 + r()*0.05).toFixed(3));
+    }
+    vis.appendChild(w);
+    if (wi < words.length-1) vis.appendChild(document.createTextNode(' '));
+  });
+  el.textContent = '';
+  el.appendChild(sr);
+  el.appendChild(vis);
+}
+document.querySelectorAll('[data-split]').forEach(function(el,i){
+  splitText(el, el.getAttribute('data-split'), 9871 + i*137);
+});
+
+/* ============================================================
+   Frame store + preloader
+   ============================================================ */
+var store = {};   // name -> array of Image
+var totalFrames = ORDER.reduce(function(n,k){ return n + SEQ[k].count; }, 0);
+var loaded = 0, settled = false;
+var fill = document.getElementById('ld-fill');
+var pct  = document.getElementById('ld-pct');
+var loaderEl = document.getElementById('loader');
+var lastPctText = '';
+
+function pad4(n){ return ('000'+n).slice(-4); }
+
+function bumpLoader(){
+  loaded++;
+  var f = loaded/totalFrames;
+  fill.style.width = (f*100).toFixed(1)+'%';
+  var t = Math.round(f*100)+'%';
+  if (t !== lastPctText){ lastPctText = t; pct.textContent = t; }
+  if (loaded >= totalFrames) unlock();
+}
+
+function unlock(){
+  if (settled) return;
+  settled = true;
+  fill.style.width = '100%';
+  pct.textContent = '100%';
+  setTimeout(function(){
+    loaderEl.classList.add('done');
+    document.body.classList.remove('locked');
+    chapters.forEach(function(ch){ ch.paint(true); });
+    drive();
+  }, 420);
+}
+
+/* A concurrency-limited queue: 450 simultaneous requests stall the browser's
+   own connection pool, and the progress bar then lies about what is ready. */
+var queue = [], active = 0, MAX_PARALLEL = 10;
+
+function pump(){
+  while (active < MAX_PARALLEL && queue.length){
+    var job = queue.shift();
+    active++;
+    (function(job){
+      var img = new Image();
+      img.decoding = 'async';
+      img.onload = img.onerror = function(){
+        active--;
+        bumpLoader();
+        // the hero can paint the moment its own frames land
+        if (job.name === 'drop') byName.drop.paint(true);
+        pump();
+      };
+      img.src = job.src;
+      store[job.name][job.idx] = img;
+    })(job);
+  }
+}
+
+function loadSequence(name){
+  var cfg = SEQ[name];
+  store[name] = new Array(cfg.count);
+  for (var i=0;i<cfg.count;i++){
+    queue.push({ name:name, idx:i, src: cfg.dir + '/frame_' + pad4(i+1) + '.jpg' });
+  }
+}
+
+/* ============================================================
+   Chapter: a pinned canvas scrub
+   ============================================================ */
+function Chapter(section){
+  this.section = section;
+  this.name = section.getAttribute('data-seq');
+  this.canvas = section.querySelector('[data-canvas]');
+  this.ctx = this.canvas.getContext('2d', { alpha:false });
+  this.count = SEQ[this.name].count;
+  this.target = 0;
+  this.shown = 0;
+  this.lastIndex = -1;
+  this.onScreen = false;
+  this.bands = [].slice.call(section.querySelectorAll('.band')).map(mkBand);
+  this.callouts = [].slice.call(section.querySelectorAll('.callout')).map(mkBand);
+  this.resize();
+}
+
+function mkBand(el){
+  var r = (el.getAttribute('data-range')||'0,1').split(',').map(Number);
+  return {
+    el: el,
+    a: r[0], b: r[1],
+    ramp: parseFloat(el.getAttribute('data-ramp')) || 0,
+    op: -1, k: -1
+  };
+}
+
+Chapter.prototype.resize = function(){
+  var dpr = Math.min(window.devicePixelRatio||1, 2);
+  var w = this.canvas.clientWidth || window.innerWidth;
+  var h = this.canvas.clientHeight || window.innerHeight;
+  this.canvas.width  = Math.round(w*dpr);
+  this.canvas.height = Math.round(h*dpr);
+  this.lastIndex = -1;
+};
+
+Chapter.prototype.progress = function(){
+  var rect = this.section.getBoundingClientRect();
+  var span = this.section.offsetHeight - window.innerHeight;
+  if (span <= 0) return 0;
+  return clamp(-rect.top/span, 0, 1);
+};
+
+Chapter.prototype.paint = function(force){
+  var arr = store[this.name];
+  if (!arr) return;
+  var idx = clamp(Math.round(this.shown*(this.count-1)), 0, this.count-1);
+  if (idx === this.lastIndex && !force) return;   // repaint only on frame change
+  var img = arr[idx];
+  if (!img || !img.complete || !img.naturalWidth){
+    // fall back to the nearest decoded neighbour so the canvas is never blank
+    var j = idx;
+    while (j > 0 && (!arr[j] || !arr[j].complete || !arr[j].naturalWidth)) j--;
+    img = arr[j];
+    if (!img || !img.naturalWidth) return;
+  }
+  this.lastIndex = idx;
+  var cw = this.canvas.width, chh = this.canvas.height;
+  var s = Math.max(cw/img.naturalWidth, chh/img.naturalHeight);
+  var dw = img.naturalWidth*s, dh = img.naturalHeight*s;
+  this.ctx.drawImage(img, (cw-dw)/2, (chh-dh)/2, dw, dh);
+};
+
+Chapter.prototype.updateText = function(p){
+  var i, band, f, op, k;
+  for (i=0;i<this.bands.length;i++){
+    band = this.bands[i];
+    f = Math.min(0.02, (band.b-band.a)/3);
+    // first band opens already settled; last band never fades out
+    var fadeIn  = (i === 0) ? 1 : smoothstep(p, band.a, band.a+f);
+    var fadeOut = (band.b >= 0.999) ? 1 : (1 - smoothstep(p, band.b-f, band.b));
+    op = fadeIn * fadeOut;
+    k = clamp((p-band.a)/(band.ramp || Math.min(0.025,(band.b-band.a)*0.35)), 0, 1);
+    if (Math.abs(op-band.op) > 0.004){ band.op = op; band.el.style.opacity = op.toFixed(3); }
+    if (Math.abs(k-band.k) > 0.008){ band.k = k; band.el.style.setProperty('--k', k.toFixed(3)); }
+  }
+  for (i=0;i<this.callouts.length;i++){
+    band = this.callouts[i];
+    f = Math.min(0.03, (band.b-band.a)/3);
+    op = smoothstep(p, band.a, band.a+f) * (band.b >= 0.999 ? 1 : (1 - smoothstep(p, band.b-f, band.b)));
+    k = clamp((p-band.a)/0.05, 0, 1);
+    if (Math.abs(op-band.op) > 0.004){ band.op = op; band.el.style.opacity = op.toFixed(3); }
+    if (Math.abs(k-band.k) > 0.008){ band.k = k; band.el.style.setProperty('--k', k.toFixed(3)); }
+  }
+};
+
+var chapters = [].slice.call(document.querySelectorAll('.chapter')).map(function(s){ return new Chapter(s); });
+var byName = {}; chapters.forEach(function(c){ byName[c.name] = c; });
+
+/* ============================================================
+   Depth gauge (built once, updated at ~10Hz and only on change)
+   ============================================================ */
+var gauge = document.createElement('div');
+gauge.className = 'gauge';
+gauge.setAttribute('aria-hidden','true');
+gauge.innerHTML =
+  '<div class="gauge-read"><span class="gauge-num" id="g-num">0</span>' +
+  '<span class="gauge-unit">Meters</span></div>' +
+  '<div class="gauge-rail" id="g-rail"><span class="head" id="g-head" style="top:0%"></span></div>';
+document.body.appendChild(gauge);
+(function(){
+  var rail = gauge.querySelector('#g-rail');
+  for (var i=0;i<=20;i++){
+    var t = document.createElement('span');
+    t.className = 'tick' + (i%5===0 ? ' major' : '');
+    t.style.top = (i*5)+'%';
+    rail.appendChild(t);
+  }
+})();
+var gNum = gauge.querySelector('#g-num');
+var gHead = gauge.querySelector('#g-head');
+var lastDepthText = '', lastDepthAt = 0;
+
+function updateGauge(p, now){
+  if (now - lastDepthAt < 100) return;      // ~10Hz
+  lastDepthAt = now;
+  var d = Math.round(depthAt(p)/5)*5;
+  var txt = d.toLocaleString('en-US');
+  if (txt !== lastDepthText){
+    lastDepthText = txt;
+    gNum.textContent = txt;
+    gHead.style.top = (p*100).toFixed(1)+'%';
+  }
+}
+
+/* ============================================================
+   The drive loop: lerp toward target, rest when converged
+   ============================================================ */
+var rafId = null, lastTick = 0;
+var lastBgKey = '';
+
+function applyBackground(descentP, inDescentOrBelow){
+  var rgb;
+  if (inDescentOrBelow === 'before') rgb = SUNLIT;
+  else if (inDescentOrBelow === 'after') rgb = MIDNIGHT;
+  else rgb = depthColor(descentP);
+  var key = rgb.join(',');
+  if (key === lastBgKey) return;
+  lastBgKey = key;
+  document.documentElement.style.setProperty('--page-bg','rgb('+key+')');
+  document.body.style.backgroundColor = 'rgb('+key+')';
+}
+
+function tick(now){
+  var dt = Math.min(100, now - (lastTick || now));
+  lastTick = now;
+  var k = 0.16;
+  var factor = 1 - Math.pow(1-k, dt/16.667);
+  var moving = false;
+
+  for (var i=0;i<chapters.length;i++){
+    var ch = chapters[i];
+    if (!ch.onScreen) continue;
+    ch.target = ch.progress();
+    ch.shown += (ch.target - ch.shown)*factor;
+    if (Math.abs(ch.target - ch.shown) < 0.0004) ch.shown = ch.target;
+    else moving = true;
+    ch.paint(false);
+    ch.updateText(ch.shown);
+  }
+
+  // page background + gauge follow the descent chapter
+  var d = byName.descent;
+  var dRect = d.section.getBoundingClientRect();
+  if (dRect.top > 0) applyBackground(0,'before');
+  else if (dRect.bottom < window.innerHeight) applyBackground(1,'after');
+  else applyBackground(d.shown, 'in');
+
+  var gaugeOn = d.onScreen && dRect.top <= 4 && dRect.bottom > window.innerHeight - 4;
+  if (gaugeOn !== gauge.classList.contains('on')) gauge.classList.toggle('on', gaugeOn);
+  if (gaugeOn) updateGauge(d.shown, now);
+
+  if (moving){ rafId = requestAnimationFrame(tick); }
+  else { rafId = null; lastTick = 0; }
+}
+
+function drive(){
+  if (!scrubOn) return;                 // static mode never runs the scrub loop
+  if (rafId === null) rafId = requestAnimationFrame(tick);
+}
+
+function onScroll(){ drive(); }
+
+/* IntersectionObserver so off-screen chapters cost nothing */
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    var ch = chapters.filter(function(c){ return c.section === e.target; })[0];
+    if (ch){ ch.onScreen = e.isIntersecting; if (e.isIntersecting) drive(); }
+  });
+}, { rootMargin:'10% 0px' });
+chapters.forEach(function(c){ io.observe(c.section); });
+
+/* ============================================================
+   Static mode: looping MP4 + static deep blue, armed live
+   ============================================================ */
+var scrubOn = false;
+
+function enableScrub(){
+  if (scrubOn) return;
+  scrubOn = true;
+  document.querySelectorAll('.loopvid').forEach(function(v){
+    v.pause(); v.removeAttribute('src'); v.load();
+  });
+  chapters.forEach(function(c){
+    c.resize(); c.lastIndex = -1;
+    c.bands.concat(c.callouts).forEach(function(b){ b.op = -1; b.k = -1; });
+    c.updateText(c.progress());
+  });
+  addEventListener('scroll', onScroll, { passive:true });
+  drive();
+}
+
+function disableScrub(){
+  scrubOn = false;
+  removeEventListener('scroll', onScroll);
+  if (rafId !== null){ cancelAnimationFrame(rafId); rafId = null; }
+  document.querySelectorAll('.loopvid').forEach(function(v){
+    var name = v.getAttribute('data-loop');
+    if (!v.getAttribute('src')){
+      v.setAttribute('src', SEQ[name].loop);
+      v.load();
+    }
+    var pr = v.play();
+    if (pr && pr.catch) pr.catch(function(){});
+  });
+  // Undo every scroll-driven inline style so the bands and callouts sit in
+  // their finished state instead of wherever the scrub last left them.
+  chapters.forEach(function(c){
+    c.bands.concat(c.callouts).forEach(function(b){
+      b.el.style.removeProperty('opacity');
+      b.el.style.removeProperty('--k');
+      b.op = -1; b.k = -1;
+    });
+  });
+  // static deep blue behind the looping film
+  lastBgKey = 'static';
+  document.documentElement.style.setProperty('--page-bg','#071B30');
+  document.body.style.backgroundColor = '#071B30';
+  gauge.classList.remove('on');
+}
+
+var loadStarted = false;
+
+function applyHeroMode(){
+  if (staticMode()){
+    disableScrub();
+    if (!settled) unlock();
+  } else {
+    if (!loadStarted){
+      loadStarted = true;
+      ORDER.forEach(function(n){ loadSequence(n); });
+      pump();
+    }
+    enableScrub();
+  }
+}
+MQLS.forEach(function(m){
+  if (m.addEventListener) m.addEventListener('change', applyHeroMode);
+  else if (m.addListener) m.addListener(applyHeroMode);
+});
+
+var resizeT;
+addEventListener('resize', function(){
+  clearTimeout(resizeT);
+  resizeT = setTimeout(function(){
+    chapters.forEach(function(c){ c.resize(); c.paint(true); });
+    drive();
+  }, 140);
+}, { passive:true });
+
+/* Safety: never leave a visitor staring at the loader. */
+setTimeout(function(){ if (!settled) unlock(); }, 25000);
+
+applyHeroMode();
+
+/* ============================================================
+   Lenis smooth scroll (progressive: the page works without it)
+   ============================================================ */
+if (window.Lenis && !staticMode()){
+  var lenis = new Lenis({ lerp:0.11, wheelMultiplier:1, smoothWheel:true });
+  lenis.on('scroll', onScroll);
+  (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0);
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      var el = id.length > 1 ? document.querySelector(id) : null;
+      if (el){ e.preventDefault(); lenis.scrollTo(el, { offset:0 }); }
+    });
+  });
+}
+
+/* ============================================================
+   Nav solidity
+   ============================================================ */
+var nav = document.getElementById('nav');
+var navSolid = false;
+addEventListener('scroll', function(){
+  var s = scrollY > window.innerHeight*0.6;
+  if (s !== navSolid){ navSolid = s; nav.classList.toggle('solid', s); }
+}, { passive:true });
+
+/* ============================================================
+   Section entrances
+   ============================================================ */
+var revealIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    setTimeout(function(){ e.target.classList.add('done'); }, 1400);
+    revealIO.unobserve(e.target);
+  });
+}, { threshold:0.16 });
+document.querySelectorAll('.sect').forEach(function(s){ revealIO.observe(s); });
+
+/* Build the dial markers once */
+(function(){
+  var dial = document.getElementById('dial');
+  for (var i=1;i<12;i++){
+    var m = document.createElement('span');
+    m.className = 'mk';
+    m.setAttribute('aria-hidden','true');
+    m.style.transform = 'translateX(-50%) rotate(' + (i*30) + 'deg)';
+    dial.appendChild(m);
+  }
+})();
+
+/* ============================================================
+   The one interactive moment: charge the lume
+   ============================================================ */
+(function(){
+  var dial = document.getElementById('dial');
+  var read = document.getElementById('charge-read');
+  var charge = 0, holding = false, cRaf = null, lastC = 0, lastRead = '';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+  function loop(now){
+    var dt = Math.min(64, now - (lastC||now)); lastC = now;
+    if (holding) charge = Math.min(1, charge + dt/1100);
+    else charge = Math.max(0, charge - dt/2600);
+    dial.style.setProperty('--charge', charge.toFixed(3));
+    var t = Math.round(charge*100)+'%';
+    if (t !== lastRead){ lastRead = t; read.textContent = t; }
+    if ((holding && charge < 1) || (!holding && charge > 0)) cRaf = requestAnimationFrame(loop);
+    else { cRaf = null; lastC = 0; }
+  }
+  function start(e){
+    if (e && e.cancelable) e.preventDefault();
+    if (reduce.matches){ charge = 1; dial.style.setProperty('--charge',1); read.textContent='100%'; return; }
+    holding = true; if (cRaf === null) cRaf = requestAnimationFrame(loop);
+  }
+  function stop(){ holding = false; if (cRaf === null) cRaf = requestAnimationFrame(loop); }
+
+  dial.addEventListener('pointerdown', start);
+  addEventListener('pointerup', stop);
+  addEventListener('pointercancel', stop);
+  dial.addEventListener('keydown', function(e){
+    if (e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); start(); }
+  });
+  dial.addEventListener('keyup', function(e){
+    if (e.key === ' ' || e.key === 'Enter'){ stop(); }
+  });
+  if (reduce.matches){ dial.style.setProperty('--charge',1); read.textContent='100%'; }
+})();
+
+/* ============================================================
+   Reserve form (no backend: honest success state)
+   ============================================================ */
+document.getElementById('reserve-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var input = document.getElementById('email');
+  if (!input.value || input.value.indexOf('@') < 1){
+    input.focus();
+    input.style.borderColor = '#ff8a7a';
+    return;
+  }
+  input.style.borderColor = '';
+  document.getElementById('form-ok').classList.add('on');
+  this.reset();
+});
+
+/* Pause every animation on a hidden tab */
+document.addEventListener('visibilitychange', function(){
+  document.body.classList.toggle('paused', document.hidden);
+});
+
+})();
+</script>
+</body>
+</html>
