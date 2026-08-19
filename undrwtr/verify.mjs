@@ -14,6 +14,38 @@
  * Exits non-zero on any failure, so CI goes red instead of shipping a broken page.
  */
 import { chromium } from 'playwright';
+import { createServer } from 'node:http';
+import { readFile } from 'node:fs/promises';
+import { extname, join, normalize } from 'node:path';
+
+/* Serve the site from inside this process. An external python server wedged
+   after roughly 900 requests and the later browser contexts could not load at
+   all, which cost two nine-minute stalls. */
+const ROOT = process.env.SITE_ROOT || '_site';
+const TYPES = {
+  '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
+  '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
+  '.mp4': 'video/mp4', '.json': 'application/json', '.svg': 'image/svg+xml'
+};
+
+function startServer(port) {
+  const server = createServer(async (req, res) => {
+    try {
+      let p = decodeURIComponent((req.url || '/').split('?')[0]);
+      if (p.endsWith('/')) p += 'index.html';
+      const file = join(ROOT, normalize(p).replace(/^(\.\.[/\\])+/, ''));
+      const buf = await readFile(file);
+      res.writeHead(200, {
+        'Content-Type': TYPES[extname(file).toLowerCase()] || 'application/octet-stream',
+        'Content-Length': buf.length
+      });
+      res.end(buf);
+    } catch {
+      res.writeHead(404); res.end('not found');
+    }
+  });
+  return new Promise((resolve) => server.listen(port, '127.0.0.1', () => resolve(server)));
+}
 
 const BASE = process.env.BASE_URL || 'http://127.0.0.1:8080';
 const results = [];
@@ -76,6 +108,8 @@ async function scrollTo(page, y) {
 }
 
 async function run() {
+  mark('starting the static server');
+  const server = await startServer(8080);
   mark('launching chromium');
   const browser = await chromium.launch();
 
@@ -276,6 +310,7 @@ async function run() {
 
   mark('closing chromium');
   await browser.close();
+  server.close();
 
   clearTimeout(watchdog);
   summarize();

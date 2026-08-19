@@ -118,15 +118,6 @@ jobs:
           npm init -y >/dev/null 2>&1
           npm i --no-audit --no-fund playwright@1.49.1 >/dev/null
           npx playwright install --with-deps chromium >/dev/null
-          # Threaded, not python3 -m http.server: that one is single threaded, and
-          # 900 files against 14 concurrent connections serialises into minutes.
-          python3 -c "
-          from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
-          import functools
-          h = functools.partial(SimpleHTTPRequestHandler, directory='_site')
-          ThreadingHTTPServer(('127.0.0.1', 8080), h).serve_forever()
-          " >/tmp/serve.log 2>&1 &
-          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8080/ >/dev/null && break; sleep 1; done
           node undrwtr/verify.mjs | tee /tmp/verify.log
         env:
           BASE_URL: http://127.0.0.1:8080
