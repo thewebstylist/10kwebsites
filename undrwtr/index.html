@@ -845,12 +845,21 @@ function unlock(){
     document.body.classList.remove('locked');
     chapters.forEach(function(ch){ ch.paint(true); });
     drive();
+    if (scrubOn) startUpgrade();   // the page is usable; now fetch the sharp frames
   }, 420);
 }
 
-/* A concurrency-limited queue: 450 simultaneous requests stall the browser's
-   own connection pool, and the progress bar then lies about what is ready. */
+/* Two tiers.
+   The loader only ever waits on the PROXY tier (720px), which is a few MB, so
+   the journey opens in seconds. The full 1600px tier then streams in behind the
+   unlocked page and each frame swaps itself in as it lands. The visitor gets a
+   soft-but-complete descent immediately that sharpens while they read.
+
+   A concurrency-limited queue either way: 450 simultaneous requests stall the
+   browser's own connection pool, and the progress bar then lies about what is ready. */
 var queue = [], active = 0, MAX_PARALLEL = 10;
+var upQueue = [], upActive = 0, MAX_UPGRADE = 4;
+var upgraded = 0, upgradeStopped = false;
 
 function pump(){
   while (active < MAX_PARALLEL && queue.length){
@@ -876,9 +885,54 @@ function loadSequence(name){
   var cfg = SEQ[name];
   store[name] = new Array(cfg.count);
   for (var i=0;i<cfg.count;i++){
-    queue.push({ name:name, idx:i, src: cfg.dir + '/frame_' + pad4(i+1) + '.jpg' });
+    queue.push({ name:name, idx:i, src: cfg.dir + '/proxy/frame_' + pad4(i+1) + '.jpg' });
   }
 }
+
+/* The upgrade pass, started only once the page is already usable. */
+function startUpgrade(){
+  if (upgradeStopped || upQueue.length) return;
+  ORDER.forEach(function(name){
+    var cfg = SEQ[name];
+    for (var i=0;i<cfg.count;i++){
+      upQueue.push({ name:name, idx:i, src: cfg.dir + '/frame_' + pad4(i+1) + '.jpg' });
+    }
+  });
+  upPump();
+}
+
+function upPump(){
+  if (upgradeStopped) return;
+  while (upActive < MAX_UPGRADE && upQueue.length){
+    var job = upQueue.shift();
+    upActive++;
+    (function(job){
+      var img = new Image();
+      img.decoding = 'async';
+      if ('fetchPriority' in img) img.fetchPriority = 'low';  // yields to anything the visitor needs
+      img.onload = function(){
+        upActive--; upgraded++;
+        store[job.name][job.idx] = img;
+        var ch = byName[job.name];
+        // if the visitor is sitting on this exact frame, sharpen it under them
+        if (ch && ch.lastIndex === job.idx) ch.paint(true);
+        upPump();
+      };
+      img.onerror = function(){ upActive--; upPump(); };
+      img.src = job.src;
+    })(job);
+  }
+}
+
+/* A seam for the CI browser test, and a handy console readout. */
+window.__undrwtr = {
+  upgraded: function(){ return upgraded; },
+  total: function(){ return totalFrames; },
+  frameWidth: function(name, idx){
+    var a = store[name];
+    return (a && a[idx] && a[idx].naturalWidth) || 0;
+  }
+};
 
 /* ============================================================
    Chapter: a pinned canvas scrub
@@ -1093,10 +1147,13 @@ function enableScrub(){
   });
   addEventListener('scroll', onScroll, { passive:true });
   drive();
+  if (settled){ upgradeStopped = false; startUpgrade(); }   // re-arm after a flip back from static
 }
 
 function disableScrub(){
   scrubOn = false;
+  upgradeStopped = true;            // a phone or reduced-motion visitor never needs the sharp tier
+  upQueue.length = 0;
   removeEventListener('scroll', onScroll);
   if (rafId !== null){ cancelAnimationFrame(rafId); rafId = null; }
   document.querySelectorAll('.loopvid').forEach(function(v){

@@ -45,21 +45,29 @@ jobs:
               -show_entries stream=width,height,nb_frames -of csv=p=0 "raw/$f.mp4"
           done
 
-      - name: Cut 150 frames per chapter
+      - name: Cut 150 frames per chapter, both tiers
         run: |
           set -euo pipefail
           mkdir -p _site/frames _site/assets
           for f in drop descent lume; do
-            mkdir -p "_site/frames/$f"
+            mkdir -p "_site/frames/$f/proxy"
+            # full tier: the brief's spec, 1600px q3
             ffmpeg -v error -i "raw/$f.mp4" \
               -vf "fps=150/10.041667,scale=1600:-2" -vsync 0 \
               -frames:v 150 -q:v 3 "_site/frames/$f/frame_%04d.jpg"
-            n=$(ls "_site/frames/$f" | wc -l)
-            echo "$f -> $n frames, $(du -sh _site/frames/$f | cut -f1)"
-            if [ "$n" -ne 150 ]; then echo "::error::$f produced $n frames, expected 150"; exit 1; fi
-            test -f "_site/frames/$f/frame_0001.jpg" || { echo "::error::$f missing frame_0001.jpg"; exit 1; }
+            # proxy tier: what the loader actually waits on
+            ffmpeg -v error -i "raw/$f.mp4" \
+              -vf "fps=150/10.041667,scale=720:-2" -vsync 0 \
+              -frames:v 150 -q:v 7 "_site/frames/$f/proxy/frame_%04d.jpg"
+            n=$(find "_site/frames/$f" -maxdepth 1 -name 'frame_*.jpg' | wc -l)
+            m=$(ls "_site/frames/$f/proxy" | wc -l)
+            echo "$f -> full $n ($(du -sh --exclude=proxy _site/frames/$f | cut -f1)), proxy $m ($(du -sh _site/frames/$f/proxy | cut -f1))"
+            if [ "$n" -ne 150 ]; then echo "::error::$f full tier produced $n frames, expected 150"; exit 1; fi
+            if [ "$m" -ne 150 ]; then echo "::error::$f proxy tier produced $m frames, expected 150"; exit 1; fi
             test -f "_site/frames/$f/frame_0150.jpg" || { echo "::error::$f missing frame_0150.jpg"; exit 1; }
+            test -f "_site/frames/$f/proxy/frame_0150.jpg" || { echo "::error::$f missing proxy frame_0150.jpg"; exit 1; }
           done
+          echo "proxy tier total: $(du -shc _site/frames/*/proxy | tail -1 | cut -f1)"
 
       - name: Build the mobile loop videos and posters
         run: |

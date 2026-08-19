@@ -15,6 +15,19 @@ Not Three.js. A **canvas image-sequence scrub**: each clip is split into 150 JPE
 - Scroll → target progress → lerped `shown` → frame index → canvas paint
 - Repaint happens **only when the frame index changes**; the rAF loop rests when converged and when the chapter is off-screen
 
+### Two tiers, so the loader is not a toll booth
+
+The full tier at the briefed spec is 30 MB, which is a real wait before anything moves. So the frames ship twice:
+
+| Tier | Size | Role |
+|---|---|---|
+| Proxy, 720 px q7 | ~4 MB total | What the loader actually counts. Unlocks in seconds. |
+| Full, 1600 px q3 | ~30 MB total | Streams in behind the unlocked page at low fetch priority. |
+
+The loader only ever waits on the proxy tier. Once it unlocks, the upgrade pass starts: four requests in flight, `fetchPriority: 'low'` so it yields to anything the visitor needs, and each frame swaps itself into the store as it lands. If the visitor happens to be sitting on the exact frame that just arrived, it repaints under them and sharpens. Scroll anywhere during the upgrade and the journey is already complete, just soft.
+
+Phones and reduced-motion visitors never start the upgrade at all, and it is cancelled if the gate flips mid-session.
+
 ---
 
 ## Assets generated (Higgsfield)

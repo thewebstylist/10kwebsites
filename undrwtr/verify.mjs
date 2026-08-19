@@ -65,16 +65,25 @@ async function run() {
   page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text()); });
   page.on('pageerror', (e) => consoleErrors.push('pageerror: ' + e.message));
 
-  const frameReqs = [];
-  page.on('request', (r) => { if (/\/frames\//.test(r.url())) frameReqs.push(r.url()); });
+  const proxyReqs = [], fullReqs = [];
+  page.on('request', (r) => {
+    const u = r.url();
+    if (!/\/frames\//.test(u)) return;
+    if (/\/proxy\//.test(u)) proxyReqs.push(u); else fullReqs.push(u);
+  });
 
+  const t0 = Date.now();
   await page.goto(BASE, { waitUntil: 'domcontentloaded' });
 
-  // 1. loader reaches 100% and unlocks
+  // 1. loader reaches 100% and unlocks, on the proxy tier alone
   await page.waitForSelector('#loader.done', { timeout: 180000 });
+  const unlockMs = Date.now() - t0;
+  const fullAtUnlock = fullReqs.length;
   const pctText = await page.$eval('#ld-pct', (e) => e.textContent.trim());
   check('loader reaches 100% and unlocks', pctText === '100%', `readout was "${pctText}"`);
-  check('all 450 frames were requested', frameReqs.length === 450, `${frameReqs.length} frame requests`);
+  check('all 450 proxy frames were requested', proxyReqs.length === 450, `${proxyReqs.length} proxy requests`);
+  check('loader does not wait on the full tier', fullAtUnlock === 0,
+    `${fullAtUnlock} full-tier requests before unlock, unlocked in ${unlockMs}ms`);
 
   const heights = await page.evaluate(() => ({
     hero: document.querySelector('#hero').offsetHeight,
@@ -159,6 +168,24 @@ async function run() {
   await settle(page, 400);
   const okVisible = await page.$eval('#form-ok', (e) => e.classList.contains('on'));
   check('reserve form shows its success state', okVisible);
+
+  // the background upgrade actually happens and actually replaces frames
+  await page.waitForFunction(() => window.__undrwtr && window.__undrwtr.upgraded() > 0,
+    null, { timeout: 120000 });
+  await page.waitForFunction(() => window.__undrwtr.upgraded() >= window.__undrwtr.total(),
+    null, { timeout: 240000 }).catch(() => {});
+  const up = await page.evaluate(() => ({
+    upgraded: window.__undrwtr.upgraded(),
+    total: window.__undrwtr.total(),
+    w0: window.__undrwtr.frameWidth('descent', 0),
+    w149: window.__undrwtr.frameWidth('lume', 149)
+  }));
+  check('full tier upgrades in the background', up.upgraded === up.total,
+    `${up.upgraded}/${up.total} frames upgraded`);
+  check('upgraded frames really are the 1600px tier', up.w0 === 1600 && up.w149 === 1600,
+    `descent[0] ${up.w0}px, lume[149] ${up.w149}px`);
+  check('full tier was fetched after unlock, not before', fullReqs.length > 0 && fullAtUnlock === 0,
+    `${fullReqs.length} full-tier requests total`);
 
   // 6. no console errors
   check('no console errors', consoleErrors.length === 0, consoleErrors.slice(0, 4).join(' | '));
