@@ -82,8 +82,13 @@ async function run() {
   const pctText = await page.$eval('#ld-pct', (e) => e.textContent.trim());
   check('loader reaches 100% and unlocks', pctText === '100%', `readout was "${pctText}"`);
   check('all 450 proxy frames were requested', proxyReqs.length === 450, `${proxyReqs.length} proxy requests`);
-  check('loader does not wait on the full tier', fullAtUnlock === 0,
-    `${fullAtUnlock} full-tier requests before unlock, unlocked in ${unlockMs}ms`);
+  // Ordering is asserted from marks recorded inside the page: waitForSelector
+  // resolves in Node a few hundred ms after the class actually lands, and on
+  // localhost the upgrade queue fires plenty of requests inside that window.
+  const m = await page.evaluate(() => window.__undrwtr.marks());
+  check('loader does not wait on the full tier',
+    m.loaderDone > 0 && m.upgradeStart >= m.loaderDone,
+    `loader done at ${m.loaderDone.toFixed(0)}ms, upgrade began at ${m.upgradeStart.toFixed(0)}ms, unlocked in ${unlockMs}ms`);
 
   const heights = await page.evaluate(() => ({
     hero: document.querySelector('#hero').offsetHeight,
@@ -184,8 +189,10 @@ async function run() {
     `${up.upgraded}/${up.total} frames upgraded`);
   check('upgraded frames really are the 1600px tier', up.w0 === 1600 && up.w149 === 1600,
     `descent[0] ${up.w0}px, lume[149] ${up.w149}px`);
-  check('full tier was fetched after unlock, not before', fullReqs.length > 0 && fullAtUnlock === 0,
-    `${fullReqs.length} full-tier requests total`);
+  const m2 = await page.evaluate(() => window.__undrwtr.marks());
+  check('full tier was fetched after unlock, not before',
+    fullReqs.length > 0 && m2.upgradeStart >= m2.loaderDone,
+    `${fullReqs.length} full-tier requests total, all after the ${m2.loaderDone.toFixed(0)}ms unlock`);
 
   // 6. no console errors
   check('no console errors', consoleErrors.length === 0, consoleErrors.slice(0, 4).join(' | '));

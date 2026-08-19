@@ -842,6 +842,7 @@ function unlock(){
   pct.textContent = '100%';
   setTimeout(function(){
     loaderEl.classList.add('done');
+    marks.loaderDone = performance.now();
     document.body.classList.remove('locked');
     chapters.forEach(function(ch){ ch.paint(true); });
     drive();
@@ -860,6 +861,7 @@ function unlock(){
 var queue = [], active = 0, MAX_PARALLEL = 10;
 var upQueue = [], upActive = 0, MAX_UPGRADE = 4;
 var upgraded = 0, upgradeStopped = false;
+var marks = { loaderDone: 0, upgradeStart: 0 };
 
 function pump(){
   while (active < MAX_PARALLEL && queue.length){
@@ -892,6 +894,7 @@ function loadSequence(name){
 /* The upgrade pass, started only once the page is already usable. */
 function startUpgrade(){
   if (upgradeStopped || upQueue.length) return;
+  if (!marks.upgradeStart) marks.upgradeStart = performance.now();
   ORDER.forEach(function(name){
     var cfg = SEQ[name];
     for (var i=0;i<cfg.count;i++){
@@ -931,7 +934,8 @@ window.__undrwtr = {
   frameWidth: function(name, idx){
     var a = store[name];
     return (a && a[idx] && a[idx].naturalWidth) || 0;
-  }
+  },
+  marks: function(){ return { loaderDone: marks.loaderDone, upgradeStart: marks.upgradeStart }; }
 };
 
 /* ============================================================
