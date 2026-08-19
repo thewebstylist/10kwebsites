@@ -19,6 +19,27 @@ const BASE = process.env.BASE_URL || 'http://127.0.0.1:8080';
 const results = [];
 let failed = 0;
 
+// Stage markers, so a stall names itself in the log instead of being guessed at.
+let stage = 'boot';
+const mark = (s) => { stage = s; console.log(`-- ${s}`); };
+
+function summarize() {
+  console.log('\n' + '='.repeat(60));
+  console.log(`${results.length - failed}/${results.length} checks passed`);
+  if (failed) {
+    console.log('\nFailures:');
+    results.filter((r) => !r.ok).forEach((r) => console.log(`  - ${r.name}: ${r.detail || ''}`));
+  }
+}
+
+// A browser test must never sit silent: report what we have and fail loudly.
+const HARD_MS = 330000;
+const watchdog = setTimeout(() => {
+  console.error(`\nverify: hard timeout after ${HARD_MS / 1000}s, stuck at stage "${stage}"`);
+  summarize();
+  process.exit(1);
+}, HARD_MS);
+
 function check(name, ok, detail) {
   results.push({ name, ok, detail });
   if (!ok) failed++;
@@ -55,6 +76,7 @@ async function scrollTo(page, y) {
 }
 
 async function run() {
+  mark('launching chromium');
   const browser = await chromium.launch();
 
   // ---------- Desktop: the full scrub ----------
@@ -73,6 +95,7 @@ async function run() {
   });
 
   const t0 = Date.now();
+  mark('loading the page');
   await page.goto(BASE, { waitUntil: 'domcontentloaded' });
 
   // 1. loader reaches 100% and unlocks, on the proxy tier alone
@@ -90,6 +113,7 @@ async function run() {
     m.loaderDone > 0 && m.upgradeStart >= m.loaderDone,
     `loader done at ${m.loaderDone.toFixed(0)}ms, upgrade began at ${m.upgradeStart.toFixed(0)}ms, unlocked in ${unlockMs}ms`);
 
+  mark('sampling the descent');
   const heights = await page.evaluate(() => ({
     hero: document.querySelector('#hero').offsetHeight,
     descent: document.querySelector('#descent').offsetHeight,
@@ -179,6 +203,7 @@ async function run() {
   // network, and waiting for it once dragged this step past fifteen minutes. A
   // healthy sample proves the mechanism; the ordering marks below prove the
   // timing, which is the part that actually matters to a visitor.
+  mark('waiting on the background upgrade');
   const SAMPLE = 40;
   await page.waitForFunction(
     (n) => window.__undrwtr && window.__undrwtr.upgraded() >= n,
@@ -200,9 +225,14 @@ async function run() {
   // 6. no console errors
   check('no console errors', consoleErrors.length === 0, consoleErrors.slice(0, 4).join(' | '));
 
+  // Cancel the in-flight upgrade before closing, so the context is not waiting
+  // on hundreds of low-priority image requests it no longer needs.
+  mark('closing the desktop context');
+  await page.goto('about:blank').catch(() => {});
   await ctx.close();
 
   // ---------- Phone: the static gate ----------
+  mark('phone gate');
   const mctx = await browser.newContext({
     viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true
   });
@@ -225,9 +255,11 @@ async function run() {
     document.documentElement.scrollWidth <= window.innerWidth + 1);
   check('phone: no sideways scroll', noHScroll);
   check('phone: no page errors', mErrors.length === 0, mErrors.slice(0, 3).join(' | '));
+  await mp.goto('about:blank').catch(() => {});
   await mctx.close();
 
   // ---------- Reduced motion ----------
+  mark('reduced motion');
   const rctx = await browser.newContext({
     viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce'
   });
@@ -239,16 +271,14 @@ async function run() {
   check('reduced motion: requests zero frames', rFrames.length === 0, `${rFrames.length} frame requests`);
   const rLoader = await rp.$eval('#loader', (e) => e.classList.contains('done'));
   check('reduced motion: loader unlocks', rLoader);
+  await rp.goto('about:blank').catch(() => {});
   await rctx.close();
 
+  mark('closing chromium');
   await browser.close();
 
-  console.log('\n' + '='.repeat(60));
-  console.log(`${results.length - failed}/${results.length} checks passed`);
-  if (failed) {
-    console.log('\nFailures:');
-    results.filter((r) => !r.ok).forEach((r) => console.log(`  - ${r.name}: ${r.detail || ''}`));
-  }
+  clearTimeout(watchdog);
+  summarize();
   process.exit(failed ? 1 : 0);
 }
 
