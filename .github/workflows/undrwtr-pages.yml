@@ -26,11 +26,23 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
       - name: Install ffmpeg
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+        timeout-minutes: 6
+        run: |
+          set -euo pipefail
+          # ubuntu-latest normally ships ffmpeg; only reach for apt when it does not,
+          # because a slow mirror on one runner hung this step for over ten minutes.
+          if command -v ffmpeg >/dev/null 2>&1; then
+            echo "ffmpeg already present on the runner"
+          else
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          ffmpeg -version | head -1
 
       - name: Fetch the approved clips
         run: |
