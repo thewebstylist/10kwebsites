@@ -71,11 +71,11 @@ jobs:
             mkdir -p "_site/frames/$f/proxy"
             # full tier: the brief's spec, 1600px q3
             ffmpeg -v error -i "raw/$f.mp4" \
-              -vf "fps=150/10.041667,scale=1600:-2" -vsync 0 \
+              -vf "fps=150/10.041667,scale=1600:-2" \
               -frames:v 150 -q:v 3 "_site/frames/$f/frame_%04d.jpg"
             # proxy tier: what the loader actually waits on
             ffmpeg -v error -i "raw/$f.mp4" \
-              -vf "fps=150/10.041667,scale=720:-2" -vsync 0 \
+              -vf "fps=150/10.041667,scale=720:-2" \
               -frames:v 150 -q:v 7 "_site/frames/$f/proxy/frame_%04d.jpg"
             n=$(find "_site/frames/$f" -maxdepth 1 -name 'frame_*.jpg' | wc -l)
             m=$(ls "_site/frames/$f/proxy" | wc -l)
