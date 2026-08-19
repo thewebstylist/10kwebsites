@@ -30,19 +30,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install ffmpeg
-        timeout-minutes: 6
+      - name: Provide ffmpeg
+        timeout-minutes: 8
         run: |
           set -euo pipefail
-          # ubuntu-latest normally ships ffmpeg; only reach for apt when it does not,
-          # because a slow mirror on one runner hung this step for over ten minutes.
+          # Not via apt. GitHub's apt mirrors hung this step for over ten minutes on
+          # two separate runners, so pull a static build straight from GitHub, which
+          # the runner already talks to at full speed for checkout.
           if command -v ffmpeg >/dev/null 2>&1; then
             echo "ffmpeg already present on the runner"
-          else
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq ffmpeg
+            ffmpeg -version | head -1
+            exit 0
           fi
-          ffmpeg -version | head -1
+          url=https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz
+          curl -fsSL --retry 3 --retry-delay 2 -o /tmp/ffmpeg.tar.xz "$url"
+          mkdir -p /tmp/ffmpeg
+          tar -xJf /tmp/ffmpeg.tar.xz -C /tmp/ffmpeg --strip-components=1
+          echo "/tmp/ffmpeg/bin" >> "$GITHUB_PATH"
+          /tmp/ffmpeg/bin/ffmpeg -version | head -1
+          /tmp/ffmpeg/bin/ffprobe -version | head -1
 
       - name: Fetch the approved clips
         run: |
