@@ -1,0 +1,144 @@
+{
+  "_help": "Blank starter. Copy to brands/<yourbrand>.json and fill in from docs/BRIEF.md. Files starting with _ are never built. Wrap a word in *stars* inside any heading to drop it into the editorial serif. Leave any image empty to get a generated stand-in in the brand's own colours. Delete a section or set its enabled to false to drop it from the page.",
+
+  "meta": { "title": "", "description": "" },
+
+  "brand": {
+    "name": "",
+    "wordmark": "",
+    "tagline": "",
+    "category": "",
+    "fictional": false,
+    "disclosure": ""
+  },
+
+  "theme": {
+    "motif": "slice",
+    "colors": { "primary": "", "cream": "", "deep": "", "soft": "" },
+    "tints": ["", "", ""],
+    "radius": "28px",
+    "maxWidth": "1280px",
+    "grain": true
+  },
+
+  "assets": { "muse": "", "motif": "" },
+
+  "nav": {
+    "links": [
+      { "label": "", "href": "#intro" },
+      { "label": "", "href": "#range" },
+      { "label": "", "href": "#inside" },
+      { "label": "", "href": "#serve" },
+      { "label": "", "href": "#story" }
+    ],
+    "cta": { "label": "", "href": "#find" }
+  },
+
+  "loader": { "enabled": true, "duration": 2.0 },
+
+  "hero": {
+    "line1": "",
+    "line2": "",
+    "support": "",
+    "scrollLabel": "SCROLL",
+    "scrollHeight": "400vh",
+    "product": { "productIndex": 0, "image": "", "alt": "" }
+  },
+
+  "intro": {
+    "eyebrow": "",
+    "heading": "",
+    "body": "",
+    "cta": { "label": "", "href": "#range" },
+    "scrollHeight": "320vh",
+    "product": { "productIndex": 0, "image": "", "alt": "" }
+  },
+
+  "lifestyle": {
+    "scrollHeight": "380vh",
+    "copy": ["", "*  *", "", "", "*  *"],
+    "cards": [
+      { "label": "01 — ", "headline": "", "body": "", "image": "", "alt": "" },
+      { "label": "02 — ", "headline": "", "body": "", "image": "", "alt": "" },
+      { "label": "03 — ", "headline": "", "body": "", "image": "", "alt": "" }
+    ]
+  },
+
+  "transition": {
+    "line1": "",
+    "line2": "",
+    "scrollHeight": "300vh",
+    "product": { "productIndex": 0, "image": "", "alt": "" }
+  },
+
+  "range": {
+    "eyebrow": "",
+    "heading": "",
+    "body": "",
+    "products": [
+      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "" },
+      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "" },
+      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "" }
+    ]
+  },
+
+  "ingredients": {
+    "eyebrow": "",
+    "heading": "",
+    "body": "",
+    "cards": [
+      { "title": "", "body": "" },
+      { "title": "", "body": "" },
+      { "title": "", "body": "" }
+    ]
+  },
+
+  "steps": {
+    "eyebrow": "",
+    "heading": "",
+    "items": [
+      { "title": "", "body": "" },
+      { "title": "", "body": "" },
+      { "title": "", "body": "" }
+    ]
+  },
+
+  "story": {
+    "eyebrow": "",
+    "heading": "",
+    "paragraphs": ["", ""],
+    "cta": { "label": "", "href": "#find" },
+    "image": "",
+    "alt": ""
+  },
+
+  "marquee": { "text": "", "flourish": "✦", "repeat": 6 },
+
+  "faq": {
+    "eyebrow": "",
+    "heading": "",
+    "intro": "",
+    "items": [
+      { "q": "", "a": "" },
+      { "q": "", "a": "" },
+      { "q": "", "a": "" },
+      { "q": "", "a": "" }
+    ]
+  },
+
+  "find": { "heading": "", "body": "", "cta": { "label": "", "href": "#" } },
+
+  "footer": {
+    "ctaLabel": "",
+    "ctaHref": "#find",
+    "statement": "",
+    "columns": [
+      { "title": "", "links": [{ "label": "", "href": "#" }] },
+      { "title": "", "links": [{ "label": "", "href": "#" }] },
+      { "title": "", "links": [{ "label": "", "href": "#" }] }
+    ],
+    "responsible": "",
+    "legal": "",
+    "backToTop": "BACK TO TOP"
+  }
+}

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 700" width="320" height="700" role="img">
+      <title>Halden Birch Cleansing Oil bottle</title>
+      <defs><clipPath id="cb"><path d="M126 40h68v92c0 34 62 66 62 126v334c0 40-28 62-96 62s-96-22-96-62V258c0-60 62-92 62-126Z"/></clipPath></defs>
+      <path d="M126 40h68v92c0 34 62 66 62 126v334c0 40-28 62-96 62s-96-22-96-62V258c0-60 62-92 62-126Z" fill="#c08a4e"/>
+      <g clip-path="url(#cb)">
+        <rect x="64" y="40" width="26" height="620" fill="#d3ad83" opacity=".45"/>
+        <rect x="228" y="40" width="30" height="620" fill="#7c623c" opacity=".3"/>
+        <rect x="60" y="300" width="204" height="250" fill="#f4efe4"/>
+        <g opacity=".16" transform="translate(102 386) scale(1.16)">
+    <path d="M50 6C24 24 12 46 14 68c2 20 18 26 30 26s28-6 30-26C76 46 70 24 50 6Z" fill="none" stroke="#7f643d" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M50 12v82" fill="none" stroke="#7f643d" stroke-width="1.8"/>
+    <path d="M50 26 C42 30 34 36 34 40M50 26 C58 30 66 36 66 40" fill="none" stroke="#7f643d" stroke-width="1.4"/><path d="M50 40 C40 44 30 50 30 54M50 40 C60 44 70 50 70 54" fill="none" stroke="#7f643d" stroke-width="1.4"/><path d="M50 54 C38 58 26 64 26 68M50 54 C62 58 74 64 74 68" fill="none" stroke="#7f643d" stroke-width="1.4"/><path d="M50 68 C36 72 22 78 22 82M50 68 C64 72 78 78 78 82" fill="none" stroke="#7f643d" stroke-width="1.4"/></g>
+      </g>
+      <rect x="118" y="24" width="84" height="34" rx="8" fill="#7c623c"/>
+      <path d="M126 40h68v92c0 34 62 66 62 126v334c0 40-28 62-96 62s-96-22-96-62V258c0-60 62-92 62-126Z" fill="none" stroke="#7c623c" stroke-width="2"/>
+      
+    <text x="162" y="344" text-anchor="middle" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+    font-size="14" fill="#7f643d"
+    textLength="105" lengthAdjust="spacingAndGlyphs"
+    opacity=".85">HALDEN</text>
+    <line x1="100.80000000000001" y1="358" x2="223.20000000000002" y2="358" stroke="#7f643d" stroke-width="1.4" opacity=".5"/>
+    <text x="162" y="378" text-anchor="middle" font-family="'Arial Narrow','Liberation Sans Narrow','DejaVu Sans Condensed','Haettenschweiler',Impact,sans-serif"
+    font-size="18" fill="#7f643d"
+    textLength="175" lengthAdjust="spacingAndGlyphs"
+    >BIRCH CLEANSING OIL</text>
+    <text x="162" y="404" text-anchor="middle" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+    font-size="11" fill="#7f643d"
+    textLength="158" lengthAdjust="spacingAndGlyphs"
+    opacity=".8">150ML · EVENING</text></svg>

@@ -1,0 +1,1151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aurello — Bittersweet citrus, bright bubbles, ready when you are</title>
+<meta name="description" content="Aurello is a ready-to-drink aperitivo spritz. Bittersweet citrus, bright bubbles, chilled and cracked in three moves. Orange Spritz, Lemon &amp; Mint, Pink Grapefruit.">
+<meta name="theme-color" content="#f04a24">
+<meta property="og:title" content="Aurello — Bittersweet citrus, bright bubbles, ready when you are">
+<meta property="og:description" content="Aurello is a ready-to-drink aperitivo spritz. Bittersweet citrus, bright bubbles, chilled and cracked in three moves. Orange Spritz, Lemon &amp; Mint, Pink Grapefruit.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%228%22%20fill%3D%22%23f04a24%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20font-family%3D%22Arial%20Narrow%2CImpact%2Csans-serif%22%20font-size%3D%2221%22%20fill%3D%22%23fff3d8%22%20text-anchor%3D%22middle%22%3EA%3C%2Ftext%3E%3C%2Fsvg%3E">
+
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<style>
+/* ==========================================================================
+   1. TOKENS  — every value below comes from the brand file, nothing is hard-coded
+   ========================================================================== */
+:root{
+  --primary:#f04a24;
+  --cream:#fff3d8;
+  --deep:#731f17;
+  --soft:#ffe0cb;
+  --primary-rgb:240, 74, 36;
+  --cream-rgb:255, 243, 216;
+  --deep-rgb:115, 31, 23;
+  --tint-1:#cfe0ef;
+  --tint-2:#f8d3da;
+  --tint-3:#fbe5a6;
+
+  --font-display:"Bebas Neue", "Oswald", "Haettenschweiler", "Arial Narrow", sans-serif;
+  --font-serif:"Roboto Slab", "Georgia", "Times New Roman", serif;
+  --font-body:"DM Sans", "Helvetica Neue", system-ui, -apple-system, Arial, sans-serif;
+  --font-script:"Caveat", "Segoe Script", "Brush Script MT", cursive;
+
+  --radius:28px;
+  --maxw:1280px;
+  --gutter:clamp(20px,5vw,64px);
+  --header-h:clamp(58px,7vw,74px);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+
+  --hero-h:400vh;
+  --intro-h:320vh;
+  --life-h:380vh;
+  --trans-h:300vh;
+}
+
+/* ==========================================================================
+   2. GLOBAL
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{overflow-x:clip}
+body{max-width:100%;overflow-x:clip}
+body{
+  background:var(--primary);color:var(--cream);
+  font-family:var(--font-body);font-size:clamp(15px,1.05vw,17px);line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--deep);color:var(--cream)}
+
+.display{font-family:var(--font-display);font-weight:400;text-transform:uppercase;
+  line-height:.86;letter-spacing:.005em}
+.serif{font-family:var(--font-serif);font-weight:300;text-transform:none;letter-spacing:-.01em}
+.script{font-family:var(--font-script);text-transform:none;letter-spacing:0;line-height:1}
+
+.eyebrow{font-family:var(--font-body);font-weight:500;
+  font-size:clamp(10px,.78vw,12px);letter-spacing:.34em;text-transform:uppercase;opacity:.85}
+.rule{height:1px;background:currentColor;opacity:.28;border:0}
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+
+:focus-visible{outline:3px solid var(--deep);outline-offset:3px;border-radius:6px}
+.on-deep :focus-visible,.on-primary :focus-visible{outline-color:var(--cream)}
+.skip{position:absolute;left:-9999px;top:0;z-index:999;background:var(--cream);color:var(--primary);
+  padding:14px 22px;font-weight:500;border-radius:0 0 14px 0}
+.skip:focus{left:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* pill button — outlined, never a gradient */
+.pill{display:inline-flex;align-items:center;gap:.7em;
+  font-family:var(--font-body);font-weight:500;font-size:clamp(12px,1vw,14px);
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:clamp(13px,1.4vw,17px) clamp(24px,2.6vw,36px);
+  border:1.5px solid currentColor;border-radius:999px;
+  transition:background .38s var(--ease),color .38s var(--ease),transform .38s var(--ease)}
+.pill:hover{transform:translateY(-2px)}
+.pill.on-light:hover{background:var(--primary);color:var(--cream);border-color:var(--primary)}
+.pill.on-dark:hover{background:var(--cream);color:var(--primary);border-color:var(--cream)}
+.pill .arw{transition:transform .38s var(--ease)}
+.pill:hover .arw{transform:translateX(4px)}
+
+/* the recurring motif — outlined, drifting, never over copy */
+.motif{position:absolute;pointer-events:none;user-select:none;z-index:1;opacity:.3}
+.motif img{width:100%;height:auto}
+.motif.tiny{width:clamp(34px,4vw,58px)}
+.motif.sm{width:clamp(52px,6vw,86px)}
+.motif.md{width:clamp(78px,9vw,130px)}
+.motif.lg{width:clamp(110px,14vw,210px)}
+.motif.xl{width:clamp(170px,24vw,340px)}
+
+
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+
+/* sticky scroll scene scaffolding */
+.scene{position:relative;z-index:1}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  display:grid;place-items:center;background:var(--primary)}
+
+/* product cut-outs are never boxed — transparent art, real shadow, free rotation */
+.cutout{filter:drop-shadow(0 30px 46px rgba(var(--deep-rgb),.42)) drop-shadow(0 6px 12px rgba(var(--deep-rgb),.28));
+  width:100%;height:auto}
+
+/* ==========================================================================
+   3. LOADER
+   ========================================================================== */
+.loader{position:fixed;inset:0;z-index:200;background:var(--cream);color:var(--primary);
+  display:grid;place-items:center;overflow:hidden}
+.loader-in{position:relative;z-index:2;text-align:center;padding-inline:var(--gutter)}
+.loader-mask{overflow:hidden;padding-bottom:.06em}
+.loader-word{font-family:var(--font-display);font-size:clamp(58px,15vw,190px);line-height:.9;
+  text-transform:uppercase;letter-spacing:.02em;transform:translateY(105%)}
+.loader-track{width:min(320px,52vw);height:2px;background:rgba(var(--primary-rgb),.22);margin:clamp(20px,3vw,34px) auto 0;overflow:hidden}
+.loader-bar{display:block;height:100%;width:100%;background:var(--primary);transform:scaleX(0);transform-origin:0 50%}
+.loader-note{margin-top:clamp(14px,2vw,20px);font-size:clamp(10px,.8vw,12px);letter-spacing:.32em;text-transform:uppercase;opacity:0}
+.loader .motif{opacity:.22}
+body.loading{overflow:hidden}
+
+/* ==========================================================================
+   4. HEADER + MOBILE MENU
+   ========================================================================== */
+.header{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(var(--primary-rgb),.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(var(--cream-rgb),.28);color:var(--cream)}
+.header-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(10px,2vw,26px);
+  min-height:var(--header-h);max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.nav-group{display:flex;align-items:center;gap:clamp(12px,1.8vw,28px)}
+.nav-group.right{justify-content:flex-end}
+.nav-link{font-size:clamp(11px,.86vw,13px);letter-spacing:.14em;text-transform:uppercase;
+  white-space:nowrap;position:relative;padding-block:6px}
+.nav-link::after{content:"";position:absolute;left:0;bottom:2px;height:1px;width:0;background:currentColor;
+  transition:width .34s var(--ease)}
+.nav-link:hover::after{width:100%}
+.nav-cta{border:1.4px solid var(--cream);border-radius:999px;padding:9px 18px;letter-spacing:.14em;
+  font-size:clamp(11px,.82vw,12.5px);text-transform:uppercase;white-space:nowrap;
+  transition:background .34s var(--ease),color .34s var(--ease)}
+.nav-cta:hover{background:var(--cream);color:var(--primary)}
+.nav-cta::after{display:none}
+.logo{font-family:var(--font-script);font-size:clamp(24px,2.6vw,36px);line-height:1;
+  justify-self:center;white-space:nowrap;padding-block:4px}
+
+.burger{display:none;justify-self:end;align-items:center;gap:9px;
+  background:var(--cream);color:var(--primary);border-radius:999px;padding:9px 16px;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.burger-ico{display:grid;gap:4px;width:16px}
+.burger-ico i{display:block;height:1.6px;background:currentColor;border-radius:2px;transition:transform .3s var(--ease),opacity .3s var(--ease)}
+.burger[aria-expanded="true"] .burger-ico i:nth-child(1){transform:translateY(5.6px) rotate(45deg)}
+.burger[aria-expanded="true"] .burger-ico i:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] .burger-ico i:nth-child(3){transform:translateY(-5.6px) rotate(-45deg)}
+
+.mobile-menu{display:none;position:fixed;left:0;right:0;top:var(--header-h);z-index:99;
+  background:var(--cream);color:var(--primary);padding:clamp(18px,5vw,32px) var(--gutter) clamp(28px,7vw,44px);
+  border-bottom:1px solid rgba(var(--primary-rgb),.2);
+  transform:translateY(-12px);opacity:0;pointer-events:none;visibility:hidden;
+  transition:opacity .34s var(--ease),transform .34s var(--ease),visibility .34s}
+.mobile-menu.open{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.mobile-menu a{display:block;font-family:var(--font-display);font-size:clamp(30px,9vw,52px);
+  line-height:1.06;text-transform:uppercase;padding-block:.16em;
+  border-bottom:1px solid rgba(var(--primary-rgb),.16)}
+.mobile-menu a:last-child{border-bottom:0}
+.mobile-menu .m-cta{margin-top:clamp(20px,5vw,28px);font-family:var(--font-body);
+  display:inline-flex;width:auto;line-height:1;border-bottom:0;
+  font-size:clamp(12px,3.2vw,14px);letter-spacing:.16em;padding:14px 26px}
+
+/* ==========================================================================
+   5. HERO
+   ========================================================================== */
+.hero{height:var(--hero-h)}
+.hero-stage{color:var(--cream)}
+.hero-inner{position:relative;z-index:3;width:100%;max-width:var(--maxw);
+  padding:calc(var(--header-h) + 3vh) var(--gutter) 0;text-align:center}
+.hero-title{position:relative;z-index:3}
+.hero-title span.line{display:block;font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(60px,17.5vw,270px);line-height:.82;letter-spacing:.01em}
+.hero-title .line-2{margin-top:.02em}
+.hero-can{position:absolute;z-index:4;left:50%;top:53%;
+  height:min(56vh,540px);width:auto;transform:translate(-50%,-50%) rotate(-11deg)}
+.hero-support{position:absolute;z-index:5;left:50%;bottom:clamp(72px,11vh,132px);transform:translateX(-50%);
+  width:min(92vw,44ch);text-align:center;font-size:clamp(13px,1.15vw,17px);
+  letter-spacing:.04em;line-height:1.5;opacity:.94}
+.scroll-ind{position:absolute;z-index:5;right:clamp(14px,3vw,40px);bottom:clamp(24px,5vh,54px);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:10px;letter-spacing:.4em;text-transform:uppercase}
+.scroll-ind .word{writing-mode:vertical-rl}
+.scroll-ind .track{width:1px;height:clamp(44px,7vh,76px);background:rgba(var(--cream-rgb),.4);position:relative;overflow:hidden}
+.scroll-ind .track i{position:absolute;inset:0;background:var(--cream);animation:cue 2.4s var(--ease) infinite}
+@keyframes cue{0%{transform:translateY(-100%)}60%,100%{transform:translateY(320%)}}
+
+/* ==========================================================================
+   6. INTRO  (copy left / product right / illustration behind)
+   ========================================================================== */
+.intro{height:var(--intro-h)}
+.intro-grid{position:relative;z-index:3;display:grid;grid-template-columns:1.02fr .98fr;
+  align-items:center;gap:clamp(20px,4vw,64px);width:100%;max-width:var(--maxw);
+  padding:calc(var(--header-h) + 2vh) var(--gutter) 4vh}
+.intro-copy{max-width:34ch}
+.intro-h{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(46px,8.6vw,140px);line-height:.84;margin:clamp(12px,1.6vw,20px) 0 clamp(16px,2vw,26px)}
+.intro-body{font-size:clamp(14px,1.2vw,18px);max-width:36ch;opacity:.94;margin-bottom:clamp(20px,2.6vw,34px)}
+.intro-stage-r{position:relative;display:grid;place-items:center;min-height:52vh}
+.intro-muse{position:absolute;z-index:1;width:min(118%,700px);opacity:.16}
+.intro-can{position:relative;z-index:2;height:min(52vh,500px);width:auto;transform:rotate(13deg)}
+
+/* ==========================================================================
+   7. LIFESTYLE  (copy left / perspective card stack right)
+   ========================================================================== */
+.life{height:var(--life-h)}
+.life-grid{position:relative;z-index:3;display:grid;grid-template-columns:.92fr 1.08fr;
+  align-items:center;gap:clamp(20px,4vw,60px);width:100%;max-width:var(--maxw);
+  padding:calc(var(--header-h) + 2vh) var(--gutter) 4vh}
+.life-copy p{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(30px,4.6vw,74px);line-height:.92;margin-bottom:.14em}
+.life-copy p .serif{font-size:.86em;line-height:1;display:inline-block}
+.life-deck{position:relative;height:min(70vh,620px);perspective:1400px;transform-style:preserve-3d}
+.life-card{position:absolute;inset:auto 0 0 0;margin-inline:auto;
+  width:min(100%,470px);height:min(64vh,560px);border-radius:var(--radius);overflow:hidden;
+  background:var(--cream);color:var(--deep);
+  box-shadow:0 34px 70px rgba(var(--deep-rgb),.34);transform-origin:50% 100%}
+.life-card .shot{position:absolute;inset:0;overflow:hidden}
+.life-card .shot img{width:100%;height:100%;object-fit:cover;transform:scale(1.08)}
+.life-card .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(var(--deep-rgb),.06) 0%,rgba(var(--deep-rgb),.1) 42%,rgba(var(--deep-rgb),.78) 100%)}
+.life-card .card-copy{position:absolute;inset:auto 0 0 0;padding:clamp(18px,2.4vw,32px);color:var(--cream)}
+.life-card .card-label{font-size:clamp(9px,.72vw,11px);letter-spacing:.32em;text-transform:uppercase;opacity:.9}
+.life-card .card-h{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(28px,3.4vw,56px);line-height:.9;margin:.16em 0 .18em}
+.life-card .card-b{font-size:clamp(12px,.95vw,15px);line-height:1.5;max-width:34ch;opacity:.92}
+
+/* ==========================================================================
+   8. CITRUS TRANSITION  (huge type + rising cream wave into the next section)
+   ========================================================================== */
+.trans{height:var(--trans-h)}
+.trans-stage{overflow:hidden}
+.trans-title{position:relative;z-index:3;text-align:center;padding-inline:var(--gutter);
+  width:100%;max-width:var(--maxw)}
+.trans-title span{display:block;font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(38px,10.5vw,178px);line-height:.86}
+.trans-muse{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(76vw,660px);opacity:.2}
+.trans-can{position:absolute;z-index:4;left:50%;top:54%;height:min(44vh,420px);width:auto;
+  transform:translate(-50%,-50%) rotate(-8deg)}
+.wave{position:absolute;z-index:5;left:-2vw;right:-2vw;bottom:0;height:78vh;
+  color:var(--cream);transform:translateY(100%)}
+.wave svg{width:100%;height:100%;display:block}
+
+/* ==========================================================================
+   9. RANGE  (cream ground, product cards)
+   ========================================================================== */
+.on-light{background:var(--cream);color:var(--primary)}
+.on-deep{background:var(--deep);color:var(--cream)}
+.on-soft{background:var(--soft);color:var(--deep)}
+.band{position:relative;z-index:2;padding-block:clamp(72px,11vw,168px)}
+.band-head{text-align:center;max-width:56ch;margin-inline:auto}
+.band-h{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(38px,7vw,124px);line-height:.86;margin:clamp(10px,1.4vw,18px) 0}
+.band-b{font-size:clamp(14px,1.15vw,17px);opacity:.9;max-width:46ch;margin-inline:auto}
+
+.range-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,26px);
+  margin-top:clamp(38px,6vw,84px)}
+.p-card{position:relative;border-radius:var(--radius);overflow:hidden;color:var(--deep);
+  padding:clamp(22px,2.4vw,34px);min-height:clamp(420px,52vw,600px);
+  /* reserve the cut-out's lane so a long product name can never ride over it */
+  padding-top:clamp(280px,34vw,430px);
+  display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate}
+.p-card .p-idx{position:absolute;top:clamp(18px,2vw,28px);left:clamp(20px,2.2vw,32px);
+  font-size:clamp(10px,.78vw,12px);letter-spacing:.28em;text-transform:uppercase;opacity:.7}
+.p-card .p-shot{position:absolute;z-index:1;left:50%;top:clamp(48px,6vw,84px);
+  height:clamp(210px,26vw,330px);width:auto;transform:translateX(-50%) rotate(-9deg);
+  transition:transform .7s var(--ease)}
+.p-card:nth-child(2n) .p-shot{transform:translateX(-50%) rotate(8deg)}
+.p-card:hover .p-shot{transform:translateX(-50%) rotate(0deg) translateY(-10px)}
+.p-card .p-body{position:relative;z-index:2}
+.p-card .p-name{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(30px,3.6vw,62px);line-height:.88}
+.p-card .p-sub{font-family:var(--font-serif);font-size:clamp(13px,1.05vw,16px);
+  margin-top:.5em;opacity:.86;max-width:26ch}
+.p-card .p-meta{margin-top:clamp(12px,1.4vw,18px);padding-top:clamp(10px,1.2vw,14px);
+  border-top:1px solid rgba(var(--deep-rgb),.28);
+  font-size:clamp(10px,.8vw,12px);letter-spacing:.22em;text-transform:uppercase;opacity:.8}
+
+/* ==========================================================================
+   10. INGREDIENTS
+   ========================================================================== */
+.ing-top{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(18px,3vw,52px);align-items:end}
+.ing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,26px);
+  margin-top:clamp(38px,6vw,80px)}
+.ing-card{border:1px solid rgba(var(--cream-rgb),.26);border-radius:var(--radius);
+  padding:clamp(24px,2.8vw,40px);display:flex;flex-direction:column;gap:clamp(12px,1.4vw,18px)}
+.ing-ico{width:clamp(46px,5vw,72px);height:clamp(46px,5vw,72px);position:relative;color:var(--cream)}
+.ing-ico img{width:100%;height:100%;opacity:.95}
+.ing-card h3{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(24px,2.6vw,42px);line-height:.92}
+.ing-card p{font-size:clamp(13px,1.02vw,16px);opacity:.88}
+
+/* ==========================================================================
+   11. STEPS
+   ========================================================================== */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(34px,5vw,72px);
+  border-top:1px solid rgba(var(--primary-rgb),.3)}
+.step{padding:clamp(24px,3vw,46px) clamp(16px,2vw,34px) clamp(28px,3.4vw,52px);
+  border-right:1px solid rgba(var(--primary-rgb),.3);border-bottom:1px solid rgba(var(--primary-rgb),.3)}
+.step:last-child{border-right:0}
+.step .s-n{font-family:var(--font-display);font-size:clamp(44px,6vw,104px);line-height:.82;opacity:.28}
+.step h3{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(26px,3vw,50px);line-height:.9;margin:clamp(10px,1.4vw,18px) 0 .3em}
+.step p{font-size:clamp(13px,1.02vw,16px);max-width:30ch;opacity:.9}
+
+/* ==========================================================================
+   12. STORY
+   ========================================================================== */
+.story{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+.story-shot{position:relative;overflow:hidden;height:100%;min-height:clamp(360px,58vw,760px);
+  clip-path:inset(0 0 0 0)}
+.story-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.story-copy{padding:clamp(48px,8vw,132px) clamp(24px,5vw,90px);
+  display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,1.6vw,22px)}
+.story-h{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(36px,5.4vw,96px);line-height:.86}
+.story-copy p{font-size:clamp(14px,1.1vw,17px);max-width:44ch;opacity:.9}
+.story-copy .pill{align-self:flex-start;margin-top:clamp(10px,1.4vw,18px)}
+
+/* ==========================================================================
+   13. MARQUEE
+   ========================================================================== */
+.marq{position:relative;z-index:2;overflow:hidden;padding-block:clamp(18px,2.6vw,40px);
+  border-block:1px solid rgba(var(--primary-rgb),.2)}
+.marq-track{display:flex;gap:clamp(24px,3vw,56px);width:max-content;will-change:transform}
+.marq-track span{font-family:var(--font-display);text-transform:uppercase;white-space:nowrap;
+  font-size:clamp(44px,9vw,150px);line-height:.9}
+
+/* ==========================================================================
+   14. FAQ
+   ========================================================================== */
+.faq-grid{display:grid;grid-template-columns:.86fr 1.14fr;gap:clamp(24px,4vw,72px);align-items:start}
+.faq-h{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(40px,6.4vw,110px);line-height:.86}
+.faq-intro{margin-top:clamp(14px,1.6vw,22px);font-size:clamp(14px,1.1vw,17px);max-width:34ch;opacity:.88}
+.faq-list{border-top:1px solid rgba(var(--deep-rgb),.26)}
+.faq-item{border-bottom:1px solid rgba(var(--deep-rgb),.26)}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:16px;
+  padding-block:clamp(18px,2.2vw,30px);
+  font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(20px,2.2vw,38px);line-height:1}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item .plus{margin-left:auto;flex:0 0 auto;width:1em;height:1em;position:relative;
+  transition:transform .4s var(--ease);font-size:clamp(18px,2vw,30px)}
+.faq-item .plus::before,.faq-item .plus::after{content:"";position:absolute;inset:50% 0 auto 0;
+  height:1.6px;background:currentColor;transform:translateY(-50%)}
+.faq-item .plus::after{transform:translateY(-50%) rotate(90deg)}
+.faq-item[open] .plus{transform:rotate(135deg)}
+.faq-item .answer{padding:0 0 clamp(20px,2.4vw,30px);max-width:56ch;
+  font-size:clamp(13px,1.05vw,16px);opacity:.9}
+
+/* ==========================================================================
+   15. FIND + FOOTER
+   ========================================================================== */
+.find{position:relative;z-index:2;overflow:hidden;text-align:center;
+  padding-block:clamp(84px,13vw,190px)}
+.find-in{position:relative;z-index:3}
+.find-h{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(42px,8.4vw,150px);line-height:.85;max-width:16ch;margin-inline:auto}
+.find-b{margin:clamp(16px,2vw,26px) auto clamp(24px,3vw,38px);max-width:44ch;
+  font-size:clamp(14px,1.1vw,17px);opacity:.9}
+.find-muse{position:absolute;z-index:1;right:-8vw;bottom:-26%;width:min(58vw,640px);opacity:.14}
+
+.footer{position:relative;z-index:2;background:var(--deep);color:var(--cream);overflow:hidden}
+.footer-curve{position:relative;z-index:2;color:var(--cream);line-height:0}
+.footer-curve svg{width:100%;height:clamp(40px,6vw,96px);display:block}
+.footer-in{position:relative;z-index:3;padding-block:clamp(48px,7vw,104px)}
+.footer-top{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,64px);align-items:start}
+.footer-cta{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(32px,5.4vw,92px);line-height:.88;display:inline-block}
+.footer-cta .arw{display:inline-block;font-size:.6em;vertical-align:.06em;transition:transform .4s var(--ease)}
+.footer-cta:hover .arw{transform:translateX(.18em)}
+.footer-statement{font-family:var(--font-serif);font-size:clamp(14px,1.2vw,19px);
+  max-width:38ch;opacity:.9;margin-top:clamp(12px,1.4vw,18px)}
+.footer-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:clamp(18px,2.4vw,36px)}
+.footer-cols h4{font-size:clamp(10px,.78vw,12px);letter-spacing:.28em;text-transform:uppercase;
+  opacity:.66;margin-bottom:clamp(10px,1.2vw,16px);font-weight:500}
+.footer-cols li{list-style:none;margin-bottom:.62em;font-size:clamp(13px,1vw,15px)}
+.footer-cols a:hover{text-decoration:underline;text-underline-offset:4px}
+.footer-wordmark{font-family:var(--font-display);text-transform:uppercase;line-height:.76;
+  font-size:clamp(66px,21vw,340px);letter-spacing:.01em;
+  margin-top:clamp(34px,5vw,72px);opacity:.94;text-align:center}
+.footer-base{display:flex;flex-wrap:wrap;gap:clamp(12px,2vw,26px);align-items:center;
+  justify-content:space-between;margin-top:clamp(22px,3vw,44px);
+  padding-top:clamp(18px,2.2vw,28px);border-top:1px solid rgba(var(--cream-rgb),.22);
+  font-size:clamp(11px,.86vw,13px);opacity:.78}
+.footer-base .responsible{max-width:52ch}
+.to-top{display:inline-flex;align-items:center;gap:8px;letter-spacing:.2em;text-transform:uppercase;
+  font-size:clamp(10px,.8vw,12px)}
+.to-top:hover{text-decoration:underline;text-underline-offset:4px}
+.footer .motif.corner{right:-4vw;bottom:-6vw;width:min(46vw,520px);opacity:.08}
+
+/* ==========================================================================
+   16. RESPONSIVE
+   ========================================================================== */
+@media (max-width:1040px){
+  .header-in{grid-template-columns:auto 1fr auto}
+  .nav-group{display:none}
+  .logo{justify-self:start}
+  .burger{display:inline-flex}
+  .mobile-menu{display:block}
+  .intro-grid,.life-grid,.ing-top,.faq-grid,.footer-top{grid-template-columns:1fr}
+  .story{grid-template-columns:1fr}
+  .range-grid,.ing-grid{grid-template-columns:1fr 1fr}
+  .life-grid{align-content:center;gap:clamp(18px,3vw,30px)}
+  .life-deck{height:min(56vh,460px)}
+  .intro-stage-r{min-height:38vh}
+}
+@media (max-width:720px){
+  .range-grid,.ing-grid,.steps-grid{grid-template-columns:1fr}
+  .step{border-right:0}
+  .p-card{min-height:clamp(400px,96vw,520px);padding-top:clamp(280px,66vw,390px)}
+  .p-card .p-shot{height:clamp(200px,52vw,300px)}
+  /* mobile hero reads as a poster: headline high, cut-out below it */
+  .hero-stage{place-items:start center}
+  .hero-inner{padding-top:calc(var(--header-h) + 7vh)}
+  .hero-title span.line{font-size:clamp(54px,19vw,120px)}
+  .hero-can{height:min(36vh,300px);top:60%}
+  .hero-support{width:min(82vw,44ch)}
+  .intro-can{height:min(38vh,330px)}
+  .trans-can{height:min(34vh,300px)}
+  .life-card{height:min(58vh,430px)}
+  .footer-base{flex-direction:column;align-items:flex-start}
+  .find-muse{right:-16vw;bottom:-14%;width:78vw}
+  .motif.xl{width:clamp(120px,34vw,200px)}
+  .motif.lg{width:clamp(84px,22vw,140px)}
+}
+@media (max-width:380px){
+  :root{--gutter:16px}
+  .hero-title span.line{font-size:clamp(46px,16vw,70px)}
+}
+
+/* animation opt-in: reveals only hide themselves once the engine is confirmed */
+.has-gsap .anim{opacity:0}
+
+/* ==========================================================================
+   17. REDUCED MOTION — keep every pixel of content, drop the motion
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero,.intro,.life,.trans{height:auto!important}
+  .stage{position:relative;height:auto;min-height:100svh;
+    padding:calc(var(--header-h) + clamp(30px,5vw,70px)) 0 clamp(70px,10vw,120px)}
+  .anim,.has-gsap .anim{opacity:1!important;transform:none!important}
+  .life-deck{height:auto;display:grid;gap:18px;perspective:none}
+  .life-card{position:relative;inset:auto;height:min(58vh,460px);transform:none!important}
+  .wave{transform:none;height:clamp(56px,9vw,120px)}
+  .scroll-ind .track i{animation:none}
+  .loader{display:none}
+  .marq-track{transform:none}
+  *{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
+</style>
+</head>
+<body class="loading">
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+
+
+<!-- 1. INTRO LOADER ---------------------------------------------------- -->
+<div class="loader" id="loader" role="status" aria-live="polite" aria-label="Loading">
+  <span class="motif md" style="top:12%;left:9%;transform:rotate(-14deg)" aria-hidden="true"><img src="assets/motif-ink.svg" alt=""></span>
+  <span class="motif sm" style="top:22%;right:12%;transform:rotate(22deg)" aria-hidden="true"><img src="assets/motif-ink.svg" alt=""></span>
+  <span class="motif lg" style="bottom:8%;right:6%;transform:rotate(9deg)" aria-hidden="true"><img src="assets/motif-ink.svg" alt=""></span>
+  <span class="motif tiny" style="bottom:20%;left:16%;transform:rotate(-30deg)" aria-hidden="true"><img src="assets/motif-ink.svg" alt=""></span>
+  <div class="loader-in">
+    <div class="loader-mask"><div class="loader-word" id="loaderWord">AURELLO</div></div>
+    <div class="loader-track"><i class="loader-bar" id="loaderBar"></i></div>
+    <p class="loader-note" id="loaderNote">Bittersweet citrus · bright bubbles · ready when you are</p>
+  </div>
+</div>
+
+
+<!-- 2. HEADER ------------------------------------------------------------ -->
+<header class="header">
+  <div class="header-in">
+    <nav class="nav-group left" aria-label="Primary">
+      <a class="nav-link" href="#intro">The Spritz</a><a class="nav-link" href="#range">Flavours</a><a class="nav-link" href="#inside">Inside</a>
+    </nav>
+    <a class="logo script" href="#top" aria-label="Aurello home">Aurello®</a>
+    <nav class="nav-group right" aria-label="Secondary">
+      <a class="nav-link" href="#serve">How to Serve</a><a class="nav-link" href="#story">Our Story</a>
+      <a class="nav-cta" href="#find">Where to Buy</a>
+    </nav>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mobileMenu">
+      <span class="burger-ico" aria-hidden="true"><i></i><i></i><i></i></span>Menu
+    </button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#intro">The Spritz</a><a href="#range">Flavours</a><a href="#inside">Inside</a><a href="#serve">How to Serve</a><a href="#story">Our Story</a>
+  <a class="pill on-light m-cta" href="#find">Where to Buy <span class="arw" aria-hidden="true">&rarr;</span></a>
+</div>
+
+<main id="main">
+<span id="top"></span>
+
+
+<!-- 3. HERO -------------------------------------------------------------- -->
+<section class="scene hero" id="hero" aria-label="THE ORANGE HOUR">
+  <div class="stage hero-stage on-primary">
+    <span class="motif lg" style="top:8%;left:4%;transform:rotate(-16deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif md" style="top:16%;right:7%;transform:rotate(24deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif sm" style="bottom:26%;left:11%;transform:rotate(38deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif xl" style="bottom:-6%;right:-4%;transform:rotate(12deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif tiny" style="top:44%;left:2%;transform:rotate(-8deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+
+    <div class="hero-inner">
+      <h1 class="hero-title">
+        <span class="line line-1 split" id="heroL1">THE ORANGE</span>
+        <span class="line line-2 split" id="heroL2">HOUR</span>
+      </h1>
+    </div>
+    <img class="hero-can cutout" id="heroCan" src="assets/product-orange-spritz.svg" alt="A chilled Aurello Orange Spritz can, tilted" width="320" height="640">
+    <p class="hero-support" id="heroSupport">Bittersweet citrus · bright bubbles · ready when you are</p>
+    <div class="scroll-ind" aria-hidden="true">
+      <span class="word">SCROLL</span>
+      <span class="track"><i></i></span>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 4. PRODUCT INTRO ----------------------------------------------------- -->
+<section class="scene intro" id="intro" aria-label="OPEN. POUR. *GLOW.*">
+  <div class="stage on-primary">
+    <span class="motif md" style="top:6%;left:-2%;transform:rotate(18deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif sm" style="bottom:6%;left:-1%;transform:rotate(-22deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif lg" style="bottom:-4%;right:2%;transform:rotate(8deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+
+    <div class="intro-grid">
+      <div class="intro-copy">
+        <p class="eyebrow intro-line">READY-TO-DRINK APERITIVO</p>
+        <h2 class="intro-h intro-line">OPEN. POUR. <span class="serif">GLOW.</span></h2>
+        <p class="intro-body intro-line">No jigger, no bar spoon, no bottle of bitters you bought once and never finished. Aurello is the aperitivo hour poured whole into a cold can: Sicilian orange peel, gentian root, a long dry finish, and bubbles fine enough to keep the whole thing bright to the last sip.</p>
+        <a class="pill on-dark intro-line" href="#range">Meet the range <span class="arw" aria-hidden="true">&rarr;</span></a>
+      </div>
+      <div class="intro-stage-r">
+        <img class="intro-muse" id="introMuse" src="assets/muse-light.svg" alt="" aria-hidden="true" width="600" height="820">
+        <img class="intro-can cutout" id="introCan" src="assets/product-orange-spritz.svg" alt="Aurello Orange Spritz can turning through the light" width="320" height="640">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 5. LIFESTYLE --------------------------------------------------------- -->
+<section class="scene life" id="moments" aria-label="Moments">
+  <div class="stage on-primary">
+    <span class="motif md" style="top:10%;left:3%;transform:rotate(-18deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif sm" style="bottom:12%;left:6%;transform:rotate(26deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif tiny" style="top:52%;left:1%;transform:rotate(10deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+
+    <div class="life-grid">
+      <div class="life-copy">
+        <p class="life-line">LONG TABLES.</p><p class="life-line"><span class="serif">Sun on the glasses.</span></p><p class="life-line">NOBODY LOOKING</p><p class="life-line">AT THE TIME.</p><p class="life-line"><span class="serif">One more, then.</span></p>
+      </div>
+      <div class="life-deck" id="lifeDeck">
+        
+        <article class="life-card" data-card="0">
+          <div class="shot"><img src="assets/shot-1.svg" alt="Friends crowded around a long table at golden hour" loading="lazy" width="900" height="1100"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="card-copy">
+            <p class="card-label">01 — THE LONG TABLE</p>
+            <h3 class="card-h">SIX CHAIRS, NINE PEOPLE</h3>
+            <p class="card-b">Somebody drags over a bench, somebody else opens another four. The food is late and nobody minds.</p>
+          </div>
+        </article>
+        
+        <article class="life-card" data-card="1">
+          <div class="shot"><img src="assets/shot-2.svg" alt="A terrace in late afternoon light, work finished for the day" loading="lazy" width="900" height="1100"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="card-copy">
+            <p class="card-label">02 — THE SLOW AFTERNOON</p>
+            <h3 class="card-h">FIVE O&#39;CLOCK, ROUGHLY</h3>
+            <p class="card-b">Laptops shut, shoes off, the light going amber across the terrace. The working day ends on the first crack.</p>
+          </div>
+        </article>
+        
+        <article class="life-card" data-card="2">
+          <div class="shot"><img src="assets/shot-3.svg" alt="Portrait of someone laughing, drink in hand, sun low behind them" loading="lazy" width="900" height="1100"></div>
+          <div class="veil" aria-hidden="true"></div>
+          <div class="card-copy">
+            <p class="card-label">03 — THE ONE MORE</p>
+            <h3 class="card-h">STAY FOR ANOTHER</h3>
+            <p class="card-b">The plan was one drink. The plan is now dinner. Cold can, no ice run, no negotiation.</p>
+          </div>
+        </article>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 6. TRANSITION -------------------------------------------------------- -->
+<section class="scene trans" aria-label="BRIGHT CITRUS. BOLD BUBBLES.">
+  <div class="stage trans-stage on-primary">
+    <span class="motif md" style="top:9%;right:8%;transform:rotate(-12deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <span class="motif sm" style="top:24%;left:7%;transform:rotate(30deg)" data-float="1" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+    <img class="trans-muse" id="transMuse" src="assets/muse-light.svg" alt="" aria-hidden="true" width="600" height="820">
+    <h2 class="trans-title" id="transTitle">
+      <span>BRIGHT CITRUS.</span>
+      <span>BOLD BUBBLES.</span>
+    </h2>
+    <img class="trans-can cutout" id="transCan" src="assets/product-orange-spritz.svg" alt="Aurello can rotating as the wave rises" width="320" height="640">
+    <div class="wave" id="wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 620" preserveAspectRatio="none" focusable="false">
+        <path d="M0 208C240 58 508 0 720 0s480 58 720 208v412H0Z" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 7. RANGE ------------------------------------------------------------- -->
+<section class="band on-light" id="range">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="eyebrow anim" data-reveal>THE AURELLO RANGE</p>
+      <h2 class="band-h anim" data-reveal>THREE WAYS TO <span class="serif">SPRITZ</span></h2>
+      <p class="band-b anim" data-reveal>One recipe, three moods. Each is built on the same bittersweet aperitivo base, then pulled in a different direction by the peel it is pressed with.</p>
+    </div>
+    <div class="range-grid">
+      
+      <article class="p-card anim" data-reveal-card style="background:#cfe0ef">
+        <p class="p-idx">01 / Orange Spritz</p>
+        <img class="p-shot cutout" src="assets/product-orange-spritz.svg" alt="Aurello Orange Spritz can" loading="lazy" width="320" height="640">
+        <div class="p-body">
+          <h3 class="p-name">Orange Spritz</h3>
+          <p class="p-sub serif">Sicilian blood orange, gentian root, a long bitter finish.</p>
+          <p class="p-meta">5% ABV · 250ml · Serve at 4°C</p>
+        </div>
+      </article>
+      
+      <article class="p-card anim" data-reveal-card style="background:#fbe5a6">
+        <p class="p-idx">02 / Lemon &amp; Mint</p>
+        <img class="p-shot cutout" src="assets/product-lemon-mint.svg" alt="Aurello Lemon &amp; Mint can" loading="lazy" width="320" height="640">
+        <div class="p-body">
+          <h3 class="p-name">Lemon &amp; Mint</h3>
+          <p class="p-sub serif">Amalfi lemon peel, cracked garden mint, dry and cold-snapping.</p>
+          <p class="p-meta">4.5% ABV · 250ml · Serve at 4°C</p>
+        </div>
+      </article>
+      
+      <article class="p-card anim" data-reveal-card style="background:#f8d3da">
+        <p class="p-idx">03 / Pink Grapefruit</p>
+        <img class="p-shot cutout" src="assets/product-pink-grapefruit.svg" alt="Aurello Pink Grapefruit can" loading="lazy" width="320" height="640">
+        <div class="p-body">
+          <h3 class="p-name">Pink Grapefruit</h3>
+          <p class="p-sub serif">Ruby grapefruit, pink peppercorn, a soft bitter tail.</p>
+          <p class="p-meta">5% ABV · 250ml · Serve at 4°C</p>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 8. INGREDIENTS ------------------------------------------------------- -->
+<section class="band on-deep" id="inside">
+  <div class="wrap">
+    <div class="ing-top">
+      <div>
+        <p class="eyebrow anim" data-reveal>WHAT IS INSIDE</p>
+        <h2 class="band-h anim" data-reveal style="margin-inline:0">THREE THINGS, <span class="serif">DONE PROPERLY</span></h2>
+      </div>
+      <p class="band-b anim" data-reveal style="margin-inline:0;text-align:left">There is no long ingredient list to hide behind. Everything in the can earns its place, and anything that did not make the drink brighter was taken back out.</p>
+    </div>
+    <div class="ing-grid">
+      
+      <article class="ing-card anim" data-reveal-card>
+        <span class="ing-ico" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+        <h3>Sun-Bright Citrus</h3>
+        <p>Peel pressed from Sicilian blood orange and Amalfi lemon, cold-extracted so the oils stay sharp instead of turning candied.</p>
+      </article>
+      
+      <article class="ing-card anim" data-reveal-card>
+        <span class="ing-ico" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+        <h3>Aromatic Botanicals</h3>
+        <p>Gentian root and rhubarb for the bitter spine, a little pink peppercorn for lift. Macerated slowly, never rushed with heat.</p>
+      </article>
+      
+      <article class="ing-card anim" data-reveal-card>
+        <span class="ing-ico" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+        <h3>Fine Bubbles</h3>
+        <p>Carbonated cold and fine, so the first crack fizzes bright and the last mouthful still has something to say.</p>
+      </article>
+      
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 9. SERVING STEPS ----------------------------------------------------- -->
+<section class="band on-light" id="serve">
+  <div class="wrap">
+    <p class="eyebrow anim" data-reveal>HOW TO SERVE</p>
+    <h2 class="band-h anim" data-reveal style="margin-inline:0;text-align:left">GOOD TO GO IN THREE.</h2>
+    <div class="steps-grid">
+      
+      <article class="step anim" data-reveal-card>
+        <p class="s-n display">01</p>
+        <h3>Chill</h3>
+        <p>Four hours in the fridge, or twenty minutes buried in ice. Cold is not optional here, it is the whole recipe.</p>
+      </article>
+      
+      <article class="step anim" data-reveal-card>
+        <p class="s-n display">02</p>
+        <h3>Crack</h3>
+        <p>Open it flat, listen for the hiss. That sound is the bubbles arriving exactly as they were packed.</p>
+      </article>
+      
+      <article class="step anim" data-reveal-card>
+        <p class="s-n display">03</p>
+        <h3>Pour</h3>
+        <p>Big glass, plenty of ice, a wide slice of orange down the side. Then leave the kitchen and go and sit outside.</p>
+      </article>
+      
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 10. STORY ------------------------------------------------------------ -->
+<section class="story on-deep" id="story">
+  <div class="story-shot" id="storyShot">
+    <img src="assets/shot-story.svg" alt="A crowded golden-hour table, glasses raised" loading="lazy" width="900" height="1100">
+  </div>
+  <div class="story-copy">
+    <p class="eyebrow anim" data-reveal>OUR STORY</p>
+    <h2 class="story-h anim" data-reveal>THE SPARK OF <span class="serif">TOGETHER</span></h2>
+    <p class="anim" data-reveal>Aurello started at a borrowed table on a borrowed terrace, in that hour where the light goes orange and nobody wants to be the first to leave. The drinks took too long to make, so someone always missed the good part while they were inside stirring.</p><p class="anim" data-reveal>So we built the whole hour into a can: the bitterness, the citrus oil, the bubbles, the reason to stay. Everything you would have made yourself, if you had not been busy pouring for everybody else.</p>
+    <a class="pill on-dark anim" data-reveal href="#find">Find a stockist <span class="arw" aria-hidden="true">&rarr;</span></a>
+  </div>
+</section>
+
+
+
+<!-- 11. MARQUEE ---------------------------------------------------------- -->
+<div class="marq on-light" aria-hidden="true">
+  <div class="marq-track" id="marqTrack">
+    <span>CHILL · CRACK · POUR ✦</span><span>CHILL · CRACK · POUR ✦</span><span>CHILL · CRACK · POUR ✦</span><span>CHILL · CRACK · POUR ✦</span><span>CHILL · CRACK · POUR ✦</span><span>CHILL · CRACK · POUR ✦</span>
+  </div>
+</div>
+<p class="sr-only">CHILL · CRACK · POUR</p>
+
+
+
+<!-- 12. FAQ -------------------------------------------------------------- -->
+<section class="band on-soft" id="faq">
+  <div class="wrap faq-grid">
+    <div>
+      <p class="eyebrow anim" data-reveal>GOOD QUESTIONS</p>
+      <h2 class="faq-h anim" data-reveal>YOUR <span class="serif">QUESTIONS</span></h2>
+      <p class="faq-intro anim" data-reveal>Everything people ask us before the first can, answered plainly. Anything else, the team reads every message.</p>
+    </div>
+    <div class="faq-list">
+      
+      <details class="faq-item anim" data-reveal>
+        <summary>How should I serve it?<span class="plus" aria-hidden="true"></span></summary>
+        <div class="answer"><p>Very cold, over plenty of ice, in a glass bigger than you think you need. A wide slice of orange down the inside of the glass is the only garnish it wants.</p></div>
+      </details>
+      
+      <details class="faq-item anim" data-reveal>
+        <summary>How much alcohol is in a can?<span class="plus" aria-hidden="true"></span></summary>
+        <div class="answer"><p>Between 4.5% and 5% ABV depending on the flavour, which is roughly one standard aperitivo serve. Every can prints its exact strength on the base.</p></div>
+      </details>
+      
+      <details class="faq-item anim" data-reveal>
+        <summary>Is it really ready to drink?<span class="plus" aria-hidden="true"></span></summary>
+        <div class="answer"><p>Completely. Nothing to mix, top up, or stir. Chill it, crack it, pour it over ice, and that is the entire method.</p></div>
+      </details>
+      
+      <details class="faq-item anim" data-reveal>
+        <summary>Are the cans recyclable?<span class="plus" aria-hidden="true"></span></summary>
+        <div class="answer"><p>Yes. The can and the ring are aluminium and endlessly recyclable, and the outer packs are uncoated board with no plastic wrap.</p></div>
+      </details>
+      
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 13. FIND / CLOSING CTA ----------------------------------------------- -->
+<section class="find on-light" id="find">
+  <span class="motif md" style="top:12%;left:7%;transform:rotate(-16deg)" data-float="1" aria-hidden="true"><img src="assets/motif-ink.svg" alt=""></span>
+  <span class="motif sm" style="top:24%;right:11%;transform:rotate(26deg)" data-float="1" aria-hidden="true"><img src="assets/motif-ink.svg" alt=""></span>
+  <span class="motif tiny" style="bottom:18%;left:18%;transform:rotate(14deg)" data-float="1" aria-hidden="true"><img src="assets/motif-ink.svg" alt=""></span>
+  <img class="find-muse" src="assets/muse-ink.svg" alt="" aria-hidden="true" loading="lazy" width="600" height="820">
+  <div class="wrap find-in">
+    <h2 class="find-h anim" data-reveal>FIND AURELLO <span class="serif">NEAR YOU.</span></h2>
+    <p class="find-b anim" data-reveal>Stocked in independent bottle shops, delis and wine bars, with more arriving every month. Tell us your postcode and we will point you at the closest cold one.</p>
+    <a class="pill on-light anim" data-reveal href="#">Find a stockist <span class="arw" aria-hidden="true">&rarr;</span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- 14. FOOTER ------------------------------------------------------------ -->
+<footer class="footer">
+  <div class="footer-curve" aria-hidden="true">
+    <svg viewBox="0 0 1440 96" preserveAspectRatio="none" focusable="false">
+      <path d="M0 0c240 74 508 96 720 96s480-22 720-96Z" fill="currentColor"/>
+    </svg>
+  </div>
+  <span class="motif corner" aria-hidden="true"><img src="assets/motif-light.svg" alt=""></span>
+  <div class="wrap footer-in">
+    <div class="footer-top">
+      <div>
+        <a class="footer-cta" href="#find">FIND YOUR ORANGE HOUR <span class="arw" aria-hidden="true">&rarr;</span></a>
+        <p class="footer-statement">A bittersweet aperitivo spritz, built for the hour when the light goes orange and nobody wants to leave.</p>
+      </div>
+      <div class="footer-cols">
+        
+        <div>
+          <h4>Drink</h4>
+          <ul><li><a href="#range">Orange Spritz</a></li><li><a href="#range">Lemon &amp; Mint</a></li><li><a href="#range">Pink Grapefruit</a></li></ul>
+        </div>
+        
+        <div>
+          <h4>Brand</h4>
+          <ul><li><a href="#story">Our story</a></li><li><a href="#inside">What is inside</a></li><li><a href="#serve">How to serve</a></li></ul>
+        </div>
+        
+        <div>
+          <h4>More</h4>
+          <ul><li><a href="#find">Stockists</a></li><li><a href="#faq">Questions</a></li><li><a href="#find">Contact</a></li></ul>
+        </div>
+        
+      </div>
+    </div>
+    <p class="footer-wordmark" aria-hidden="true">AURELLO</p>
+    <div class="footer-base">
+      <p class="responsible">Please enjoy Aurello responsibly. Not for sale to anyone under the legal drinking age. Aurello is a concept brand created for design purposes.</p>
+      <p>© Aurello. All rights reserved.</p>
+      <a class="to-top" href="#top">BACK TO TOP <span aria-hidden="true">&uarr;</span></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+/* runtime classes created by the script below */
+.ch{display:inline-block;will-change:transform,opacity}
+.ch.sp{width:.26em}
+.anim,#heroCan,#introCan,#transCan,#wave,.life-card,.marq-track{will-change:transform,opacity}
+</style>
+
+<script>
+/* ==========================================================================
+   Aurello — scroll direction
+   One GSAP timeline per scene. Transform / opacity / clip-path only.
+   The page is fully readable with no JavaScript and with no GSAP at all;
+   animation is strictly an enhancement layered on top.
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var rand = function (min, max) { return min + Math.random() * (max - min); };
+
+  /* ---------------------------------------------------------- mobile menu */
+  (function menu() {
+    var burger = $('#burger'), panel = $('#mobileMenu');
+    if (!burger || !panel) return;
+    var close = function () {
+      panel.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    };
+    burger.addEventListener('click', function () {
+      var open = panel.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    $$('a', panel).forEach(function (a) { a.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) { close(); burger.focus(); }
+    });
+    window.addEventListener('resize', function () { if (window.innerWidth > 1040) close(); });
+  }());
+
+  /* --------------------------------------------------------------- loader */
+  function runLoader(done) {
+    var el = $('#loader');
+    document.body.classList.remove('loading');
+    if (!el) { done(); return; }
+    if (reduceMotion) { el.remove(); done(); return; }
+
+    var word = $('#loaderWord'), bar = $('#loaderBar'), note = $('#loaderNote');
+    var total = 2;
+    if (window.gsap) {
+      var tl = window.gsap.timeline({ onComplete: function () { el.remove(); done(); } });
+      tl.fromTo(word, { y: 0, yPercent: 105 },
+                { yPercent: 0, duration: total * 0.34, ease: 'expo.out' })
+        .to(note, { opacity: 0.72, duration: total * 0.2 }, '-=' + total * 0.16)
+        .to(bar, { scaleX: 1, duration: total * 0.46, ease: 'power2.inOut' }, '<')
+        .to(el, { yPercent: -100, duration: total * 0.34, ease: 'expo.inOut' }, '+=' + total * 0.06);
+    } else {
+      word.style.transition = 'transform .7s cubic-bezier(.16,1,.3,1)';
+      word.style.transform = 'translateY(0)';
+      bar.style.transition = 'transform ' + (total * 0.5) + 's ease-in-out';
+      bar.style.transform = 'scaleX(1)';
+      note.style.transition = 'opacity .5s ease';
+      note.style.opacity = '.72';
+      setTimeout(function () {
+        el.style.transition = 'transform .6s cubic-bezier(.65,0,.35,1),opacity .6s ease';
+        el.style.transform = 'translateY(-100%)';
+        el.style.opacity = '0';
+        setTimeout(function () { el.remove(); done(); }, 620);
+      }, total * 620);
+    }
+  }
+
+  /* ----------------------------------------------------------- char split */
+  function splitChars(el) {
+    if (!el || el.dataset.split === 'done') return [];
+    var text = el.textContent;
+    el.textContent = '';
+    var frag = document.createDocumentFragment();
+    var out = [];
+    for (var i = 0; i < text.length; i++) {
+      var span = document.createElement('span');
+      span.className = 'ch' + (text[i] === ' ' ? ' sp' : '');
+      span.setAttribute('aria-hidden', 'true');
+      span.textContent = text[i] === ' ' ? ' ' : text[i];
+      frag.appendChild(span);
+      out.push(span);
+    }
+    var sr = document.createElement('span');
+    sr.className = 'sr-only';
+    sr.textContent = text;
+    el.appendChild(sr);
+    el.appendChild(frag);
+    el.dataset.split = 'done';
+    return out;
+  }
+
+  /* ------------------------------------------------------------ gsap load */
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src; s.async = false;
+      s.onload = resolve; s.onerror = function () { reject(new Error(src)); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function ensureGsap() {
+    if (window.gsap && window.ScrollTrigger) return Promise.resolve(true);
+    /* local copies first so the page works offline, CDN as the fallback */
+    var sources = [
+      ['vendor/gsap.min.js', 'vendor/ScrollTrigger.min.js'],
+      ['https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js',
+       'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js']
+    ];
+    return sources.reduce(function (chain, pair) {
+      return chain.then(function (ok) {
+        if (ok) return true;
+        return loadScript(pair[0])
+          .then(function () { return loadScript(pair[1]); })
+          .then(function () { return !!(window.gsap && window.ScrollTrigger); })
+          .catch(function () { return false; });
+      });
+    }, Promise.resolve(false));
+  }
+
+  /* ----------------------------------------------------------- the scenes */
+  function build() {
+    var gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+    root.classList.add('has-gsap');
+
+    /* base transforms handed to GSAP so it owns them outright */
+    if ($('#heroCan')) gsap.set('#heroCan', { x: 0, y: 0, xPercent: -50, yPercent: -50, rotation: -11 });
+    if ($('#heroSupport')) gsap.set('#heroSupport', { x: 0, xPercent: -50 });
+    if ($('#transCan')) gsap.set('#transCan', { x: 0, y: 0, xPercent: -50, yPercent: -50, rotation: -8 });
+    if ($('#transMuse')) gsap.set('#transMuse', { x: 0, y: 0, xPercent: -50, yPercent: -50 });
+    if ($('#wave')) gsap.set('#wave', { y: 0, yPercent: 100 });
+
+    /* -- drifting motifs: slow, sparse, never over copy ------------------ */
+    $$('[data-float]').forEach(function (el) {
+      gsap.to(el, {
+        y: rand(-70, -26), x: rand(-24, 24), rotation: '+=' + rand(-14, 14),
+        duration: rand(7, 14), ease: 'sine.inOut', repeat: -1, yoyo: true, delay: rand(0, 3)
+      });
+      gsap.to(el, {
+        opacity: rand(0.16, 0.4), duration: rand(5, 9),
+        ease: 'sine.inOut', repeat: -1, yoyo: true, delay: rand(0, 2)
+      });
+    });
+
+    /* -- 3. hero --------------------------------------------------------- */
+    if ($('.hero')) {
+      var l1 = splitChars($('#heroL1')), l2 = splitChars($('#heroL2'));
+      var chars = l1.concat(l2);
+      var hero = gsap.timeline({
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: true }
+      });
+      hero.to('#heroCan', { y: '-=' + (window.innerHeight * 0.34), x: '+=' + (window.innerWidth * 0.06),
+                            rotation: 14, scale: 0.82, ease: 'none' }, 0)
+          .to('#heroSupport', { y: -70, opacity: 0, ease: 'none' }, 0)
+          .to(chars, {
+            x: function (i) { return (i - chars.length / 2) * rand(16, 40); },
+            y: function (i) { return i % 2 ? rand(90, 260) : rand(-260, -90); },
+            rotation: function () { return rand(-42, 42); },
+            opacity: 0.06, ease: 'none', stagger: { amount: 0.35, from: 'center' }
+          }, 0.06)
+          .to('#heroCan', { y: '-=' + (window.innerHeight * 0.5), opacity: 0, ease: 'none' }, 0.72);
+    }
+
+    /* -- 4. product intro ------------------------------------------------ */
+    if ($('.intro')) {
+      var intro = gsap.timeline({
+        scrollTrigger: { trigger: '.intro', start: 'top top', end: 'bottom bottom', scrub: 1 }
+      });
+      intro.from('.intro-line', { y: 64, opacity: 0, ease: 'none', stagger: 0.06 }, 0)
+           .to('#introCan', { rotation: -16, x: '-=' + (window.innerWidth * 0.1), y: -60, ease: 'none' }, 0.1)
+           .fromTo('#introMuse', { opacity: 0.08, scale: 0.92 }, { opacity: 0.24, scale: 1.04, ease: 'none' }, 0.24)
+           .to('#introCan', { x: '+=' + (window.innerWidth * 0.62), rotation: 26, opacity: 0.15, ease: 'none' }, 0.6)
+           .to('.intro-line', { y: -70, opacity: 0, ease: 'none', stagger: 0.03 }, 0.74);
+    }
+
+    /* -- 5. lifestyle deck ----------------------------------------------- */
+    var cards = $$('.life-card');
+    if (cards.length) {
+      var tilt = [-6, 3, -2, 5, -4];
+      gsap.set(cards, { yPercent: 116, opacity: 0, rotate: function (i) { return tilt[i % tilt.length]; } });
+      var life = gsap.timeline({
+        scrollTrigger: { trigger: '.life', start: 'top top', end: 'bottom bottom', scrub: 1 }
+      });
+      gsap.from('.life-line', {
+        y: 50, opacity: 0, stagger: 0.08, ease: 'power2.out', duration: 0.9,
+        scrollTrigger: { trigger: '.life', start: 'top 62%' }
+      });
+      cards.forEach(function (card, i) {
+        var at = 0.08 + i * 0.26;
+        life.to(card, { yPercent: 0, ease: 'power2.out' }, at);
+        life.to(card, { opacity: 1, duration: 0.16 }, at);
+        gsap.to($('img', card), {
+          scale: 1.16, ease: 'none',
+          scrollTrigger: { trigger: '.life', start: 'top top', end: 'bottom bottom', scrub: 1 }
+        });
+        if (i < cards.length - 1) {
+          life.to(card, { yPercent: -7 - i * 3, scale: 0.94 - i * 0.03, rotate: tilt[i % tilt.length] / 2, ease: 'none' },
+                  at + 0.26);
+        }
+      });
+    }
+
+    /* -- 6. citrus transition + cream wave ------------------------------- */
+    if ($('.trans')) {
+      var trans = gsap.timeline({
+        scrollTrigger: { trigger: '.trans', start: 'top top', end: 'bottom bottom', scrub: 1 }
+      });
+      trans.to('#transTitle', { xPercent: -26, ease: 'none' }, 0)
+           .to('#transMuse', { yPercent: -128, opacity: 0, ease: 'none' }, 0.12)
+           .to('#transCan', { rotation: 22, yPercent: -74, ease: 'none' }, 0.18)
+           .to('#transTitle', { opacity: 0, ease: 'none' }, 0.6)
+           .to('#wave', { yPercent: 0, ease: 'none' }, 0.44);
+    }
+
+    /* -- 10. story panel clip reveal ------------------------------------- */
+    if ($('#storyShot')) {
+      gsap.fromTo('#storyShot',
+        { clipPath: 'inset(0% 0% 100% 0%)' },
+        { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.25, ease: 'power3.out',
+          scrollTrigger: { trigger: '#storyShot', start: 'top 78%' } });
+      gsap.fromTo('#storyShot img', { scale: 1.18 }, {
+        scale: 1, duration: 1.5, ease: 'power3.out',
+        scrollTrigger: { trigger: '#storyShot', start: 'top 78%' } });
+    }
+
+    /* -- 11. scroll-linked marquee --------------------------------------- */
+    var track = $('#marqTrack');
+    if (track) {
+      var travel = function () { return Math.max(0, track.scrollWidth - window.innerWidth); };
+      gsap.fromTo(track, { x: 0 }, {
+        x: function () { return -travel(); }, ease: 'none',
+        scrollTrigger: { trigger: '.marq', start: 'top bottom', end: 'bottom top', scrub: 0.6,
+                         invalidateOnRefresh: true }
+      });
+    }
+
+    /* -- standard section reveals ---------------------------------------- */
+    $$('[data-reveal]').forEach(function (el) {
+      gsap.fromTo(el, { y: 42, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.95, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%' }
+      });
+    });
+
+    /* grouped cards rise with a stagger, alternating offsets in the dark band */
+    ['.range-grid', '.ing-grid', '.steps-grid'].forEach(function (sel) {
+      var wrapEl = $(sel);
+      if (!wrapEl) return;
+      var items = $$('[data-reveal-card]', wrapEl);
+      if (!items.length) return;
+      gsap.fromTo(items,
+        { y: function (i) { return sel === '.ing-grid' ? (i % 2 ? 96 : 52) : 78; }, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', stagger: 0.11,
+          scrollTrigger: { trigger: wrapEl, start: 'top 84%' } });
+    });
+
+    ScrollTrigger.refresh();
+    window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+  }
+
+  /* ----------------------------------------------------------------- go */
+  function start() {
+    if (reduceMotion) { runLoader(function () {}); return; }
+    ensureGsap().then(function (ok) {
+      if (!ok) { runLoader(function () {}); return; }
+      runLoader(function () { build(); });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+}());
+</script>
+</body>
+</html>

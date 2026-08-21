@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 820" width="600" height="820" role="img">
+    <title>Decorative illustration</title>
+    <g fill="none" stroke="#3f5f4f" stroke-width="3" stroke-linecap="round">
+      <circle cx="300" cy="300" r="150"/>
+      <circle cx="300" cy="300" r="118" stroke-width="1.8"/>
+      <g stroke-width="2.2"><path d="M450.0 300.0L496.0 300.0"/><path d="M441.0 351.3L504.9 374.6"/><path d="M414.9 396.4L483.9 454.3"/><path d="M375.0 429.9L398.0 469.7"/><path d="M326.0 447.7L337.9 514.7"/><path d="M274.0 447.7L258.3 536.4"/><path d="M225.0 429.9L202.0 469.7"/><path d="M185.1 396.4L133.0 440.1"/><path d="M159.0 351.3L74.5 382.1"/><path d="M150.0 300.0L104.0 300.0"/><path d="M159.0 248.7L95.1 225.4"/><path d="M185.1 203.6L116.1 145.7"/><path d="M225.0 170.1L202.0 130.3"/><path d="M274.0 152.3L262.1 85.3"/><path d="M326.0 152.3L341.7 63.6"/><path d="M375.0 170.1L398.0 130.3"/><path d="M414.9 203.6L467.0 159.9"/><path d="M441.0 248.7L525.5 217.9"/></g>
+      <path d="M120 470h360" stroke-width="2"/>
+      <path d="M186 470c0-118 52-186 114-186s114 68 114 186" stroke-width="2.4"/>
+      <path d="M300 470v300" stroke-width="2.4"/>
+      <path d="M300 560c-58 0-96-34-104-92M300 560c58 0 96-34 104-92" stroke-width="2"/>
+      <path d="M232 770h136" stroke-width="2.4"/>
+      <ellipse cx="300" cy="284" rx="58" ry="74" stroke-width="1.6" opacity=".7"/>
+      <path d="M60 640q60-52 120 0t120 0 120 0 120 0" stroke-width="1.8" opacity=".6"/>
+      <path d="M60 690q60-52 120 0t120 0 120 0 120 0" stroke-width="1.4" opacity=".4"/>
+    </g></svg>
