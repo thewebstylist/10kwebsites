@@ -275,10 +275,11 @@ function buildOne(configPath, opts) {
   const slots = makeSlotResolver(path.dirname(path.resolve(configPath)), outAssets, opts.assets !== false);
   cfg.derived = derive(cfg, slots);
 
-  const html = render(fs.readFileSync(TEMPLATE, 'utf8'), cfg);
+  let html = render(fs.readFileSync(TEMPLATE, 'utf8'), cfg);
   const leftovers = html.match(/\{\{[^}]*\}\}/g);
   if (leftovers) warn(`unresolved template tags: ${Array.from(new Set(leftovers)).join(' ')}`);
 
+  html = html.replace('<!--INLINE-SCRIPTS-->', '');
   fs.writeFileSync(path.join(outDir, 'index.html'), html);
 
   /* ship local GSAP when it is vendored, so the page animates with no CDN */
@@ -289,13 +290,65 @@ function buildOne(configPath, opts) {
     fs.cpSync(vendorSrc, vendorOut, { recursive: true });
   }
 
+  if (opts.inline) {
+    const single = inlineEverything(render(fs.readFileSync(TEMPLATE, 'utf8'), cfg), outDir);
+    const file = path.join(outDir, `${slug(cfg.brand.name)}.single.html`);
+    fs.writeFileSync(file, single);
+    console.log(`  + ${path.relative(process.cwd(), file)}  (${(Buffer.byteLength(single) / 1024).toFixed(0)} KB, one portable file)`);
+  }
+
   return { outDir, html, cfg };
+}
+
+/* ------------------------------------------------------- single-file build */
+/* Folds the fonts, GSAP and every generated asset into the HTML, so the page
+   is one file that can be opened from disk or emailed and still animates. */
+const MIME = { '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.woff2': 'font/woff2' };
+
+function dataUri(file) {
+  const ext = path.extname(file).toLowerCase();
+  const mime = MIME[ext] || 'application/octet-stream';
+  if (ext === '.svg') {
+    return 'data:image/svg+xml,' + encodeURIComponent(fs.readFileSync(file, 'utf8'))
+      .replace(/'/g, '%27').replace(/"/g, '%22');
+  }
+  return `data:${mime};base64,${fs.readFileSync(file).toString('base64')}`;
+}
+
+function inlineEverything(html, outDir) {
+  const fontsCss = path.join(outDir, 'vendor', 'fonts', 'fonts.css');
+  if (fs.existsSync(fontsCss)) {
+    const css = fs.readFileSync(fontsCss, 'utf8').replace(/url\('\.\/([^']+)'\)/g, (m, name) => {
+      const f = path.join(path.dirname(fontsCss), name);
+      return fs.existsSync(f) ? `url('${dataUri(f)}')` : m;
+    });
+    /* replacer functions, not strings: minified sources contain $& and $1,
+       which String.replace would otherwise treat as substitution patterns */
+    html = html.replace(/<link rel="stylesheet" href="vendor\/fonts\/fonts\.css">/,
+      () => `<style>${css}</style>`);
+  }
+
+  const gsapFiles = ['gsap.min.js', 'ScrollTrigger.min.js']
+    .map((f) => path.join(outDir, 'vendor', f)).filter(fs.existsSync);
+  if (gsapFiles.length === 2) {
+    const bundled = gsapFiles.map((f) => `<script>${fs.readFileSync(f, 'utf8')}</script>`).join('\n');
+    html = html.replace('<!--INLINE-SCRIPTS-->', () => bundled);
+  }
+  html = html.replace('<!--INLINE-SCRIPTS-->', '');
+
+  html = html.replace(/(src|href)="assets\/([^"]+)"/g, (m, attr, name) => {
+    const f = path.join(outDir, 'assets', name);
+    return fs.existsSync(f) ? `${attr}="${dataUri(f)}"` : m;
+  });
+  return html;
 }
 
 /* ------------------------------------------------------------------- cli */
 function main(argv) {
   const args = argv.slice(2);
-  const opts = { assets: !args.includes('--no-assets'), clean: args.includes('--clean') };
+  const opts = { assets: !args.includes('--no-assets'), clean: args.includes('--clean'),
+                 inline: args.includes('--inline') };
   const outIdx = args.indexOf('--out');
   if (outIdx > -1) opts.out = path.resolve(args[outIdx + 1]);
 
@@ -310,7 +363,8 @@ function main(argv) {
   files.forEach((f) => {
     warnings.length = 0;
     missingAssets.length = 0;
-    const res = buildOne(f, files.length > 1 ? { assets: opts.assets, clean: opts.clean } : opts);
+    const res = buildOne(f, files.length > 1
+      ? { assets: opts.assets, clean: opts.clean, inline: opts.inline } : opts);
     const kb = (Buffer.byteLength(res.html) / 1024).toFixed(1);
     console.log(`✓ ${path.basename(f)} → ${path.relative(process.cwd(), res.outDir)}/index.html  (${kb} KB)`);
     var uniqMissing = Array.from(new Set(missingAssets));

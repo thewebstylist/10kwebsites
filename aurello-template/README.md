@@ -140,8 +140,13 @@ node build.js                          # every brands/*.json
 node build.js brands/x.json            # one
 node build.js brands/x.json --out DIR  # somewhere else
 node build.js --no-assets              # reuse assets already on disk
+node build.js brands/x.json --inline   # also emit one portable single file
 node build.js brands/x.json --out DIR --clean   # wipe DIR/assets first
 ```
+
+`--inline` folds the fonts, GSAP and every image into the HTML and writes
+`<brand>.single.html` next to the normal build: around 460 KB, no external
+requests, opens straight from disk or an email attachment and still animates.
 
 `dist/` is owned by the build and rebuilt clean each run. A caller-supplied
 `--out` is only cleaned when `--clean` is passed.
