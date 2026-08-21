@@ -306,11 +306,19 @@ function buildOne(configPath, opts) {
     fs.cpSync(vendorSrc, vendorOut, { recursive: true });
   }
 
-  if (opts.inline) {
+  if (opts.inline || opts.artifact) {
     const single = inlineEverything(render(fs.readFileSync(TEMPLATE, 'utf8'), cfg), outDir);
-    const file = path.join(outDir, `${slug(cfg.brand.name)}.single.html`);
-    fs.writeFileSync(file, single);
-    console.log(`  + ${path.relative(process.cwd(), file)}  (${(Buffer.byteLength(single) / 1024).toFixed(0)} KB, one portable file)`);
+    if (opts.inline) {
+      const file = path.join(outDir, `${slug(cfg.brand.name)}.single.html`);
+      fs.writeFileSync(file, single);
+      console.log(`  + ${path.relative(process.cwd(), file)}  (${(Buffer.byteLength(single) / 1024).toFixed(0)} KB, one portable file)`);
+    }
+    if (opts.artifact) {
+      const file = path.join(outDir, `${slug(cfg.brand.name)}.artifact.html`);
+      const body = toBodyFragment(single);
+      fs.writeFileSync(file, body);
+      console.log(`  + ${path.relative(process.cwd(), file)}  (${(Buffer.byteLength(body) / 1024).toFixed(0)} KB, body fragment for hosts that supply their own document shell)`);
+    }
   }
 
   return { outDir, html, cfg };
@@ -360,11 +368,40 @@ function inlineEverything(html, outDir) {
   return html;
 }
 
+/* Some hosts (Claude Artifacts among them) wrap the file in their own
+   doctype/head/body and render only what is inside the body. Hand them the
+   page as a fragment: title, styles and structured data first, then the body
+   content, with the body's own attributes reapplied at runtime. */
+function toBodyFragment(doc) {
+  const head = doc.slice(doc.indexOf('<head>') + 6, doc.indexOf('</head>'));
+  const bodyOpen = doc.indexOf('<body');
+  const innerStart = doc.indexOf('>', bodyOpen) + 1;
+  const bodyTag = doc.slice(bodyOpen, innerStart);
+  const inner = doc.slice(innerStart, doc.indexOf('</body>'));
+
+  /* the host owns the head, so no <title> travels with the fragment: it names
+     the page itself, and a page title inside a body is invalid anyway */
+  const keep = [];
+  for (const m of head.match(/<style>[\s\S]*?<\/style>/g) || []) keep.push(m);
+  const ld = head.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/);
+  if (ld) keep.push(ld[0]);
+
+  const cls = (bodyTag.match(/class="([^"]*)"/) || [, ''])[1].trim();
+  const lang = (doc.match(/<html lang="([^"]*)"/) || [, ''])[1];
+  const boot = `<script>` +
+    (lang ? `document.documentElement.lang=${JSON.stringify(lang)};` : '') +
+    (cls ? cls.split(/\s+/).map((c) => `document.body.classList.add(${JSON.stringify(c)});`).join('') : '') +
+    `</script>`;
+
+  return `${keep.join('\n')}\n${boot}\n${inner}`;
+}
+
 /* ------------------------------------------------------------------- cli */
 function main(argv) {
   const args = argv.slice(2);
   const opts = { assets: !args.includes('--no-assets'), clean: args.includes('--clean'),
-                 inline: args.includes('--inline') };
+                 inline: args.includes('--inline'),
+                 artifact: args.includes('--artifact') };
   const outIdx = args.indexOf('--out');
   if (outIdx > -1) opts.out = path.resolve(args[outIdx + 1]);
 
@@ -380,7 +417,7 @@ function main(argv) {
     warnings.length = 0;
     missingAssets.length = 0;
     const res = buildOne(f, files.length > 1
-      ? { assets: opts.assets, clean: opts.clean, inline: opts.inline } : opts);
+      ? { assets: opts.assets, clean: opts.clean, inline: opts.inline, artifact: opts.artifact } : opts);
     const kb = (Buffer.byteLength(res.html) / 1024).toFixed(1);
     console.log(`✓ ${path.basename(f)} → ${path.relative(process.cwd(), res.outDir)}/index.html  (${kb} KB)`);
     var uniqMissing = Array.from(new Set(missingAssets));

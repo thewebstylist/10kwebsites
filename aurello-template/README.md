@@ -152,12 +152,19 @@ node build.js brands/x.json            # one
 node build.js brands/x.json --out DIR  # somewhere else
 node build.js --no-assets              # reuse assets already on disk
 node build.js brands/x.json --inline   # also emit one portable single file
+node build.js brands/x.json --artifact # also emit a body-only fragment
 node build.js brands/x.json --out DIR --clean   # wipe DIR/assets first
 ```
 
 `--inline` folds the fonts, GSAP and every image into the HTML and writes
 `<brand>.single.html` next to the normal build: around 460 KB, no external
 requests, opens straight from disk or an email attachment and still animates.
+
+`--artifact` writes `<brand>.artifact.html`, the same fully inlined page as a
+body fragment, for hosts that supply their own `<!doctype>`, `<head>` and
+`<body>` and render only what sits inside the body. Styles and structured data
+come first, then the content, with the body's own attributes reapplied at
+runtime.
 
 `dist/` is owned by the build and rebuilt clean each run. A caller-supplied
 `--out` is only cleaned when `--clean` is passed.
