@@ -9,6 +9,8 @@ node build.js brands/aurello.json     # → dist/aurello/
 node tools/serve.js dist/aurello 4173 # → http://localhost:4173
 ```
 
+Or through the package scripts: `npm run build`, `npm run serve`, `npm run verify`.
+
 `brands/aurello.json` is the original design. `brands/halden.json` is the same
 template pointed at a Nordic skincare line: different palette, motif, package
 shape, voice and copy, with no change to the template itself.
@@ -42,6 +44,7 @@ tools/
   assets.js           procedural SVG kit: motifs, packages, illustration, photos
   fetch-fonts.js      self-hosts the web fonts from npm
   serve.js            static preview server
+  verify.js           drives every built brand in a real browser
 docs/BRIEF.md         the questions that fill in a brand file
 vendor/               GSAP and the fonts, copied into every build
 dist/                 build output, rebuilt clean each run
@@ -95,6 +98,14 @@ Four colours and three card tints run the whole page:
 generated package: `can`, `bottle`, `jar`, `box`, `tube`, `pouch`. Both are ignored
 once real artwork is supplied.
 
+### Brand context
+
+`brand.category` and `brand.tagline` are emitted as schema.org `Brand` structured
+data alongside the meta tags, so search results and link previews get the same
+description the page does. `brand.fictional` is the switch that prints
+`brand.disclosure` in the footer: a concept brand always discloses, a real one
+never does.
+
 ### Dropping a section
 
 Set `"enabled": false` on `hero`, `intro`, `lifestyle`, `transition`, `range`,
@@ -117,8 +128,8 @@ node tools/fetch-fonts.js                    # the four default families
 node tools/fetch-fonts.js inter:400,600 …    # any @fontsource family
 ```
 
-Delete `vendor/fonts/` and the build falls back to the Google Fonts URL in
-`theme.fontsUrl`. Delete `vendor/*.js` and the page loads GSAP from a CDN, and if
+Delete `vendor/fonts/`, or set `theme.useLocalFonts` to `false`, and the build
+falls back to the Google Fonts URL in `theme.fontsUrl`. Delete `vendor/*.js` and the page loads GSAP from a CDN, and if
 that fails too it still renders completely, just without the motion.
 
 ## Accessibility and motion
@@ -150,6 +161,26 @@ requests, opens straight from disk or an email attachment and still animates.
 
 `dist/` is owned by the build and rebuilt clean each run. A caller-supplied
 `--out` is only cleaned when `--clean` is passed.
+
+## Checking a build
+
+```bash
+npm i -D playwright && npx playwright install chromium   # once
+npm run verify
+```
+
+Twenty-two checks per brand, run in a real browser: every section rendered, no
+broken images, nothing left hidden waiting for a scroll trigger, the header stays
+pinned, structured data present, no console errors or failed requests; no
+horizontal overflow, the right nav mode, three product cards and an un-orphaned
+footer arrow at 320, 390, 768, 1024, 1440, 1920 and 2560px; reduced motion keeps
+all content and unpins every scene; the page still renders with GSAP blocked; the
+skip link takes the first tab and the mobile menu closes on Escape; and the
+single-file build animates from disk with zero external requests.
+
+Worth running after any copy change, because the three things that break first
+are a product name long enough to wrap, a headline long enough to reach three
+lines, and a nav with more than five links.
 
 ## Deploying
 

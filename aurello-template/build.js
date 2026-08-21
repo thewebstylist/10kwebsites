@@ -206,9 +206,25 @@ function derive(cfg, slots) {
 
   const localFonts = fs.existsSync(path.join(ROOT, 'vendor', 'fonts', 'fonts.css')) && cfg.theme.useLocalFonts !== false;
 
+  /* the concept flag is what turns the disclosure line on, so a real brand
+     never ships one by accident and a concept never ships without one */
+  const disclosure = cfg.brand.fictional ? (cfg.brand.disclosure || '') : '';
+
+  /* brand.category earns its keep here: search and link previews read it */
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Brand',
+    name: cfg.brand.name,
+    slogan: cfg.brand.tagline || undefined,
+    description: cfg.meta.description || undefined,
+    disambiguatingDescription: cfg.brand.category || undefined
+  }).replace(/</g, '\\u003c');
+
   return {
     brandUpper,
     favicon,
+    disclosure,
+    jsonLd,
     fonts: { local: localFonts, href: localFonts ? 'vendor/fonts/fonts.css' : cfg.theme.fontsUrl },
     ids: IDS,
     rgb: { primary: hexToRgb(colors.primary), cream: hexToRgb(colors.cream), deep: hexToRgb(colors.deep) },

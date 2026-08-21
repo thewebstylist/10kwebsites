@@ -10,6 +10,7 @@
 <meta property="og:description" content="{{meta.description}}">
 <meta property="og:type" content="website">
 {{#meta.ogImage}}<meta property="og:image" content="{{meta.ogImage}}">{{/meta.ogImage}}
+<script type="application/ld+json">{{{derived.jsonLd}}}</script>
 <link rel="icon" href="{{{derived.favicon}}}">
 {{^derived.fonts.local}}<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>{{/derived.fonts.local}}
@@ -386,7 +387,10 @@ body.loading{overflow:hidden}
 .footer-in{position:relative;z-index:3;padding-block:clamp(48px,7vw,104px)}
 .footer-top{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,64px);align-items:start}
 .footer-cta{font-family:var(--font-display);text-transform:uppercase;
-  font-size:clamp(32px,5.4vw,92px);line-height:.88;display:inline-block}
+  font-size:clamp(30px,4.7vw,78px);line-height:.9;display:inline-block;
+  /* the label is brand copy of any length: leave room for the arrow on the
+     same line, and let the browser avoid orphaning it when it does wrap */
+  max-width:100%;text-wrap:pretty}
 .footer-cta .arw{display:inline-block;font-size:.6em;vertical-align:.06em;transition:transform .4s var(--ease)}
 .footer-cta:hover .arw{transform:translateX(.18em)}
 .footer-statement{font-family:var(--font-serif);font-size:clamp(14px,1.2vw,19px);
@@ -771,7 +775,7 @@ body.loading{overflow:hidden}
     </div>
     <p class="footer-wordmark" aria-hidden="true">{{derived.brandUpper}}</p>
     <div class="footer-base">
-      <p class="responsible">{{footer.responsible}}{{#brand.disclosure}} {{brand.disclosure}}{{/brand.disclosure}}</p>
+      <p class="responsible">{{footer.responsible}}{{#derived.disclosure}} {{derived.disclosure}}{{/derived.disclosure}}</p>
       <p>{{footer.legal}}</p>
       <a class="to-top" href="#top">{{footer.backToTop}} <span aria-hidden="true">&uarr;</span></a>
     </div>

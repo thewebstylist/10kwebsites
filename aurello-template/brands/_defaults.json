@@ -20,6 +20,7 @@
 
   "theme": {
     "motif": "slice",
+    "useLocalFonts": true,
     "fontsUrl": "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Roboto+Slab:wght@300;400&display=swap",
     "fonts": {
       "display": "\"Bebas Neue\", \"Oswald\", \"Haettenschweiler\", \"Arial Narrow\", sans-serif",
@@ -40,8 +41,6 @@
   },
 
   "assets": {
-    "dir": "assets",
-    "mode": "generate",
     "muse": "",
     "motif": ""
   },
@@ -116,7 +115,7 @@
     "alt": ""
   },
 
-  "marquee": { "enabled": true, "text": "", "separator": "·", "flourish": "✦" },
+  "marquee": { "enabled": true, "text": "", "flourish": "✦", "repeat": 6 },
 
   "faq": { "enabled": true, "eyebrow": "", "heading": "", "intro": "", "items": [] },
 

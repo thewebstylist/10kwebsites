@@ -96,6 +96,23 @@ Section by section, in the order a visitor meets them.
 Paths are resolved relative to the brand file, then to the template root. Anything
 missing is generated, and the build prints a list of what it stood in for.
 
+## F. Pacing and switches
+
+Not questions to ask, but the knobs worth knowing about once the answers are in.
+
+| Setting | Default | What it does |
+|---------|---------|--------------|
+| `<section>.enabled` | `true` | Set `false` on `hero`, `intro`, `lifestyle`, `transition`, `range`, `ingredients`, `steps`, `story`, `marquee`, `faq` or `find` to drop that section and its markup entirely. |
+| `<scene>.scrollHeight` | `300vh`–`400vh` | How long a pinned scene holds. `400vh` is four screens of scrolling for one screen of content. Lower for a faster page, raise for a slower one. |
+| `loader.enabled` | `true` | The opening full-screen wordmark. |
+| `loader.duration` | `2.0` | Seconds for the whole loader sequence. Keep it between 1.5 and 2.5. |
+| `theme.grain` | `true` | The fine paper grain over the whole page. |
+| `theme.useLocalFonts` | `true` | Use the self-hosted fonts in `vendor/fonts/` when they exist. Set `false` to force the `theme.fontsUrl` stylesheet instead. |
+| `marquee.repeat` | `6` | How many times the marquee phrase repeats. Raise it if the phrase is short enough to run out mid-scroll. |
+| `range.products[].labelColor` | derived | The type colour on a generated package label. Defaults to the product colour, darkened. |
+| `range.products[].labelBg` | `cream` | The label band colour on a generated package. |
+| `brand.fictional` | `false` | When `true`, `brand.disclosure` is printed in the footer. When `false` it never is, whatever the disclosure field says. |
+
 ---
 
 ## Turning answers into a site

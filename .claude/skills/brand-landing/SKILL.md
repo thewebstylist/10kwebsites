@@ -63,9 +63,14 @@ the footer at 1440px and at 390px. Check the three things that break first when 
 changes: a product name long enough to wrap, a headline long enough to reach three
 lines, and a nav with more than five links.
 
-Check the fallbacks whenever the template itself changed: `prefers-reduced-motion`
-must keep all content and drop all motion, and the page must render completely with
-GSAP blocked.
+Then run the suite, which covers all of that plus the fallbacks:
+
+```bash
+npm run verify
+```
+
+It needs Playwright once (`npm i -D playwright && npx playwright install chromium`).
+It must come back ALL CHECKS PASSED before you show the user anything.
 
 ## What not to do
 
