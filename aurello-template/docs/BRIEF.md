@@ -96,6 +96,36 @@ Section by section, in the order a visitor meets them.
 Paths are resolved relative to the brand file, then to the template root. Anything
 missing is generated, and the build prints a list of what it stood in for.
 
+### What each real image needs to be
+
+The background motifs stay as generated SVG. The foreground is where real
+pictures belong, and each slot has a shape it has to fit.
+
+| Slot | Wants | Why |
+|------|-------|-----|
+| Product cut-outs | **Transparent PNG**, about 1400px tall, product centred with clear margin | The page rotates them, scales them and casts a real `drop-shadow`. A photo with a background reads as a white box, which is the one mistake that breaks the look. |
+| Lifestyle cards (3) | 1200 × 1500, portrait | Fills a rounded card, cropped to cover. A landscape source loses about half its frame. |
+| Story panel | 1600 × 2000, portrait | Full-height panel revealed by a clip-path wipe. |
+| Illustration | Transparent PNG, ~1200px wide | Sits behind the product at low opacity. |
+
+`node tools/art.js brands/<brand>.json --ingest <folder>` normalises whatever you
+have into those shapes: it trims the dead space around a cut-out, crops and
+resizes photographs, converts to the right format, and refuses anything that
+will not sit right rather than writing it and letting you find out later.
+
+### If the images are to be generated rather than supplied
+
+| # | Question | Writes to |
+|---|----------|-----------|
+| 42 | What does the photography feel like? One sentence on film stock, light and time of day. | `art.style` |
+| 43 | What should product shots stand on? A seamless studio backdrop, a real surface, something else? | `art.background` |
+| 44 | Anything that must never appear? | `art.negative` |
+| 45 | Any slot where you already know the exact shot you want? | `range.products[].prompt`, `lifestyle.cards[].prompt`, `story.prompt` |
+
+Everything else is written for you. `node tools/art.js brands/<brand>.json --plan`
+turns the answers above plus the brand's palette, category, product names and card
+copy into one prompt per slot, and prints the credit cost before anything is spent.
+
 ## F. Pacing and switches
 
 Not questions to ask, but the knobs worth knowing about once the answers are in.

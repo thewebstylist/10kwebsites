@@ -4,7 +4,6 @@
     "description": "Aurello is a ready-to-drink aperitivo spritz. Bittersweet citrus, bright bubbles, chilled and cracked in three moves. Orange Spritz, Lemon & Mint, Pink Grapefruit.",
     "themeColor": "#f04a24"
   },
-
   "brand": {
     "name": "Aurello",
     "wordmark": "Aurello®",
@@ -13,7 +12,6 @@
     "fictional": true,
     "disclosure": "Aurello is a concept brand created for design purposes."
   },
-
   "theme": {
     "motif": "slice",
     "colors": {
@@ -22,48 +20,84 @@
       "deep": "#731f17",
       "soft": "#ffe0cb"
     },
-    "tints": ["#cfe0ef", "#f8d3da", "#fbe5a6"],
+    "tints": [
+      "#cfe0ef",
+      "#f8d3da",
+      "#fbe5a6"
+    ],
     "radius": "28px",
     "maxWidth": "1280px",
     "grain": true
   },
-
   "assets": {
     "muse": "spritz-assets/muse.png",
     "motif": "spritz-assets/orange-slice-pasted.svg"
   },
-
+  "art": {
+    "style": "Shot on 35mm colour film in the last hour of daylight, warm and slightly overexposed, with real grain and gentle halation on the highlights.",
+    "background": "studio backdrop",
+    "model": "nano_banana_pro",
+    "resolution": "2k"
+  },
   "nav": {
     "links": [
-      { "label": "The Spritz", "href": "#intro" },
-      { "label": "Flavours", "href": "#range" },
-      { "label": "Inside", "href": "#inside" },
-      { "label": "How to Serve", "href": "#serve" },
-      { "label": "Our Story", "href": "#story" }
+      {
+        "label": "The Spritz",
+        "href": "#intro"
+      },
+      {
+        "label": "Flavours",
+        "href": "#range"
+      },
+      {
+        "label": "Inside",
+        "href": "#inside"
+      },
+      {
+        "label": "How to Serve",
+        "href": "#serve"
+      },
+      {
+        "label": "Our Story",
+        "href": "#story"
+      }
     ],
-    "cta": { "label": "Where to Buy", "href": "#find" }
+    "cta": {
+      "label": "Where to Buy",
+      "href": "#find"
+    }
   },
-
-  "loader": { "enabled": true, "duration": 2.0 },
-
+  "loader": {
+    "enabled": true,
+    "duration": 2.0
+  },
   "hero": {
     "line1": "THE ORANGE",
     "line2": "HOUR",
     "support": "Bittersweet citrus · bright bubbles · ready when you are",
     "scrollLabel": "SCROLL",
     "scrollHeight": "400vh",
-    "product": { "image": "spritz-assets/aurello-can.png", "alt": "A chilled Aurello Orange Spritz can, tilted", "productIndex": 0 }
+    "product": {
+      "image": "spritz-assets/aurello-can.png",
+      "alt": "A chilled Aurello Orange Spritz can, tilted",
+      "productIndex": 0
+    }
   },
-
   "intro": {
     "eyebrow": "READY-TO-DRINK APERITIVO",
     "heading": "OPEN. POUR. *GLOW.*",
     "body": "No jigger, no bar spoon, no bottle of bitters you bought once and never finished. Aurello is the aperitivo hour poured whole into a cold can: Sicilian orange peel, gentian root, a long dry finish, and bubbles fine enough to keep the whole thing bright to the last sip.",
-    "cta": { "label": "Meet the range", "href": "#range" },
+    "cta": {
+      "label": "Meet the range",
+      "href": "#range"
+    },
     "scrollHeight": "320vh",
-    "product": { "image": "spritz-assets/aurello-can.png", "alt": "Aurello Orange Spritz can turning through the light", "productIndex": 0 }
+    "product": {
+      "image": "spritz-assets/aurello-can.png",
+      "alt": "Aurello Orange Spritz can turning through the light",
+      "productIndex": 0
+    }
   },
-
   "lifestyle": {
     "scrollHeight": "380vh",
     "copy": [
@@ -97,14 +131,16 @@
       }
     ]
   },
-
   "transition": {
     "line1": "BRIGHT CITRUS.",
     "line2": "BOLD BUBBLES.",
     "scrollHeight": "300vh",
-    "product": { "image": "spritz-assets/aurello-can.png", "alt": "Aurello can rotating as the wave rises", "productIndex": 0 }
+    "product": {
+      "image": "spritz-assets/aurello-can.png",
+      "alt": "Aurello can rotating as the wave rises",
+      "productIndex": 0
+    }
   },
-
   "range": {
     "eyebrow": "THE AURELLO RANGE",
     "heading": "THREE WAYS TO *SPRITZ*",
@@ -142,7 +178,6 @@
       }
     ]
   },
-
   "ingredients": {
     "eyebrow": "WHAT IS INSIDE",
     "heading": "THREE THINGS, *DONE PROPERLY*",
@@ -162,17 +197,24 @@
       }
     ]
   },
-
   "steps": {
     "eyebrow": "HOW TO SERVE",
     "heading": "GOOD TO GO IN THREE.",
     "items": [
-      { "title": "Chill", "body": "Four hours in the fridge, or twenty minutes buried in ice. Cold is not optional here, it is the whole recipe." },
-      { "title": "Crack", "body": "Open it flat, listen for the hiss. That sound is the bubbles arriving exactly as they were packed." },
-      { "title": "Pour", "body": "Big glass, plenty of ice, a wide slice of orange down the side. Then leave the kitchen and go and sit outside." }
+      {
+        "title": "Chill",
+        "body": "Four hours in the fridge, or twenty minutes buried in ice. Cold is not optional here, it is the whole recipe."
+      },
+      {
+        "title": "Crack",
+        "body": "Open it flat, listen for the hiss. That sound is the bubbles arriving exactly as they were packed."
+      },
+      {
+        "title": "Pour",
+        "body": "Big glass, plenty of ice, a wide slice of orange down the side. Then leave the kitchen and go and sit outside."
+      }
     ]
   },
-
   "story": {
     "eyebrow": "OUR STORY",
     "heading": "THE SPARK OF *TOGETHER*",
@@ -180,51 +222,105 @@
       "Aurello started at a borrowed table on a borrowed terrace, in that hour where the light goes orange and nobody wants to be the first to leave. The drinks took too long to make, so someone always missed the good part while they were inside stirring.",
       "So we built the whole hour into a can: the bitterness, the citrus oil, the bubbles, the reason to stay. Everything you would have made yourself, if you had not been busy pouring for everybody else."
     ],
-    "cta": { "label": "Find a stockist", "href": "#find" },
+    "cta": {
+      "label": "Find a stockist",
+      "href": "#find"
+    },
     "image": "spritz-assets/meeting.jpg",
     "alt": "A crowded golden-hour table, glasses raised"
   },
-
-  "marquee": { "text": "CHILL · CRACK · POUR", "flourish": "✦", "repeat": 6 },
-
+  "marquee": {
+    "text": "CHILL · CRACK · POUR",
+    "flourish": "✦",
+    "repeat": 6
+  },
   "faq": {
     "eyebrow": "GOOD QUESTIONS",
     "heading": "YOUR *QUESTIONS*",
     "intro": "Everything people ask us before the first can, answered plainly. Anything else, the team reads every message.",
     "items": [
-      { "q": "How should I serve it?", "a": "Very cold, over plenty of ice, in a glass bigger than you think you need. A wide slice of orange down the inside of the glass is the only garnish it wants." },
-      { "q": "How much alcohol is in a can?", "a": "Between 4.5% and 5% ABV depending on the flavour, which is roughly one standard aperitivo serve. Every can prints its exact strength on the base." },
-      { "q": "Is it really ready to drink?", "a": "Completely. Nothing to mix, top up, or stir. Chill it, crack it, pour it over ice, and that is the entire method." },
-      { "q": "Are the cans recyclable?", "a": "Yes. The can and the ring are aluminium and endlessly recyclable, and the outer packs are uncoated board with no plastic wrap." }
+      {
+        "q": "How should I serve it?",
+        "a": "Very cold, over plenty of ice, in a glass bigger than you think you need. A wide slice of orange down the inside of the glass is the only garnish it wants."
+      },
+      {
+        "q": "How much alcohol is in a can?",
+        "a": "Between 4.5% and 5% ABV depending on the flavour, which is roughly one standard aperitivo serve. Every can prints its exact strength on the base."
+      },
+      {
+        "q": "Is it really ready to drink?",
+        "a": "Completely. Nothing to mix, top up, or stir. Chill it, crack it, pour it over ice, and that is the entire method."
+      },
+      {
+        "q": "Are the cans recyclable?",
+        "a": "Yes. The can and the ring are aluminium and endlessly recyclable, and the outer packs are uncoated board with no plastic wrap."
+      }
     ]
   },
-
   "find": {
     "heading": "FIND AURELLO *NEAR YOU.*",
     "body": "Stocked in independent bottle shops, delis and wine bars, with more arriving every month. Tell us your postcode and we will point you at the closest cold one.",
-    "cta": { "label": "Find a stockist", "href": "#" }
+    "cta": {
+      "label": "Find a stockist",
+      "href": "#"
+    }
   },
-
   "footer": {
     "ctaLabel": "FIND YOUR ORANGE HOUR",
     "ctaHref": "#find",
     "statement": "A bittersweet aperitivo spritz, built for the hour when the light goes orange and nobody wants to leave.",
     "columns": [
-      { "title": "Drink", "links": [
-        { "label": "Orange Spritz", "href": "#range" },
-        { "label": "Lemon & Mint", "href": "#range" },
-        { "label": "Pink Grapefruit", "href": "#range" }
-      ] },
-      { "title": "Brand", "links": [
-        { "label": "Our story", "href": "#story" },
-        { "label": "What is inside", "href": "#inside" },
-        { "label": "How to serve", "href": "#serve" }
-      ] },
-      { "title": "More", "links": [
-        { "label": "Stockists", "href": "#find" },
-        { "label": "Questions", "href": "#faq" },
-        { "label": "Contact", "href": "#find" }
-      ] }
+      {
+        "title": "Drink",
+        "links": [
+          {
+            "label": "Orange Spritz",
+            "href": "#range"
+          },
+          {
+            "label": "Lemon & Mint",
+            "href": "#range"
+          },
+          {
+            "label": "Pink Grapefruit",
+            "href": "#range"
+          }
+        ]
+      },
+      {
+        "title": "Brand",
+        "links": [
+          {
+            "label": "Our story",
+            "href": "#story"
+          },
+          {
+            "label": "What is inside",
+            "href": "#inside"
+          },
+          {
+            "label": "How to serve",
+            "href": "#serve"
+          }
+        ]
+      },
+      {
+        "title": "More",
+        "links": [
+          {
+            "label": "Stockists",
+            "href": "#find"
+          },
+          {
+            "label": "Questions",
+            "href": "#faq"
+          },
+          {
+            "label": "Contact",
+            "href": "#find"
+          }
+        ]
+      }
     ],
     "responsible": "Please enjoy Aurello responsibly. Not for sale to anyone under the legal drinking age.",
     "legal": "© Aurello. All rights reserved.",

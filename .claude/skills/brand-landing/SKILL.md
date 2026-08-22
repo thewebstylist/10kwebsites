@@ -38,6 +38,14 @@ Two things to raise early because they shape everything after:
   paths in the brand file whether or not the files exist yet, and let the build
   print what it stood in for.
 
+If they have no photography, offer to generate it, and say the price before
+spending anything. `node tools/art.js brands/<brand>.json --plan` writes one
+prompt per slot from the brand's own palette and copy and prints the cost. Get an
+explicit yes on that number, generate, then `--ingest` the results. Product slots
+need their background removed between the two steps or the page shows a white
+box where a cut-out should be. Never spend the user's credits without quoting
+the number first and hearing yes.
+
 ## Writing the copy
 
 The page lives or dies on its words. No placeholder text, no "Lorem", no generic

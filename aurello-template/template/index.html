@@ -482,10 +482,10 @@ body.loading{overflow:hidden}
 {{#loader.enabled}}
 <!-- 1. INTRO LOADER ---------------------------------------------------- -->
 <div class="loader" id="loader" role="status" aria-live="polite" aria-label="Loading">
-  <span class="motif md" style="top:12%;left:9%;transform:rotate(-14deg)" aria-hidden="true"><img src="{{derived.motifSrcInk}}" alt=""></span>
-  <span class="motif sm" style="top:22%;right:12%;transform:rotate(22deg)" aria-hidden="true"><img src="{{derived.motifSrcInk}}" alt=""></span>
-  <span class="motif lg" style="bottom:8%;right:6%;transform:rotate(9deg)" aria-hidden="true"><img src="{{derived.motifSrcInk}}" alt=""></span>
-  <span class="motif tiny" style="bottom:20%;left:16%;transform:rotate(-30deg)" aria-hidden="true"><img src="{{derived.motifSrcInk}}" alt=""></span>
+  <span class="motif md" style="top:12%;left:9%;transform:rotate(-14deg)" aria-hidden="true"><img src="{{derived.motifInk.src}}" alt="" width="{{derived.motifInk.w}}" height="{{derived.motifInk.h}}"></span>
+  <span class="motif sm" style="top:22%;right:12%;transform:rotate(22deg)" aria-hidden="true"><img src="{{derived.motifInk.src}}" alt="" width="{{derived.motifInk.w}}" height="{{derived.motifInk.h}}"></span>
+  <span class="motif lg" style="bottom:8%;right:6%;transform:rotate(9deg)" aria-hidden="true"><img src="{{derived.motifInk.src}}" alt="" width="{{derived.motifInk.w}}" height="{{derived.motifInk.h}}"></span>
+  <span class="motif tiny" style="bottom:20%;left:16%;transform:rotate(-30deg)" aria-hidden="true"><img src="{{derived.motifInk.src}}" alt="" width="{{derived.motifInk.w}}" height="{{derived.motifInk.h}}"></span>
   <div class="loader-in">
     <div class="loader-mask"><div class="loader-word" id="loaderWord">{{derived.brandUpper}}</div></div>
     <div class="loader-track"><i class="loader-bar" id="loaderBar"></i></div>
@@ -522,11 +522,11 @@ body.loading{overflow:hidden}
 <!-- 3. HERO -------------------------------------------------------------- -->
 <section class="scene hero" id="{{derived.ids.hero}}" aria-label="{{hero.line1}} {{hero.line2}}">
   <div class="stage hero-stage on-primary">
-    <span class="motif lg" style="top:8%;left:4%;transform:rotate(-16deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif md" style="top:16%;right:7%;transform:rotate(24deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif sm" style="bottom:26%;left:11%;transform:rotate(38deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif xl" style="bottom:-6%;right:-4%;transform:rotate(12deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif tiny" style="top:44%;left:2%;transform:rotate(-8deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
+    <span class="motif lg" style="top:8%;left:4%;transform:rotate(-16deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif md" style="top:16%;right:7%;transform:rotate(24deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif sm" style="bottom:26%;left:11%;transform:rotate(38deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif xl" style="bottom:-6%;right:-4%;transform:rotate(12deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif tiny" style="top:44%;left:2%;transform:rotate(-8deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
 
     <div class="hero-inner">
       <h1 class="hero-title">
@@ -534,7 +534,7 @@ body.loading{overflow:hidden}
         <span class="line line-2 split" id="heroL2">{{hero.line2}}</span>
       </h1>
     </div>
-    <img class="hero-can cutout" id="heroCan" src="{{derived.hero.productSrc}}" alt="{{hero.product.alt}}" width="320" height="640">
+    <img class="hero-can cutout" id="heroCan" src="{{derived.hero.product.src}}" alt="{{hero.product.alt}}" width="{{derived.hero.product.w}}" height="{{derived.hero.product.h}}">
     <p class="hero-support" id="heroSupport">{{hero.support}}</p>
     <div class="scroll-ind" aria-hidden="true">
       <span class="word">{{hero.scrollLabel}}</span>
@@ -548,9 +548,9 @@ body.loading{overflow:hidden}
 <!-- 4. PRODUCT INTRO ----------------------------------------------------- -->
 <section class="scene intro" id="{{derived.ids.intro}}" aria-label="{{intro.heading}}">
   <div class="stage on-primary">
-    <span class="motif md" style="top:6%;left:-2%;transform:rotate(18deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif sm" style="bottom:6%;left:-1%;transform:rotate(-22deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif lg" style="bottom:-4%;right:2%;transform:rotate(8deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
+    <span class="motif md" style="top:6%;left:-2%;transform:rotate(18deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif sm" style="bottom:6%;left:-1%;transform:rotate(-22deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif lg" style="bottom:-4%;right:2%;transform:rotate(8deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
 
     <div class="intro-grid">
       <div class="intro-copy">
@@ -560,8 +560,8 @@ body.loading{overflow:hidden}
         {{#intro.cta.label}}<a class="pill on-dark intro-line" href="{{intro.cta.href}}">{{intro.cta.label}} <span class="arw" aria-hidden="true">&rarr;</span></a>{{/intro.cta.label}}
       </div>
       <div class="intro-stage-r">
-        <img class="intro-muse" id="introMuse" src="{{derived.museSrc}}" alt="" aria-hidden="true" width="600" height="820">
-        <img class="intro-can cutout" id="introCan" src="{{derived.intro.productSrc}}" alt="{{intro.product.alt}}" width="320" height="640">
+        <img class="intro-muse" id="introMuse" src="{{derived.muse.src}}" alt="" aria-hidden="true" width="{{derived.muse.w}}" height="{{derived.muse.h}}">
+        <img class="intro-can cutout" id="introCan" src="{{derived.intro.product.src}}" alt="{{intro.product.alt}}" width="{{derived.intro.product.w}}" height="{{derived.intro.product.h}}">
       </div>
     </div>
   </div>
@@ -572,9 +572,9 @@ body.loading{overflow:hidden}
 <!-- 5. LIFESTYLE --------------------------------------------------------- -->
 <section class="scene life" id="{{derived.ids.lifestyle}}" aria-label="Moments">
   <div class="stage on-primary">
-    <span class="motif md" style="top:10%;left:3%;transform:rotate(-18deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif sm" style="bottom:12%;left:6%;transform:rotate(26deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif tiny" style="top:52%;left:1%;transform:rotate(10deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
+    <span class="motif md" style="top:10%;left:3%;transform:rotate(-18deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif sm" style="bottom:12%;left:6%;transform:rotate(26deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif tiny" style="top:52%;left:1%;transform:rotate(10deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
 
     <div class="life-grid">
       <div class="life-copy">
@@ -583,7 +583,7 @@ body.loading{overflow:hidden}
       <div class="life-deck" id="lifeDeck">
         {{#lifestyle.cards}}
         <article class="life-card" data-card="{{@index}}">
-          <div class="shot"><img src="{{src}}" alt="{{alt}}" loading="lazy" width="900" height="1100"></div>
+          <div class="shot"><img src="{{img.src}}" alt="{{alt}}" loading="lazy" width="{{img.w}}" height="{{img.h}}"></div>
           <div class="veil" aria-hidden="true"></div>
           <div class="card-copy">
             <p class="card-label">{{label}}</p>
@@ -602,14 +602,14 @@ body.loading{overflow:hidden}
 <!-- 6. TRANSITION -------------------------------------------------------- -->
 <section class="scene trans" aria-label="{{transition.line1}} {{transition.line2}}">
   <div class="stage trans-stage on-primary">
-    <span class="motif md" style="top:9%;right:8%;transform:rotate(-12deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <span class="motif sm" style="top:24%;left:7%;transform:rotate(30deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
-    <img class="trans-muse" id="transMuse" src="{{derived.museSrc}}" alt="" aria-hidden="true" width="600" height="820">
+    <span class="motif md" style="top:9%;right:8%;transform:rotate(-12deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <span class="motif sm" style="top:24%;left:7%;transform:rotate(30deg)" data-float="1" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
+    <img class="trans-muse" id="transMuse" src="{{derived.muse.src}}" alt="" aria-hidden="true" width="{{derived.muse.w}}" height="{{derived.muse.h}}">
     <h2 class="trans-title" id="transTitle">
       <span>{{transition.line1}}</span>
       <span>{{transition.line2}}</span>
     </h2>
-    <img class="trans-can cutout" id="transCan" src="{{derived.transition.productSrc}}" alt="{{transition.product.alt}}" width="320" height="640">
+    <img class="trans-can cutout" id="transCan" src="{{derived.transition.product.src}}" alt="{{transition.product.alt}}" width="{{derived.transition.product.w}}" height="{{derived.transition.product.h}}">
     <div class="wave" id="wave" aria-hidden="true">
       <svg viewBox="0 0 1440 620" preserveAspectRatio="none" focusable="false">
         <path d="M0 208C240 58 508 0 720 0s480 58 720 208v412H0Z" fill="currentColor"/>
@@ -632,7 +632,7 @@ body.loading{overflow:hidden}
       {{#range.products}}
       <article class="p-card anim" data-reveal-card style="background:{{tint}}">
         <p class="p-idx">{{@n}} / {{name}}</p>
-        <img class="p-shot cutout" src="{{src}}" alt="{{alt}}" loading="lazy" width="320" height="640">
+        <img class="p-shot cutout" src="{{img.src}}" alt="{{alt}}" loading="lazy" width="{{img.w}}" height="{{img.h}}">
         <div class="p-body">
           <h3 class="p-name">{{name}}</h3>
           {{#subtitle}}<p class="p-sub serif">{{subtitle}}</p>{{/subtitle}}
@@ -659,7 +659,7 @@ body.loading{overflow:hidden}
     <div class="ing-grid">
       {{#ingredients.cards}}
       <article class="ing-card anim" data-reveal-card>
-        <span class="ing-ico" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
+        <span class="ing-ico" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
         <h3>{{title}}</h3>
         <p>{{body}}</p>
       </article>
@@ -692,7 +692,7 @@ body.loading{overflow:hidden}
 <!-- 10. STORY ------------------------------------------------------------ -->
 <section class="story on-deep" id="{{derived.ids.story}}">
   <div class="story-shot" id="storyShot">
-    <img src="{{derived.story.src}}" alt="{{story.alt}}" loading="lazy" width="900" height="1100">
+    <img src="{{derived.story.shot.src}}" alt="{{story.alt}}" loading="lazy" width="{{derived.story.shot.w}}" height="{{derived.story.shot.h}}">
   </div>
   <div class="story-copy">
     <p class="eyebrow anim" data-reveal>{{story.eyebrow}}</p>
@@ -737,10 +737,10 @@ body.loading{overflow:hidden}
 {{#find.enabled}}
 <!-- 13. FIND / CLOSING CTA ----------------------------------------------- -->
 <section class="find on-light" id="{{derived.ids.find}}">
-  <span class="motif md" style="top:12%;left:7%;transform:rotate(-16deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrcInk}}" alt=""></span>
-  <span class="motif sm" style="top:24%;right:11%;transform:rotate(26deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrcInk}}" alt=""></span>
-  <span class="motif tiny" style="bottom:18%;left:18%;transform:rotate(14deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifSrcInk}}" alt=""></span>
-  <img class="find-muse" src="{{derived.museSrcInk}}" alt="" aria-hidden="true" loading="lazy" width="600" height="820">
+  <span class="motif md" style="top:12%;left:7%;transform:rotate(-16deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifInk.src}}" alt="" width="{{derived.motifInk.w}}" height="{{derived.motifInk.h}}"></span>
+  <span class="motif sm" style="top:24%;right:11%;transform:rotate(26deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifInk.src}}" alt="" width="{{derived.motifInk.w}}" height="{{derived.motifInk.h}}"></span>
+  <span class="motif tiny" style="bottom:18%;left:18%;transform:rotate(14deg)" data-float="1" aria-hidden="true"><img src="{{derived.motifInk.src}}" alt="" width="{{derived.motifInk.w}}" height="{{derived.motifInk.h}}"></span>
+  <img class="find-muse" src="{{derived.museInk.src}}" alt="" aria-hidden="true" loading="lazy" width="{{derived.museInk.w}}" height="{{derived.museInk.h}}">
   <div class="wrap find-in">
     <h2 class="find-h anim" data-reveal>{{{derived.find.headingHtml}}}</h2>
     <p class="find-b anim" data-reveal>{{find.body}}</p>
@@ -757,7 +757,7 @@ body.loading{overflow:hidden}
       <path d="M0 0c240 74 508 96 720 96s480-22 720-96Z" fill="currentColor"/>
     </svg>
   </div>
-  <span class="motif corner" aria-hidden="true"><img src="{{derived.motifSrc}}" alt=""></span>
+  <span class="motif corner" aria-hidden="true"><img src="{{derived.motif.src}}" alt="" width="{{derived.motif.w}}" height="{{derived.motif.h}}"></span>
   <div class="wrap footer-in">
     <div class="footer-top">
       <div>

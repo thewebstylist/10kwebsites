@@ -43,6 +43,8 @@ tools/
   render.js           ~120-line Mustache subset, no dependencies
   assets.js           procedural SVG kit: motifs, packages, illustration, photos
   fetch-fonts.js      self-hosts the web fonts from npm
+  art.js              image prompts out, finished photography in
+  imagesize.js        intrinsic dimensions, so no <img> shifts the layout
   serve.js            static preview server
   verify.js           drives every built brand in a real browser
 docs/BRIEF.md         the questions that fill in a brand file
@@ -78,6 +80,71 @@ build prints what it stood in for:
 ```
 
 Drop the real files at those paths and rebuild. Nothing else changes.
+
+### Real photography
+
+The drifting background motifs are meant to stay as generated SVG. The foreground
+is where real pictures belong: the product cut-outs above all, then the three
+lifestyle cards and the story panel.
+
+Two ways in, and they meet at the same command.
+
+**If the client supplies the images.** Put them anywhere, named by slot id, and
+ingest the folder:
+
+```bash
+node tools/art.js brands/aurello.json --plan          # lists the slot ids
+node tools/art.js brands/aurello.json --ingest ./from-client
+node build.js brands/aurello.json --inline
+```
+
+Ingest trims the dead space around a cut-out, crops and resizes photographs to
+the box the page actually paints, converts to the target format, and writes the
+paths back into the brand file. It refuses an opaque image in a cut-out slot
+rather than writing a picture that will read as a white box, and it says when
+something is too small, too heavy, or losing most of its frame to the crop.
+
+**If the images are to be generated.** `--plan` writes one prompt per slot, built
+from the brand's own palette, category, product names and card copy, and prints
+the cost before anything is spent:
+
+```bash
+node tools/art.js brands/aurello.json --plan
+```
+
+```
+Aurello — 7 image slots
+model nano_banana_pro at 2k, 2 credits each, 14 credits for the set
+
+── product-orange-spritz  [product, needs background removed]  2:3  -> spritz-assets/aurello-can.png
+   Studio packshot of a single can of Aurello Orange Spritz, a ready-to-drink
+   aperitivo. The can is vivid orange-red with a cream label band. Upright,
+   centred, very slight three-quarter turn so one edge catches the light. …
+```
+
+Colours are described in words rather than hex, because `#f04a24` means nothing to
+an image model and "vivid orange-red" means exactly the right thing. Generate each
+prompt, put the results in a JSON map of slot id to URL or path, and ingest that:
+
+```bash
+node tools/art.js brands/aurello.json --ingest results.json
+```
+
+Product slots need their background removed between generation and ingest. Shape
+the prompt to make that easy — a flat, contrasting, seamless backdrop, the whole
+product inside the frame with margin — which is what the generated prompts already
+ask for.
+
+Tune the look with the `art` block: `style` is one sentence of film stock, light
+and time of day that gets appended to every prompt; `background` is what product
+shots stand on; `negative` is what must never appear. Any slot can carry its own
+`prompt` to override the generated one.
+
+`--audit` checks what is already wired in:
+
+```bash
+node tools/art.js brands/aurello.json --audit
+```
 
 ### Colour
 

@@ -1,0 +1,75 @@
+{
+  "brand": "Aurello",
+  "brandFile": "brands/aurello.json",
+  "model": "nano_banana_pro",
+  "resolution": "2k",
+  "creditsPerImage": 2,
+  "slots": [
+    {
+      "id": "product-orange-spritz",
+      "kind": "product",
+      "label": "Orange Spritz",
+      "target": "spritz-assets/aurello-can.png",
+      "writesTo": null,
+      "aspect": "2:3",
+      "cutout": true,
+      "prompt": "Studio packshot of a single can of Aurello Orange Spritz, a ready-to-drink aperitivo. The can is vivid orange-red with a cream label band. Upright, centred, very slight three-quarter turn so one edge catches the light. The whole product is inside the frame with generous empty space on every side, nothing cropped or touching an edge. Plain seamless studio backdrop in a flat mid tone that contrasts the product, so the subject cuts out cleanly. Large soft key light from the upper left, gentle falloff, one crisp specular highlight down the edge, soft contact shadow directly under the base. Sharp throughout, high material detail, commercial product photography. Shot on 35mm colour film in the last hour of daylight, warm and slightly overexposed, with real grain and gentle halation on the highlights. Colour world: vivid orange-red dominant, cream in the light, deep wine red in the shadows. Warm, sun-soaked, editorial. Real photographic grain, no plastic render sheen. No text, no lettering, no logos, no watermark, no extra props."
+    },
+    {
+      "id": "product-lemon-mint",
+      "kind": "product",
+      "label": "Lemon & Mint",
+      "target": "spritz-assets/aurello-lemon-mint.png",
+      "writesTo": null,
+      "aspect": "2:3",
+      "cutout": true,
+      "prompt": "Studio packshot of a single can of Aurello Lemon & Mint, a ready-to-drink aperitivo. The can is vivid yellow with a cream label band. Upright, centred, very slight three-quarter turn so one edge catches the light. The whole product is inside the frame with generous empty space on every side, nothing cropped or touching an edge. Plain seamless studio backdrop in a flat mid tone that contrasts the product, so the subject cuts out cleanly. Large soft key light from the upper left, gentle falloff, one crisp specular highlight down the edge, soft contact shadow directly under the base. Sharp throughout, high material detail, commercial product photography. Shot on 35mm colour film in the last hour of daylight, warm and slightly overexposed, with real grain and gentle halation on the highlights. Colour world: vivid orange-red dominant, cream in the light, deep wine red in the shadows. Warm, sun-soaked, editorial. Real photographic grain, no plastic render sheen. No text, no lettering, no logos, no watermark, no extra props."
+    },
+    {
+      "id": "product-pink-grapefruit",
+      "kind": "product",
+      "label": "Pink Grapefruit",
+      "target": "spritz-assets/aurello-pink-grapefruit.png",
+      "writesTo": null,
+      "aspect": "2:3",
+      "cutout": true,
+      "prompt": "Studio packshot of a single can of Aurello Pink Grapefruit, a ready-to-drink aperitivo. The can is rose pink with a cream label band. Upright, centred, very slight three-quarter turn so one edge catches the light. The whole product is inside the frame with generous empty space on every side, nothing cropped or touching an edge. Plain seamless studio backdrop in a flat mid tone that contrasts the product, so the subject cuts out cleanly. Large soft key light from the upper left, gentle falloff, one crisp specular highlight down the edge, soft contact shadow directly under the base. Sharp throughout, high material detail, commercial product photography. Shot on 35mm colour film in the last hour of daylight, warm and slightly overexposed, with real grain and gentle halation on the highlights. Colour world: vivid orange-red dominant, cream in the light, deep wine red in the shadows. Warm, sun-soaked, editorial. Real photographic grain, no plastic render sheen. No text, no lettering, no logos, no watermark, no extra props."
+    },
+    {
+      "id": "shot-1",
+      "kind": "photo",
+      "label": "SIX CHAIRS, NINE PEOPLE",
+      "target": "spritz-assets/meeting.jpg",
+      "writesTo": null,
+      "aspect": "4:5",
+      "prompt": "Editorial lifestyle photograph for a ready-to-drink aperitivo brand. SIX CHAIRS, NINE PEOPLE. Somebody drags over a bench, somebody else opens another four. The food is late and nobody minds. Vertical framing, subject in the lower two thirds. Candid and unposed, real people at ease, natural light, shallow depth of field, 35mm. Shot late in the day when the light goes warm and long. Shot on 35mm colour film in the last hour of daylight, warm and slightly overexposed, with real grain and gentle halation on the highlights. Colour world: vivid orange-red dominant, cream in the light, deep wine red in the shadows. Warm, sun-soaked, editorial. Real photographic grain, no plastic render sheen. No text, no lettering, no logos, no watermark, no extra props."
+    },
+    {
+      "id": "shot-2",
+      "kind": "photo",
+      "label": "FIVE O'CLOCK, ROUGHLY",
+      "target": "spritz-assets/work.jpg",
+      "writesTo": null,
+      "aspect": "4:5",
+      "prompt": "Editorial lifestyle photograph for a ready-to-drink aperitivo brand. FIVE O'CLOCK, ROUGHLY. Laptops shut, shoes off, the light going amber across the terrace. The working day ends on the first crack. Vertical framing, subject in the lower two thirds. Candid and unposed, real people at ease, natural light, shallow depth of field, 35mm. Shot late in the day when the light goes warm and long. Shot on 35mm colour film in the last hour of daylight, warm and slightly overexposed, with real grain and gentle halation on the highlights. Colour world: vivid orange-red dominant, cream in the light, deep wine red in the shadows. Warm, sun-soaked, editorial. Real photographic grain, no plastic render sheen. No text, no lettering, no logos, no watermark, no extra props."
+    },
+    {
+      "id": "shot-3",
+      "kind": "photo",
+      "label": "STAY FOR ANOTHER",
+      "target": "spritz-assets/portrait.jpg",
+      "writesTo": null,
+      "aspect": "4:5",
+      "prompt": "Editorial lifestyle photograph for a ready-to-drink aperitivo brand. STAY FOR ANOTHER. The plan was one drink. The plan is now dinner. Cold can, no ice run, no negotiation. Vertical framing, subject in the lower two thirds. Candid and unposed, real people at ease, natural light, shallow depth of field, 35mm. Shot late in the day when the light goes warm and long. Shot on 35mm colour film in the last hour of daylight, warm and slightly overexposed, with real grain and gentle halation on the highlights. Colour world: vivid orange-red dominant, cream in the light, deep wine red in the shadows. Warm, sun-soaked, editorial. Real photographic grain, no plastic render sheen. No text, no lettering, no logos, no watermark, no extra props."
+    },
+    {
+      "id": "shot-story",
+      "kind": "story",
+      "label": "THE SPARK OF *TOGETHER*",
+      "target": "spritz-assets/meeting.jpg",
+      "writesTo": null,
+      "aspect": "4:5",
+      "prompt": "Editorial lifestyle photograph for a ready-to-drink aperitivo brand. THE SPARK OF TOGETHER. Aurello started at a borrowed table on a borrowed terrace, in that hour where the light goes orange and nobody wants to be the first to leave. The drinks took too long to make, so someone always missed the good part while they were inside stirring. Wider framing with room for the scene to breathe. Candid and unposed, real people at ease, natural light, shallow depth of field, 35mm. Shot late in the day when the light goes warm and long. Shot on 35mm colour film in the last hour of daylight, warm and slightly overexposed, with real grain and gentle halation on the highlights. Colour world: vivid orange-red dominant, cream in the light, deep wine red in the shadows. Warm, sun-soaked, editorial. Real photographic grain, no plastic render sheen. No text, no lettering, no logos, no watermark, no extra props."
+    }
+  ]
+}

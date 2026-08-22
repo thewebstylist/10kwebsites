@@ -6,11 +6,15 @@
   "license": "MIT",
   "scripts": {
     "build": "node build.js --inline",
+    "art": "node tools/art.js",
     "serve": "node tools/serve.js dist/aurello 4173",
     "fonts": "node tools/fetch-fonts.js",
     "verify": "node build.js --inline && node tools/verify.js"
   },
   "devDependencies": {
     "playwright": "^1.49.0"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.34.0"
   }
 }

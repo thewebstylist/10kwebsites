@@ -45,6 +45,16 @@
     "motif": ""
   },
 
+  "art": {
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "style": "",
+    "background": "studio backdrop",
+    "negative": "No text, no lettering, no logos, no watermark, no extra props.",
+    "muse": false,
+    "musePrompt": ""
+  },
+
   "nav": {
     "links": [],
     "cta": { "label": "", "href": "#find" }

@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const { render } = require('./tools/render');
+const { imageSize } = require('./tools/imagesize');
 const kit = require('./tools/assets');
 
 const ROOT = __dirname;
@@ -72,13 +73,22 @@ const warn = (m) => { warnings.push(m); };
 function makeSlotResolver(configDir, outAssets, writeAssets) {
   const written = new Set();
 
+  /* an image slot is {src, w, h}: the path plus the real intrinsic box, so the
+     browser reserves the right space and swapping an SVG for a photo of a
+     different shape never shifts the layout */
+  function slot(src, file) {
+    const dim = file ? imageSize(file) : null;
+    return { src, w: dim ? dim.width : '', h: dim ? dim.height : '' };
+  }
+
   function write(name, svg) {
-    if (!writeAssets) return 'assets/' + name;
+    const dest = path.join(outAssets, name);
+    if (!writeAssets) return slot('assets/' + name, fs.existsSync(dest) ? dest : null);
     if (!written.has(name)) {
-      fs.writeFileSync(path.join(outAssets, name), svg);
+      fs.writeFileSync(dest, svg);
       written.add(name);
     }
-    return 'assets/' + name;
+    return slot('assets/' + name, dest);
   }
 
   function copyReal(rel) {
@@ -87,11 +97,12 @@ function makeSlotResolver(configDir, outAssets, writeAssets) {
     const found = candidates.find((p) => fs.existsSync(p) && fs.statSync(p).isFile());
     if (!found) { missingAssets.push(rel); return null; }
     const name = path.basename(found);
+    const dest = path.join(outAssets, name);
     if (writeAssets && !written.has(name)) {
-      fs.copyFileSync(found, path.join(outAssets, name));
+      fs.copyFileSync(found, dest);
       written.add(name);
     }
-    return 'assets/' + name;
+    return slot('assets/' + name, fs.existsSync(dest) ? dest : found);
   }
 
   return { write, copyReal };
@@ -112,10 +123,10 @@ function derive(cfg, slots) {
      grounds and one for the colour blocks. A supplied file wins in both. */
   const realMotif = slots.copyReal(cfg.assets.motif);
   const realMuse = slots.copyReal(cfg.assets.muse);
-  const motifSrc = realMotif || slots.write('motif-light.svg', kit.motif(t.motif, colors.cream));
-  const motifSrcInk = realMotif || slots.write('motif-ink.svg', kit.motif(t.motif, colors.primary));
-  const museSrc = realMuse || slots.write('muse-light.svg', kit.muse(colors.cream));
-  const museSrcInk = realMuse || slots.write('muse-ink.svg', kit.muse(colors.primary));
+  const motif = realMotif || slots.write('motif-light.svg', kit.motif(t.motif, colors.cream));
+  const motifInk = realMotif || slots.write('motif-ink.svg', kit.motif(t.motif, colors.primary));
+  const muse = realMuse || slots.write('muse-light.svg', kit.muse(colors.cream));
+  const museInk = realMuse || slots.write('muse-ink.svg', kit.muse(colors.primary));
 
   /* products ---------------------------------------------------------- */
   const tints = [0, 1, 2].map((i) => (t.tints && t.tints[i]) || mix(colors.cream, colors.primary, 0.1 + i * 0.06));
@@ -126,7 +137,7 @@ function derive(cfg, slots) {
     const item = Object.assign({}, p, {
       tint,
       alt: p.alt || `${cfg.brand.name} ${p.name}`,
-      src: (p.image && slots.copyReal(p.image)) || slots.write(`product-${slug(p.name) || i + 1}.svg`, kit.product({
+      img: (p.image && slots.copyReal(p.image)) || slots.write(`product-${slug(p.name) || i + 1}.svg`, kit.product({
         shape: p.shape || 'can',
         body,
         ink: p.labelColor || mix(body, colors.deep, 0.4),
@@ -151,7 +162,7 @@ function derive(cfg, slots) {
       if (real) return real;
     }
     const ref = products[spec.productIndex || 0];
-    if (ref && !spec.shape && !spec.tint) return ref.src;
+    if (ref && !spec.shape && !spec.tint) return ref.img;
     const body = spec.tint || colors.primary;
     return slots.write(`product-scene-${key}.svg`, kit.product({
       shape: spec.shape || 'can',
@@ -171,7 +182,7 @@ function derive(cfg, slots) {
   /* photography slots ------------------------------------------------- */
   cfg.lifestyle.cards = (cfg.lifestyle.cards || []).map((c, i) => Object.assign({}, c, {
     alt: c.alt || c.headline || 'Lifestyle image',
-    src: (c.image && slots.copyReal(c.image)) || slots.write(`shot-${i + 1}.svg`, kit.photo({
+    img: (c.image && slots.copyReal(c.image)) || slots.write(`shot-${i + 1}.svg`, kit.photo({
       label: c.label || c.headline,
       seed: (c.headline || '') + i,
       base: tints[i % tints.length],
@@ -181,7 +192,7 @@ function derive(cfg, slots) {
     }))
   }));
 
-  const storySrc = (cfg.story.image && slots.copyReal(cfg.story.image)) ||
+  const storyShot = (cfg.story.image && slots.copyReal(cfg.story.image)) ||
     slots.write('shot-story.svg', kit.photo({
       label: cfg.story.eyebrow || cfg.brand.name,
       seed: 'story-' + cfg.brand.name,
@@ -229,14 +240,14 @@ function derive(cfg, slots) {
     ids: IDS,
     rgb: { primary: hexToRgb(colors.primary), cream: hexToRgb(colors.cream), deep: hexToRgb(colors.deep) },
     tints,
-    motifSrc, motifSrcInk, museSrc, museSrcInk,
+    motif, motifInk, muse, museInk,
     nav: { left: links.slice(0, half), right: links.slice(half) },
-    hero: { productSrc: sceneProduct(cfg.hero.product || {}, 'hero') },
-    intro: { productSrc: sceneProduct(cfg.intro.product || {}, 'intro'), headingHtml: emphasise(cfg.intro.heading) },
-    transition: { productSrc: sceneProduct(cfg.transition.product || {}, 'transition') },
+    hero: { product: sceneProduct(cfg.hero.product || {}, 'hero') },
+    intro: { product: sceneProduct(cfg.intro.product || {}, 'intro'), headingHtml: emphasise(cfg.intro.heading) },
+    transition: { product: sceneProduct(cfg.transition.product || {}, 'transition') },
     range: { headingHtml: emphasise(cfg.range.heading) },
     ingredients: { headingHtml: emphasise(cfg.ingredients.heading) },
-    story: { src: storySrc, headingHtml: emphasise(cfg.story.heading) },
+    story: { shot: storyShot, headingHtml: emphasise(cfg.story.heading) },
     faq: { headingHtml: emphasise(cfg.faq.heading) },
     find: { headingHtml: emphasise(cfg.find.heading) },
     marquee

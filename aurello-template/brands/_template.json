@@ -23,6 +23,13 @@
 
   "assets": { "muse": "", "motif": "" },
 
+  "art": {
+    "style": "",
+    "background": "studio backdrop",
+    "model": "nano_banana_pro",
+    "resolution": "2k"
+  },
+
   "nav": {
     "links": [
       { "label": "", "href": "#intro" },
@@ -58,9 +65,9 @@
     "scrollHeight": "380vh",
     "copy": ["", "*  *", "", "", "*  *"],
     "cards": [
-      { "label": "01 — ", "headline": "", "body": "", "image": "", "alt": "" },
-      { "label": "02 — ", "headline": "", "body": "", "image": "", "alt": "" },
-      { "label": "03 — ", "headline": "", "body": "", "image": "", "alt": "" }
+      { "label": "01 — ", "headline": "", "body": "", "image": "", "alt": "", "prompt": "" },
+      { "label": "02 — ", "headline": "", "body": "", "image": "", "alt": "", "prompt": "" },
+      { "label": "03 — ", "headline": "", "body": "", "image": "", "alt": "", "prompt": "" }
     ]
   },
 
@@ -76,9 +83,9 @@
     "heading": "",
     "body": "",
     "products": [
-      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "" },
-      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "" },
-      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "" }
+      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "", "prompt": "" },
+      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "", "prompt": "" },
+      { "name": "", "subtitle": "", "meta": "", "shape": "can", "color": "", "tint": "", "image": "", "alt": "", "prompt": "" }
     ]
   },
 
@@ -109,7 +116,8 @@
     "paragraphs": ["", ""],
     "cta": { "label": "", "href": "#find" },
     "image": "",
-    "alt": ""
+    "alt": "",
+    "prompt": ""
   },
 
   "marquee": { "text": "", "flourish": "✦", "repeat": 6 },
