@@ -1,0 +1,148 @@
+{
+  "_comment": "Defaults merged UNDER every brand file. A brand only overrides what it changes.",
+
+  "meta": {
+    "lang": "en",
+    "title": "",
+    "description": "",
+    "themeColor": "",
+    "ogImage": ""
+  },
+
+  "brand": {
+    "name": "",
+    "wordmark": "",
+    "tagline": "",
+    "category": "",
+    "fictional": false,
+    "disclosure": ""
+  },
+
+  "theme": {
+    "motif": "slice",
+    "useLocalFonts": true,
+    "fontsUrl": "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@600&family=DM+Sans:opsz,wght@9..40,400;9..40,500&family=Roboto+Slab:wght@300;400&display=swap",
+    "fonts": {
+      "display": "\"Bebas Neue\", \"Oswald\", \"Haettenschweiler\", \"Arial Narrow\", sans-serif",
+      "serif": "\"Roboto Slab\", \"Georgia\", \"Times New Roman\", serif",
+      "body": "\"DM Sans\", \"Helvetica Neue\", system-ui, -apple-system, Arial, sans-serif",
+      "script": "\"Caveat\", \"Segoe Script\", \"Brush Script MT\", cursive"
+    },
+    "colors": {
+      "primary": "#f04a24",
+      "cream": "#fff3d8",
+      "deep": "#731f17",
+      "soft": "#ffe0cb"
+    },
+    "tints": ["#cfe0ef", "#f8d3da", "#fbe5a6"],
+    "radius": "28px",
+    "maxWidth": "1280px",
+    "grain": true
+  },
+
+  "assets": {
+    "muse": "",
+    "motif": ""
+  },
+
+  "art": {
+    "model": "nano_banana_pro",
+    "resolution": "2k",
+    "style": "",
+    "background": "studio backdrop",
+    "negative": "No text, no lettering, no logos, no watermark, no extra props.",
+    "muse": false,
+    "musePrompt": ""
+  },
+
+  "nav": {
+    "links": [],
+    "cta": { "label": "", "href": "#find" }
+  },
+
+  "loader": { "enabled": true, "duration": 2.0 },
+
+  "hero": {
+    "enabled": true,
+    "line1": "",
+    "line2": "",
+    "support": "",
+    "scrollLabel": "SCROLL",
+    "product": { "image": "", "alt": "", "productIndex": 0 },
+    "scrollHeight": "400vh"
+  },
+
+  "intro": {
+    "enabled": true,
+    "eyebrow": "",
+    "heading": "",
+    "body": "",
+    "cta": { "label": "", "href": "#range" },
+    "product": { "image": "", "alt": "", "productIndex": 0 },
+    "scrollHeight": "320vh"
+  },
+
+  "lifestyle": {
+    "enabled": true,
+    "copy": [],
+    "cards": [],
+    "scrollHeight": "380vh"
+  },
+
+  "transition": {
+    "enabled": true,
+    "line1": "",
+    "line2": "",
+    "product": { "image": "", "alt": "", "productIndex": 0 },
+    "scrollHeight": "300vh"
+  },
+
+  "range": {
+    "enabled": true,
+    "eyebrow": "",
+    "heading": "",
+    "body": "",
+    "products": []
+  },
+
+  "ingredients": {
+    "enabled": true,
+    "eyebrow": "",
+    "heading": "",
+    "body": "",
+    "cards": []
+  },
+
+  "steps": { "enabled": true, "eyebrow": "", "heading": "", "items": [] },
+
+  "story": {
+    "enabled": true,
+    "eyebrow": "",
+    "heading": "",
+    "paragraphs": [],
+    "cta": { "label": "", "href": "#find" },
+    "image": "",
+    "alt": ""
+  },
+
+  "marquee": { "enabled": true, "text": "", "flourish": "✦", "repeat": 6 },
+
+  "faq": { "enabled": true, "eyebrow": "", "heading": "", "intro": "", "items": [] },
+
+  "find": {
+    "enabled": true,
+    "heading": "",
+    "body": "",
+    "cta": { "label": "", "href": "#" }
+  },
+
+  "footer": {
+    "ctaLabel": "",
+    "ctaHref": "#",
+    "statement": "",
+    "columns": [],
+    "responsible": "",
+    "legal": "",
+    "backToTop": "BACK TO TOP"
+  }
+}

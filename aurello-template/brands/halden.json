@@ -1,0 +1,197 @@
+{
+  "_note": "Second brand on the same template. Different category, palette, motif, product shape and voice — no template edits, only this file.",
+
+  "meta": {
+    "title": "Halden — Cold-climate skincare, made of very little",
+    "description": "Halden is a Nordic skincare line built on three formulas, twelve ingredients and nothing else. Barrier Serum, Glacier Cream, Birch Cleansing Oil."
+  },
+
+  "brand": {
+    "name": "Halden",
+    "wordmark": "Halden°",
+    "tagline": "Cold climate · short ingredient lists · nothing you cannot pronounce",
+    "category": "Nordic skincare",
+    "fictional": true,
+    "disclosure": "Halden is a concept brand created for design purposes."
+  },
+
+  "theme": {
+    "motif": "leaf",
+    "colors": {
+      "primary": "#3f5f4f",
+      "cream": "#f4efe4",
+      "deep": "#1e2b24",
+      "soft": "#e2e7dd"
+    },
+    "tints": ["#dfe6dd", "#efe3d3", "#d8e0e6"],
+    "radius": "20px",
+    "maxWidth": "1240px",
+    "grain": true
+  },
+
+  "nav": {
+    "links": [
+      { "label": "The Routine", "href": "#intro" },
+      { "label": "Formulas", "href": "#range" },
+      { "label": "Inside", "href": "#inside" },
+      { "label": "How to Use", "href": "#serve" },
+      { "label": "Our Story", "href": "#story" }
+    ],
+    "cta": { "label": "Stockists", "href": "#find" }
+  },
+
+  "loader": { "enabled": true, "duration": 1.8 },
+
+  "hero": {
+    "line1": "THE COLD",
+    "line2": "MONTHS",
+    "support": "Cold climate · short ingredient lists · nothing you cannot pronounce",
+    "scrollLabel": "SCROLL",
+    "scrollHeight": "380vh",
+    "product": { "productIndex": 0, "alt": "Halden Barrier Serum bottle" }
+  },
+
+  "intro": {
+    "eyebrow": "THREE FORMULAS, TWELVE INGREDIENTS",
+    "heading": "LESS. BUT *BETTER.*",
+    "body": "Most shelves are full of things doing very little in large quantities. Halden runs the other way: three formulas, twelve ingredients between them, each one at a dose that actually does the work. Nothing added to make the label longer.",
+    "cta": { "label": "See the formulas", "href": "#range" },
+    "scrollHeight": "300vh",
+    "product": { "productIndex": 0, "alt": "Halden Barrier Serum turning through the light" }
+  },
+
+  "lifestyle": {
+    "scrollHeight": "360vh",
+    "copy": [
+      "DARK MORNINGS.",
+      "*Dry indoor air.*",
+      "SIX MONTHS OF",
+      "WIND OFF THE WATER.",
+      "*Skin notices.*"
+    ],
+    "cards": [
+      { "label": "01 — THE COMMUTE", "headline": "MINUS ELEVEN, STILL DARK", "body": "Cold outside, forced air inside, and eight hours between the two. The barrier takes the whole of it." },
+      { "label": "02 — THE LONG WINTER", "headline": "MONTH FOUR OF SIX", "body": "By February the usual routine has stopped working. This is the point Halden was formulated for." },
+      { "label": "03 — THE THAW", "headline": "LIGHT COMES BACK", "body": "Skin recovers faster than people expect, given the right three things and none of the rest." }
+    ]
+  },
+
+  "transition": {
+    "line1": "QUIET FORMULAS.",
+    "line2": "REAL DOSES.",
+    "scrollHeight": "280vh",
+    "product": { "productIndex": 1, "alt": "Halden Glacier Cream jar" }
+  },
+
+  "range": {
+    "eyebrow": "THE HALDEN RANGE",
+    "heading": "THREE STEPS, *NO MORE*",
+    "body": "Cleanse, repair, protect. Everything else on a bathroom shelf is either one of these three wearing a different label, or nothing at all.",
+    "products": [
+      {
+        "name": "Barrier Serum",
+        "subtitle": "Niacinamide at 5%, panthenol, oat lipids. Repairs what winter takes.",
+        "meta": "30ml · Morning and night",
+        "shape": "bottle",
+        "color": "#3f5f4f",
+        "tint": "#dfe6dd",
+        "alt": "Halden Barrier Serum bottle"
+      },
+      {
+        "name": "Glacier Cream",
+        "subtitle": "Squalane and shea, whipped light. Holds moisture through dry indoor air.",
+        "meta": "50ml · Night, or a cold morning",
+        "shape": "jar",
+        "color": "#8fa7b8",
+        "tint": "#d8e0e6",
+        "alt": "Halden Glacier Cream jar"
+      },
+      {
+        "name": "Birch Cleansing Oil",
+        "subtitle": "Birch sap and sunflower oil. Lifts the day off without stripping anything.",
+        "meta": "150ml · Evening",
+        "shape": "bottle",
+        "color": "#c08a4e",
+        "tint": "#efe3d3",
+        "alt": "Halden Birch Cleansing Oil bottle"
+      }
+    ]
+  },
+
+  "ingredients": {
+    "eyebrow": "WHAT IS INSIDE",
+    "heading": "TWELVE THINGS, *COUNTED*",
+    "body": "Every ingredient is listed at its real percentage on the carton. If something is in there at a level too low to work, it is not in there.",
+    "cards": [
+      { "title": "Cold-Pressed Lipids", "body": "Oat and sunflower lipids pressed without heat, so the fatty acids that rebuild the barrier arrive intact." },
+      { "title": "Named Actives", "body": "Niacinamide at 5%, panthenol at 3%. Printed on the box, because a percentage you cannot see is a claim, not a dose." },
+      { "title": "Nothing Decorative", "body": "No fragrance, no colourant, no botanical added at 0.01% for the ingredient list. Twelve ingredients, all of them working." }
+    ]
+  },
+
+  "steps": {
+    "eyebrow": "HOW TO USE",
+    "heading": "DONE IN THREE MINUTES.",
+    "items": [
+      { "title": "Cleanse", "body": "Birch oil onto dry skin, warm water to lift it off. Once at night is enough, twice is too much." },
+      { "title": "Repair", "body": "Four drops of Barrier Serum on damp skin, pressed rather than rubbed. Give it thirty seconds." },
+      { "title": "Protect", "body": "Glacier Cream over the top, more of it in the coldest months. That is the entire routine." }
+    ]
+  },
+
+  "story": {
+    "eyebrow": "OUR STORY",
+    "heading": "MADE FOR *THE DARK HALF*",
+    "paragraphs": [
+      "Halden began in a town where the sun clears the roofline for about four hours in December, and every skincare routine anybody owned quietly stopped working around the middle of January.",
+      "So we cut the shelf down to what survives a real winter: three formulas, twelve ingredients, doses printed on the box. Everything that was there for the marketing came out."
+    ],
+    "cta": { "label": "Find a stockist", "href": "#find" }
+  },
+
+  "marquee": { "text": "CLEANSE · REPAIR · PROTECT", "flourish": "◇", "repeat": 6 },
+
+  "faq": {
+    "eyebrow": "GOOD QUESTIONS",
+    "heading": "YOUR *QUESTIONS*",
+    "intro": "The things people ask before the first order, answered without the marketing voice.",
+    "items": [
+      { "q": "Will this work on sensitive skin?", "a": "It was formulated for it. No fragrance, no essential oils, no denatured alcohol. If your skin reacts to most things, this is the shorter list." },
+      { "q": "Do I need all three?", "a": "No. The Barrier Serum does the most work and stands on its own. The other two make it last longer through a hard winter." },
+      { "q": "Why are the percentages on the box?", "a": "Because an active at an unstated dose tells you nothing. Ours are printed where you can read them before you buy." },
+      { "q": "Is the packaging recyclable?", "a": "The glass, the aluminium lids and the cartons all are. The pumps are the one part that is not yet, and we are working on it." }
+    ]
+  },
+
+  "find": {
+    "heading": "FIND HALDEN *NEAR YOU.*",
+    "body": "Stocked in independent pharmacies and skin studios across the Nordics, with more each season. Tell us where you are and we will point you at the nearest.",
+    "cta": { "label": "Find a stockist", "href": "#" }
+  },
+
+  "footer": {
+    "ctaLabel": "START WITH THE SERUM",
+    "ctaHref": "#range",
+    "statement": "Three formulas, twelve ingredients, doses printed on the box. Built for six months of wind off the water.",
+    "columns": [
+      { "title": "Shop", "links": [
+        { "label": "Barrier Serum", "href": "#range" },
+        { "label": "Glacier Cream", "href": "#range" },
+        { "label": "Birch Cleansing Oil", "href": "#range" }
+      ] },
+      { "title": "Brand", "links": [
+        { "label": "Our story", "href": "#story" },
+        { "label": "What is inside", "href": "#inside" },
+        { "label": "How to use", "href": "#serve" }
+      ] },
+      { "title": "More", "links": [
+        { "label": "Stockists", "href": "#find" },
+        { "label": "Questions", "href": "#faq" },
+        { "label": "Contact", "href": "#find" }
+      ] }
+    ],
+    "responsible": "For external use only. Patch test if your skin is reactive.",
+    "legal": "© Halden. All rights reserved.",
+    "backToTop": "BACK TO TOP"
+  }
+}
