@@ -1,0 +1,150 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#000}canvas{display:block}</style></head><body>
+<canvas id="c"></canvas>
+<script id="fs" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+uniform vec2 uRes; uniform float uT; uniform float uLoop; uniform int uMode;
+uniform vec2 uOff; uniform float uZoom; uniform float uSeed; uniform float uFrame;
+out vec4 o;
+float h21(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
+vec2 h22(vec2 p){ float n=h21(p); return vec2(n,h21(p+n+17.1)); }
+float noise(vec2 p){ vec2 i=floor(p),f=fract(p); vec2 u=f*f*(3.-2.*f);
+  return mix(mix(h21(i),h21(i+vec2(1,0)),u.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),u.x),u.y); }
+float fbm(vec2 p){ float a=.5,s=0.; mat2 m=mat2(1.6,1.2,-1.2,1.6); for(int i=0;i<6;i++){ s+=a*noise(p); p=m*p+vec2(3.1,1.7); a*=.5; } return s; }
+float fbm3(vec2 p){ float a=.5,s=0.; mat2 m=mat2(1.6,1.2,-1.2,1.6); for(int i=0;i<4;i++){ s+=a*noise(p); p=m*p+vec2(3.1,1.7); a*=.5; } return s; }
+mat2 rot(float a){ float c=cos(a),s=sin(a); return mat2(c,-s,s,c); }
+vec2 vor(vec2 x){
+  vec2 n=floor(x), f=fract(x), mg=vec2(0), mr=vec2(0); float md=8.0;
+  for(int j=-1;j<=1;j++) for(int i=-1;i<=1;i++){ vec2 g=vec2(i,j); vec2 o=h22(n+g); vec2 r=g+o-f; float d=dot(r,r); if(d<md){md=d;mr=r;mg=g;} }
+  md=8.0;
+  for(int j=-2;j<=2;j++) for(int i=-2;i<=2;i++){ vec2 g=mg+vec2(i,j); vec2 o=h22(n+g); vec2 r=g+o-f; if(dot(mr-r,mr-r)>0.00001) md=min(md, dot(0.5*(mr+r), normalize(r-mr))); }
+  return vec2(md, h21(n+mg));
+}
+float sstep(float a,float b,float x){ float t=clamp((x-a)/(b-a),0.,1.); return t*t*t*(t*(t*6.-15.)+10.); }
+float seamY(float x){ return -0.24 + 0.13*x + 0.11*(fbm3(vec2(x*1.3+uSeed,2.7))-0.5) + 0.028*(fbm3(vec2(x*7.0+uSeed,9.1))-0.5); }
+const float TAU=6.2831853;
+
+vec3 dust(vec2 s, float time, float lp, bool loopMode, float amt){
+  vec3 acc=vec3(0.);
+  for(int i=0;i<3;i++){
+    float fi=float(i);
+    float S = 7.0 + fi*6.0;
+    float cellsPerLoop = 1.0 + fi;          // integer => seamless loop
+    float fall = loopMode ? lp*cellsPerLoop : time*(0.10+0.07*fi);
+    vec2 cc = s*S + vec2(fi*13.7, fall + fi*5.3);
+    cc.x += 0.15*sin(cc.y*0.7 + fi*2.0);     // gentle sway
+    vec2 id=floor(cc), lc=fract(cc)-.5;
+    float pres = step(0.58, h21(id+fi*31.0));
+    vec2 ro=(h22(id+fi*7.0)-.5)*.7;
+    float d=length(lc-ro);
+    float r = mix(0.035,0.09,h21(id+3.3)) * (1.0 + (2.0-fi)*0.35);
+    float tw = loopMode ? 0.6+0.4*sin(TAU*(lp*(1.0+fi)+h21(id+9.1))) : 0.6+0.4*sin(time*2.2+h21(id+9.1)*TAU);
+    float core = smoothstep(r, 0.0, d);
+    float halo = smoothstep(r*3.5, 0.0, d)*0.25;
+    float depth = (fi==0.0)? 0.55 : (fi==1.0 ? 0.85 : 0.6);
+    acc += vec3(1.0,0.80,0.45)*(core*core+halo)*pres*tw*depth;
+  }
+  return acc*amt;
+}
+
+void main(){
+  vec2 frag = gl_FragCoord.xy;
+  vec2 s = (frag - 0.5*uRes)/uRes.y;          // screen, y up, height=1
+  bool loopMode = uMode!=0;
+  float t = uT;                                // hero progress 0..1
+  float lp = uLoop;                            // loop phase 0..1
+  float e = sstep(0.0,1.0,t);
+  float zoom, ang; vec2 cam; float front; float time;
+  if(!loopMode){
+    zoom = mix(1.75,1.0,e); ang = mix(-0.11,0.0,e);
+    cam = vec2(mix(-0.10,0.0,e), mix(0.55,0.0,e));
+    front = mix(-1.02, 1.35, sstep(0.10,0.86,t));
+    time = t*6.0;
+  } else {
+    zoom = uZoom; ang = 0.0; cam = uOff; front = 9.0; time = lp*8.0;
+  }
+  vec2 p = rot(ang)*s*zoom + cam;
+
+  // ---- onyx stone ----
+  vec2 q = vec2(fbm(p*1.1+uSeed), fbm(p*1.1+vec2(5.2,1.3)+uSeed));
+  float r = fbm(p*1.3 + 3.5*q + vec2(1.7,9.2));
+  float bands = 0.5+0.5*sin((p.x*0.7 + p.y*2.0 + 4.2*r)*5.0);
+  float bands2 = 0.5+0.5*sin((p.x*1.9 - p.y*0.6 + 2.5*q.x)*11.0);
+  vec3 col = mix(vec3(0.014,0.016,0.018), vec3(0.070,0.078,0.076), pow(bands,2.2)*0.8 + r*0.18);
+  col += vec3(0.020,0.022,0.021)*pow(bands2,6.0)*smoothstep(0.35,0.7,q.y);
+  float wisp = smoothstep(0.58,0.92, fbm(p*3.0+6.0*q));
+  col += vec3(0.085,0.088,0.086)*wisp*0.32;
+
+  // ---- gold veins: warped fractures ----
+  vec2 wp = p + 0.32*(vec2(fbm3(p*1.7+3.0), fbm3(p*1.7+8.0))-0.5);
+  vec2 ap = rot(0.55)*wp*vec2(1.0,2.1);           // anisotropic: elongated cracks
+  vec2 c1 = vor(ap*1.25 + 4.0);
+  float keep1 = smoothstep(0.42,0.62, noise(wp*2.2 + c1.y*9.0));
+  float th1 = 0.004 + 0.012*noise(wp*4.0);
+  float aa1 = fwidth(c1.x)*1.2;
+  float v1 = (1.0 - smoothstep(th1, th1+aa1+0.002, c1.x))*keep1;
+  float g1 = (1.0 - smoothstep(0.0, 0.12, c1.x))*keep1;
+  vec2 c2 = vor(rot(-0.3)*wp*vec2(1.0,1.6)*3.4 + 11.0);
+  float keep2 = smoothstep(0.50,0.66, noise(wp*3.1 + c2.y*7.0));
+  float aa2 = fwidth(c2.x)*1.2;
+  float v2 = (1.0 - smoothstep(0.003, 0.003+aa2+0.002, c2.x))*keep2*0.55;
+  float sd = abs(p.y - seamY(p.x));
+  float sth = 0.0035 + 0.0055*noise(vec2(p.x*5.0, 1.0));
+  float aas = fwidth(sd)*1.2;
+  float seam = 1.0 - smoothstep(sth, sth+aas+0.0015, sd);
+  float seamGlow = exp(-sd*34.0);
+
+  float lit = smoothstep(front, front-0.38, p.x);
+  float edge = exp(-pow((p.x-front)*9.0,2.0)) * step(-1.0, front);
+  vec3 gold = vec3(0.84,0.67,0.34), hot = vec3(1.0,0.93,0.72);
+
+  // light sweep (polished reflection)
+  vec2 L = loopMode ? vec2(0.55*cos(TAU*lp)+0.1, 0.35+0.08*sin(TAU*lp)) : vec2(mix(-0.9,0.55,e), mix(0.55,0.38,e));
+  float spec = pow(max(0.0, 1.0 - length(s - L)/1.15), 3.0);
+  float streakC = loopMode ? 0.25*sin(TAU*lp) : mix(-1.1, 0.35, e);
+  float streak = exp(-pow((s.x*0.45 + s.y - streakC)*3.2, 2.0));
+  col += vec3(0.62,0.66,0.70)*(spec*0.10 + streak*0.045)*(0.5+0.5*bands);
+
+  float shimmer = loopMode ? 0.75+0.25*sin(TAU*(p.x*1.2 + p.y*0.4 - lp*2.0)) : 1.0;
+  float veins = max(v1, v2);
+  vec3 latent = gold*0.12*(0.6+spec*1.2);
+  float prof = clamp(1.0 - c1.x/max(th1,1e-4), 0.0, 1.0);
+  vec3 litGold = gold*(0.62 + 0.45*prof + 1.3*spec + 0.7*streak)*shimmer;
+  col = mix(col, mix(latent, litGold, lit), veins);
+  col = mix(col, mix(gold*0.16, mix(litGold, hot, 0.25), lit), seam);
+  col += gold*(seamGlow*0.22 + g1*0.035)*lit*shimmer;
+  col += hot*edge*(seam*1.6 + seamGlow*0.9 + veins*0.9 + g1*0.08);
+
+  // ---- atmosphere ----
+  float expo = loopMode ? 1.0 : mix(0.78, 1.0, smoothstep(0.0,0.35,t));
+  float amt = loopMode ? 1.0 : mix(1.0, 0.75, t);
+  col += dust(s, time, lp, loopMode, amt*0.55);
+  col *= expo;
+  float vig = smoothstep(1.25, 0.25, length(s*vec2(0.85,1.15)));
+  col *= mix(0.42, 1.0, vig);
+  col = 1.0 - exp(-col*1.25);                 // soft shoulder
+  col += (h21(frag + uFrame*1.37)-0.5)/255.0*1.6; // dither
+  o = vec4(col,1.0);
+}
+</script>
+<script>
+const c=document.getElementById('c');
+const gl=c.getContext('webgl2',{preserveDrawingBuffer:true,antialias:false});
+function sh(t,src){const s=gl.createShader(t);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw gl.getShaderInfoLog(s);return s}
+const pr=gl.createProgram();
+gl.attachShader(pr,sh(gl.VERTEX_SHADER,'#version 300 es\nin vec2 a;void main(){gl_Position=vec4(a,0,1);}'));
+gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,document.getElementById('fs').textContent.trim()));
+gl.linkProgram(pr);if(!gl.getProgramParameter(pr,gl.LINK_STATUS))throw gl.getProgramInfoLog(pr);
+gl.useProgram(pr);
+const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+const al=gl.getAttribLocation(pr,'a');gl.enableVertexAttribArray(al);gl.vertexAttribPointer(al,2,gl.FLOAT,false,0,0);
+const U=n=>gl.getUniformLocation(pr,n);
+window.renderFrame=(o)=>{
+  if(c.width!==o.w||c.height!==o.h){c.width=o.w;c.height=o.h;gl.viewport(0,0,o.w,o.h);}
+  gl.uniform2f(U('uRes'),o.w,o.h);gl.uniform1f(U('uT'),o.t||0);gl.uniform1f(U('uLoop'),o.loop||0);
+  gl.uniform1i(U('uMode'),o.mode||0);gl.uniform2f(U('uOff'),...(o.off||[0,0]));gl.uniform1f(U('uZoom'),o.zoom||1);
+  gl.uniform1f(U('uSeed'),o.seed||0);gl.uniform1f(U('uFrame'),o.frame||0);
+  gl.drawArrays(gl.TRIANGLES,0,3);gl.finish();
+  return c.toDataURL('image/png');
+};
+window.ready=true;
+</script></body></html>
