@@ -15,8 +15,10 @@ Every line of copy below ships verbatim. Band ranges are starting points, valida
   testimonials. Every factual line comes from the live site. The two disclaimers ("There are no
   securities being offered on this website." and the S.E.C. notice) stay verbatim and prominent.
   `robots: noindex, nofollow` is preserved from the live site.
-- **Logo:** the live `logo.png` could not be fetched here, so the nav uses a drawn onyx-gem mark
-  plus a type wordmark. Swap in the real logo file at `site/assets/logo.png` when available.
+- **Logo:** the client's real marks, supplied by the user: `assets/logo-goat.png` (gold goat, nav +
+  favicon) and `assets/logo-seal.png` (the full "We put the black in onyx" seal: hero settle stamp,
+  phone hero, footer, apple-touch-icon). The seal file is 512px; a larger or vector version would
+  render sharper on retina screens.
 - **Tier:** 1, one 6 s rendered shot, 520vh hero. Phones and reduced motion get the static hero.
 - **Contact handling:** mailto (as on the live site). No backend form.
 
@@ -91,7 +93,7 @@ Same words as bands 1 to 4, stacked over the ending frame.
 - The seam: one gold SVG line that draws itself down the left margin with scroll, lighting a
   diamond node at each Article. Hidden under 1100px. Drawn in full under reduced motion.
 - The trace diagram path and nodes.
-- Onyx-gem mark (nav, favicon).
+- The seal stamp: presses into place beside the settle copy (scale + slight rotation off band 4's --k), gold ring after it lands.
 - Fixed environment: whisper-level gold dust canvas + static grain.
 
 ## 8. Engineering list
