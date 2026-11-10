@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Perihelion Space Agency | We build the ships that leave</title>
+<meta name="description" content="Perihelion builds crewed starships in orbit and flies them to every world the Sun holds. Scroll the voyage from the Meridian Yard to Saturn.">
+<meta name="theme-color" content="#05070d">
+<meta property="og:title" content="Perihelion Space Agency">
+<meta property="og:description" content="Starships assembled in orbit, crewed by people, bound for every world the Sun holds.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2305070d'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23ece6da' stroke-width='1.6'/%3E%3Ccircle cx='22.4' cy='9.6' r='2.6' fill='%23ffb35c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Martian+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">
+{ "imports": {
+  "three": "./vendor/three/three.module.min.js",
+  "three/addons/": "./vendor/three/addons/"
+} }
+</script>
+</head>
+<body class="is-loading">
+
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">
+    <svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="21" fill="none" stroke="currentColor" stroke-width="1.2"/><circle class="loader__dot" cx="47" cy="17" r="4"/></svg>
+  </div>
+  <p class="loader__text">Aligning guidance</p>
+</div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="#top" aria-label="Perihelion, back to top">
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="23.4" cy="8.6" r="2.7" fill="var(--amber)"/></svg>
+    <span>Perihelion</span>
+  </a>
+  <nav class="nav" aria-label="Primary">
+    <a href="#yard">Yard</a>
+    <a href="#voyage">Voyage</a>
+    <a href="#destinations">Destinations</a>
+    <a href="#fleet">Fleet</a>
+    <a href="#programme">Programme</a>
+  </nav>
+  <a class="btn btn--ghost" href="#crew">Join the crew</a>
+</header>
+
+<!-- Instrument frame: the signature element. Lives over the 3D voyage only. -->
+<div class="hud" id="hud" aria-hidden="true">
+  <i class="hud__corner hud__corner--tl"></i><i class="hud__corner hud__corner--tr"></i>
+  <i class="hud__corner hud__corner--bl"></i><i class="hud__corner hud__corner--br"></i>
+  <div class="telemetry">
+    <div><span>Range from Earth</span><b id="t-range">420 km</b></div>
+    <div><span>Velocity</span><b id="t-vel">7.66 km/s</b></div>
+    <div><span>Mission clock</span><b id="t-met">T+ 000d 00h 00m</b></div>
+  </div>
+  <div class="scrollcue" id="scrollcue"><span>Scroll to begin ascent</span><i></i></div>
+</div>
+
+<nav class="rail" id="rail" aria-label="Voyage chapters">
+  <button data-go="0"><span>Earth</span></button>
+  <button data-go="1"><span>Yard</span></button>
+  <button data-go="2"><span>Burn</span></button>
+  <button data-go="3"><span>Luna</span></button>
+  <button data-go="4"><span>Mars</span></button>
+  <button data-go="5"><span>Jupiter</span></button>
+  <button data-go="6"><span>Saturn</span></button>
+  <button data-go="7"><span>System</span></button>
+</nav>
+
+<div class="orrery-labels" id="orrery-labels" aria-hidden="true"></div>
+
+<main id="top">
+  <div class="voyage" id="journey">
+
+    <section class="chapter chapter--left chapter--hero" data-hold="0.5">
+      <div class="chapter__pin">
+        <div class="caption">
+          <p class="eyebrow">Perihelion Space Agency <i></i> Est. 2031 <i></i> Low Earth Orbit</p>
+          <h1 class="display display--xl" data-split>We build the ships <em>that leave.</em></h1>
+          <p class="lede">Starships assembled in orbit, crewed by people, bound for every world the Sun holds.</p>
+          <div class="cta-row">
+            <a class="btn btn--solid" href="#crew">Request a crew briefing</a>
+            <a class="btn btn--link" href="#yard">Follow one voyage <span aria-hidden="true">&darr;</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter--left" id="yard">
+      <div class="chapter__pin">
+        <div class="caption">
+          <p class="eyebrow"><b>01</b> Meridian Yard <i></i> 420 km</p>
+          <h2 class="display" data-split>Built in orbit. <em>Never on a pad.</em></h2>
+          <p class="lede">A ship that never has to survive a launch can be built for the voyage instead. Halcyon comes together in freefall, module by module, above the Pacific.</p>
+          <dl class="specs">
+            <div><dt>Length</dt><dd>214 m</dd></div>
+            <div><dt>Modules</dt><dd>61</dd></div>
+            <div><dt>Crew</dt><dd>24</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter--right" id="voyage">
+      <div class="chapter__pin">
+        <div class="caption">
+          <p class="eyebrow"><b>02</b> Departure burn <i></i> T+ 00:00</p>
+          <h2 class="display" data-split>Light the drive. <em>Let go of home.</em></h2>
+          <p class="lede">Seven fusion-thermal engines burn for eleven minutes. Earth stops being the ground and becomes a place you are from.</p>
+          <dl class="specs">
+            <div><dt>Thrust</dt><dd>2.4 MN</dd></div>
+            <div><dt>Burn</dt><dd>11 min</dd></div>
+            <div><dt>Delta-v</dt><dd>14.2 km/s</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter--left">
+      <div class="chapter__pin">
+        <div class="caption">
+          <p class="eyebrow"><b>03</b> Luna <i></i> 384,400 km <i></i> Day 3</p>
+          <h2 class="display" data-split>The first <em>harbor.</em></h2>
+          <p class="lede">We top off with lunar ice at Shackleton Station and check every system twice. Behind us, the whole of home fits behind a thumb.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter--right">
+      <div class="chapter__pin">
+        <div class="caption">
+          <p class="eyebrow"><b>04</b> Mars <i></i> 0.52 AU <i></i> Day 39</p>
+          <h2 class="display" data-split>A second sunrise, <em>thirty-nine days out.</em></h2>
+          <p class="lede">Chemical rockets take seven months. Halcyon arrives in under six weeks with a rested crew and four hundred tonnes of cargo for Arcadia Base.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter--left">
+      <div class="chapter__pin">
+        <div class="caption">
+          <p class="eyebrow"><b>05</b> Jupiter <i></i> 4.2 AU <i></i> Day 214</p>
+          <h2 class="display" data-split>Where the map <em>gets big.</em></h2>
+          <p class="lede">A storm wider than Earth turns below the hull. We ride behind a magnetic shield, steal speed from the giant, and leave a science team in orbit over Europa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter--right">
+      <div class="chapter__pin">
+        <div class="caption">
+          <p class="eyebrow"><b>06</b> Saturn <i></i> 8.5 AU <i></i> Month 19</p>
+          <h2 class="display" data-split>The long way <em>is the point.</em></h2>
+          <p class="lede">The rings fill every window from edge to edge. Titan Outpost opens in 2046. Nobody who has seen this comes home the same.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter--left chapter--system" id="destinations" data-hold="0.72">
+      <div class="chapter__pin">
+        <div class="caption caption--wide">
+          <p class="eyebrow"><b>07</b> The itinerary</p>
+          <h2 class="display" data-split>Seven ports. <em>One fleet.</em></h2>
+          <ul class="dest" id="dest">
+            <li><button data-dest="luna"><b>Luna</b><span>3 days</span><em>Shackleton Station</em><i class="st st--on">Flying now</i></button></li>
+            <li><button data-dest="mars" class="is-on"><b>Mars</b><span>39 days</span><em>Arcadia Base</em><i class="st st--on">Flying now</i></button></li>
+            <li><button data-dest="ceres"><b>Ceres</b><span>4 months</span><em>Belt fuel depot</em><i class="st">2041</i></button></li>
+            <li><button data-dest="europa"><b>Europa</b><span>7 months</span><em>Ocean science orbit</em><i class="st">2043</i></button></li>
+            <li><button data-dest="titan"><b>Titan</b><span>19 months</span><em>Titan Outpost</em><i class="st">2046</i></button></li>
+            <li><button data-dest="uranus"><b>Uranus</b><span>3.1 years</span><em>Survey flight</em><i class="st">2052</i></button></li>
+            <li><button data-dest="triton"><b>Triton</b><span>4.6 years</span><em>Neptune system</em><i class="st">2058</i></button></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- The page settles into a real site. Opaque, so the stage can reset behind it. -->
+  <div class="curtain" id="curtain">
+
+    <section class="band band--stats" aria-label="Agency in numbers">
+      <div class="wrap stats">
+        <div><b data-count="4">0</b><span>Starships in service</span></div>
+        <div><b data-count="212">0</b><span>Crew flown beyond the Moon</span></div>
+        <div><b data-count="39">0</b><span>Days, Earth to Mars</span></div>
+        <div><b data-count="0">0</b><span>Launches from the ground</span></div>
+      </div>
+    </section>
+
+    <section class="band" id="fleet">
+      <div class="wrap">
+        <header class="head reveal">
+          <p class="eyebrow"><b>08</b> The fleet</p>
+          <h2 class="display" data-split>Halcyon class. <em>Built for the dark between.</em></h2>
+          <p class="lede">One design, built four times, improved every time. Everything a crew needs for two years away, and nothing that only matters on the ground.</p>
+        </header>
+
+        <figure class="blueprint reveal" aria-label="Side view drawing of a Halcyon class starship">
+          <svg viewBox="0 0 1000 340" role="img">
+            <title>Halcyon class, side elevation</title>
+            <g class="bp-grid">
+              <path d="M0 170H1000M100 20V320M300 20V320M500 20V320M700 20V320M900 20V320"/>
+            </g>
+            <g class="bp-lines" fill="none">
+              <path pathLength="1" d="M150 170H832"/>
+              <path pathLength="1" d="M62 170Q70 138 122 136H152V204H122Q70 202 62 170Z"/>
+              <path pathLength="1" d="M92 150H128M92 190H128"/>
+              <rect pathLength="1" x="214" y="52" width="28" height="236" rx="14"/>
+              <rect pathLength="1" x="202" y="152" width="52" height="36" rx="4"/>
+              <path pathLength="1" d="M228 66V152M228 188V274"/>
+              <path pathLength="1" d="M352 170V96M352 170V244"/>
+              <rect pathLength="1" x="292" y="44" width="120" height="52"/>
+              <rect pathLength="1" x="292" y="244" width="120" height="52"/>
+              <path pathLength="1" d="M322 44V96M352 44V96M382 44V96M322 244V296M352 244V296M382 244V296"/>
+              <rect pathLength="1" x="462" y="112" width="176" height="36" rx="18"/>
+              <rect pathLength="1" x="462" y="152" width="176" height="36" rx="18"/>
+              <rect pathLength="1" x="462" y="192" width="176" height="36" rx="18"/>
+              <path pathLength="1" d="M668 136H792L770 40H690Z"/>
+              <path pathLength="1" d="M668 204H792L770 300H690Z"/>
+              <path pathLength="1" d="M700 60L684 136M730 44V136M760 60L776 136M700 280L684 204M730 296V204M760 280L776 204"/>
+              <rect pathLength="1" x="822" y="134" width="42" height="72" rx="3"/>
+              <path pathLength="1" d="M864 142L912 130V162L864 156ZM864 163L916 158V182L864 177ZM864 184L912 178V210L864 198Z"/>
+            </g>
+            <g class="bp-dim" fill="none">
+              <path d="M62 322H916M62 314V330M916 314V330"/>
+            </g>
+            <g class="bp-notes">
+              <path d="M100 136V30H112"/><text x="118" y="34">Command deck</text>
+              <path d="M228 52V30H240"/><text x="246" y="34">Habitat ring, 0.4 g</text>
+              <path d="M412 60H436"/><text x="442" y="64">Solar wings</text>
+              <path d="M550 112V84H562"/><text x="568" y="88">Six tanks</text>
+              <path d="M792 136H812V84H824"/><text x="830" y="88">Radiators</text>
+              <path d="M890 210V250"/><text x="890" y="268" text-anchor="middle">Fusion drive, 7 engines</text>
+              <text x="489" y="316" text-anchor="middle" class="bp-big">214 m</text>
+            </g>
+          </svg>
+        </figure>
+
+        <div class="ships">
+          <article class="ship reveal">
+            <p class="ship__tag"><i class="st st--on">In service</i> Flight 11</p>
+            <h3>PSV Halcyon</h3>
+            <p>First of her class. Holds the Earth to Mars record at thirty eight days, nineteen hours.</p>
+            <dl><div><dt>Keel</dt><dd>2034</dd></div><div><dt>Route</dt><dd>Mars</dd></div></dl>
+          </article>
+          <article class="ship reveal">
+            <p class="ship__tag"><i class="st st--on">In service</i> Flight 6</p>
+            <h3>PSV Calliope</h3>
+            <p>The cargo runner. Carries the reactors, greenhouses and mail that keep Arcadia Base alive.</p>
+            <dl><div><dt>Keel</dt><dd>2036</dd></div><div><dt>Route</dt><dd>Luna, Mars</dd></div></dl>
+          </article>
+          <article class="ship reveal">
+            <p class="ship__tag"><i class="st st--on">In service</i> Flight 2</p>
+            <h3>PSV Vesper</h3>
+            <p>Long range build with double shielding. Outbound to Ceres with the first depot crew.</p>
+            <dl><div><dt>Keel</dt><dd>2038</dd></div><div><dt>Route</dt><dd>Ceres</dd></div></dl>
+          </article>
+          <article class="ship reveal">
+            <p class="ship__tag"><i class="st">Fitting out</i> Meridian Yard</p>
+            <h3>PSV Tamsin</h3>
+            <p>The Europa ship. Her science deck is being installed now. Six berths are still open.</p>
+            <dl><div><dt>Keel</dt><dd>2040</dd></div><div><dt>Route</dt><dd>Europa</dd></div></dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--quote">
+      <div class="wrap">
+        <blockquote class="quote reveal">
+          <p data-split>You stop thinking of Earth as the ground. It becomes a light you can cover with your thumb, <em>and you love it more for that.</em></p>
+          <footer><b>Cmdr. Ilse Varga</b><span>PSV Halcyon, Flight 3</span></footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="band" id="programme">
+      <div class="wrap">
+        <header class="head reveal">
+          <p class="eyebrow"><b>09</b> The programme</p>
+          <h2 class="display" data-split>One port at a time, <em>all the way out.</em></h2>
+        </header>
+        <ol class="timeline">
+          <li class="reveal"><time>2031</time><h3>Meridian Yard opens</h3><p>The first permanent shipyard in orbit starts work with a crew of nine.</p></li>
+          <li class="reveal"><time>2034</time><h3>Halcyon keel laid</h3><p>Sixty one modules, three years, zero ground launches of finished hull.</p></li>
+          <li class="reveal"><time>2037</time><h3>Mars in 39 days</h3><p>First crewed fusion transit. Arcadia Base receives its founding twelve.</p></li>
+          <li class="reveal is-next"><time>2041</time><h3>Ceres depot</h3><p>Water ice from the belt becomes propellant for everything further out.</p></li>
+          <li class="reveal"><time>2043</time><h3>Europa orbit</h3><p>PSV Tamsin puts a science crew above an ocean older than our own.</p></li>
+          <li class="reveal"><time>2046</time><h3>Titan Outpost</h3><p>The first people to stand under another sky with weather in it.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="band band--steps">
+      <div class="wrap">
+        <header class="head reveal">
+          <p class="eyebrow"><b>10</b> How you fly</p>
+          <h2 class="display" data-split>From application <em>to airlock.</em></h2>
+        </header>
+        <div class="steps">
+          <article class="reveal"><span>1</span><h3>Briefing</h3><p>A one hour call with a flight director. Honest answers about risk, time away and what the work is.</p></article>
+          <article class="reveal"><span>2</span><h3>Selection</h3><p>Medical, skills and a ten day isolation trial with the people you would fly with.</p></article>
+          <article class="reveal"><span>3</span><h3>Yard year</h3><p>Twelve months building and learning the ship you will live aboard. Paid, with family housing.</p></article>
+          <article class="reveal"><span>4</span><h3>Departure</h3><p>You ride up to Meridian, take your berth, and we light the drive.</p></article>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="finale" id="crew">
+    <div class="wrap finale__grid">
+      <div class="finale__copy reveal">
+        <p class="eyebrow"><b>11</b> Crew intake 2041 <i></i> Six berths open</p>
+        <h2 class="display display--xl" data-split>Your seat <em>is being built.</em></h2>
+        <p class="lede">Pilots, geologists, cooks, surgeons, welders. Tell us who you are and a flight director will call you within ten days.</p>
+      </div>
+      <form class="form reveal" id="crew-form" novalidate>
+        <label><span>Full name</span><input type="text" name="name" autocomplete="name" required></label>
+        <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
+        <label><span>I want to</span>
+          <select name="role">
+            <option>Fly as crew</option>
+            <option>Do science aboard</option>
+            <option>Build ships at Meridian Yard</option>
+            <option>Just follow the missions</option>
+          </select>
+        </label>
+        <button class="btn btn--solid btn--wide" type="submit">Request a crew briefing</button>
+        <p class="form__note" id="form-note" role="status">No fee, no obligation. We reply to everyone.</p>
+      </form>
+    </div>
+    <footer class="footer">
+      <div class="wrap footer__row">
+        <span class="brand brand--sm">
+          <svg viewBox="0 0 32 32" width="20" height="20" aria-hidden="true"><circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="23.4" cy="8.6" r="2.7" fill="var(--amber)"/></svg>
+          Perihelion
+        </span>
+        <span>Perihelion is a fictional agency. This is a concept site, and the form does not send anything.</span>
+        <a href="#top">Back to Earth <span aria-hidden="true">&uarr;</span></a>
+      </div>
+    </footer>
+  </section>
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
