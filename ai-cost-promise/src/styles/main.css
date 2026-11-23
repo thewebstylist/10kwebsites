@@ -62,7 +62,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* No CSS smooth scrolling: GSAP's ScrollToPlugin glides in-page links (src/ui/smooth-anchors.js);
+     a CSS value here fights its per-frame scrolling and cancels the glide. */
   scroll-padding-top: var(--header-h);
   -webkit-text-size-adjust: 100%;
 }

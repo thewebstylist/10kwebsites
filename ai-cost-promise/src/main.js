@@ -17,12 +17,12 @@ import { initChoreography, refreshAll } from './ui/choreography.js';
 initCitations();
 initScenes();
 initHeader(REDUCED_MOTION);
-initSmoothAnchors(REDUCED_MOTION);
 initDivider();
 initCalculator(REDUCED_MOTION);
 initChoreography(REDUCED_MOTION);
 initCounters(REDUCED_MOTION);
 refreshAll();
+initSmoothAnchors(REDUCED_MOTION); // after triggers/pins exist, so deep links land correctly
 
 // Re-measure once web fonts settle (they shift layout slightly).
 document.fonts?.ready.then(refreshAll);
