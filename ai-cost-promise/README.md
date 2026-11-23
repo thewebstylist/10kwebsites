@@ -67,3 +67,13 @@ with the saturated hue in their glow, so they meet WCAG AA.
 
 Edit `src/data/sources.js`; citation numbers, tooltips and the Sources list regenerate
 automatically. Figures in the copy live in `index.html` next to their `data-cite` markers.
+
+## Deployment (Cloudflare Pages)
+
+Live at **https://cost-and-promise-of-ai.pages.dev**, built by Cloudflare Pages straight from GitHub
+(`thewebstylist/10kwebsites`).
+
+- Root directory `ai-cost-promise`, build command `npm run build`, output `dist`, `NODE_VERSION=22`.
+- Production branch: `claude/ai-cost-promise-site-hof814` (switch to `main` once merged).
+- Every push that touches `ai-cost-promise/` rebuilds and redeploys in about a minute.
+  Pushes to other branches get their own preview URL.
