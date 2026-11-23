@@ -24,3 +24,15 @@ These apply to every site, page, video and document made for the brand.
 - White / off-white grounds (#FFFFFF, #F7F8FC), charcoal text (#1A1A2E).
 - Softened magenta (#F2A7E3, #E77FD0) and softened blue (#8FCBF5, #4DB3EE) for large areas;
   saturated #FF3BD4 and #0599F2 only for small accents. Montserrat throughout.
+
+## Logo: always the official mark
+
+- Always use the real Sterling Creations Ai logo (the circular "SC / Ai" circuit mark with
+  STERLING / CREATIONS AI around the ring). Never redraw, recolor, approximate or replace it
+  with a placeholder icon.
+- Source of truth: https://SterlingCreations.Ai/brand-kit (the site header uses
+  `wp-content/uploads/2026/04/sterling-creations-ai-new-logo-circle-light-clean-.png`).
+- A copy lives in this repo at `reference/brand/logo/sterling-creations-ai-logo.png`
+  (transparent PNG, 716×693). It reads well on white and light backgrounds.
+- For the web, export downscaled PNG + WebP at 2× the display size (for example 96 px tall
+  for a 48 px header logo) and favicons from the same file.
