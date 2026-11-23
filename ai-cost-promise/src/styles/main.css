@@ -13,6 +13,8 @@
   --color-paper: #ffffff;
   --color-mist: #f7f8fc;
   --color-ink: #1a1a2e;        /* headings, body: 16.9:1 on white */
+  --color-ink-deep: #07091a;   /* brand-kit Ink: dark ground for the logo badge */
+  --color-plum: #0e1433;       /* brand-kit Plum */
   --color-ink-2: #4a4a63;      /* secondary text: 8.9:1 on white */
   --color-ink-3: #62627c;      /* captions: 5.9:1 on white */
   --color-line: #e6e7f0;
@@ -201,7 +203,33 @@ body {
 .wordmark__logo { display: block; flex: none; }
 .wordmark__logo img { display: block; height: 48px; width: auto; }
 .wordmark__logo--lg img { height: 88px; }
-@media (max-width: 899px) { .site-header .wordmark__logo img { height: 40px; } }
+/* Header: the logo sits on a deep-ink badge (the dark ground the neon mark was made for),
+   giving the light page one strong point of contrast. The logo itself is untouched. */
+.site-header .wordmark__logo {
+  display: grid; place-items: center;
+  width: 58px; height: 58px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, var(--color-plum) 0%, var(--color-ink-deep) 72%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.9),
+    0 10px 28px -10px rgba(7, 9, 26, 0.55),
+    -6px 0 22px -8px rgba(255, 59, 212, 0.45),
+    6px 0 22px -8px rgba(5, 153, 242, 0.45);
+  transition: transform 0.4s var(--ease-soft), box-shadow 0.4s var(--ease-soft);
+}
+.site-header .wordmark__logo img { height: 50px; }
+.site-header .wordmark:hover .wordmark__logo {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.9),
+    0 12px 30px -10px rgba(7, 9, 26, 0.6),
+    -8px 0 26px -6px rgba(255, 59, 212, 0.6),
+    8px 0 26px -6px rgba(5, 153, 242, 0.6);
+}
+@media (max-width: 899px) {
+  .site-header .wordmark__logo { width: 50px; height: 50px; }
+  .site-header .wordmark__logo img { height: 43px; }
+}
+@media (prefers-reduced-motion: reduce) { .site-header .wordmark:hover .wordmark__logo { transform: none; } }
 /* Brand rule: "Ai" always keeps its lowercase i, even inside all-caps labels. */
 .wordmark__ai, .ai-mark { text-transform: none; }
 .wordmark__ai {

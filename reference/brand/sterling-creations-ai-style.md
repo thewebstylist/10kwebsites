@@ -36,3 +36,7 @@ These apply to every site, page, video and document made for the brand.
   (transparent PNG, 716×693). It reads well on white and light backgrounds.
 - For the web, export downscaled PNG + WebP at 2× the display size (for example 96 px tall
   for a 48 px header logo) and favicons from the same file.
+- On light pages, set the header logo on a deep-ink circular badge (brand-kit Ink #07091A
+  with a Plum #0E1433 center) and a faint magenta/blue glow. This is the dark ground the
+  neon mark was designed for and gives the page its strongest point of contrast. The logo
+  artwork itself is never recolored.
