@@ -75,5 +75,7 @@ Live at **https://cost-and-promise-of-ai.pages.dev**, built by Cloudflare Pages 
 
 - Root directory `ai-cost-promise`, build command `npm run build`, output `dist`, `NODE_VERSION=22`.
 - Production branch: `claude/ai-cost-promise-site-hof814` (switch to `main` once merged).
-- Every push that touches `ai-cost-promise/` rebuilds and redeploys in about a minute.
-  Pushes to other branches get their own preview URL.
+- Once the Cloudflare GitHub app has access to this repo, every push that touches
+  `ai-cost-promise/` rebuilds and redeploys in about a minute, and other branches get preview URLs.
+  Until then, trigger a deploy of the branch from the Cloudflare dashboard or API
+  (POST `/accounts/{id}/pages/projects/cost-and-promise-of-ai/deployments` with `branch`).
