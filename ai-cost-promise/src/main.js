@@ -11,11 +11,13 @@ import { initCounters } from './ui/counters.js';
 import { initDivider } from './ui/divider.js';
 import { initCalculator } from './ui/calculator.js';
 import { initHeader } from './ui/header.js';
+import { initSmoothAnchors } from './ui/smooth-anchors.js';
 import { initChoreography, refreshAll } from './ui/choreography.js';
 
 initCitations();
 initScenes();
 initHeader(REDUCED_MOTION);
+initSmoothAnchors(REDUCED_MOTION);
 initDivider();
 initCalculator(REDUCED_MOTION);
 initChoreography(REDUCED_MOTION);

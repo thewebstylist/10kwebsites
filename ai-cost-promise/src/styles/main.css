@@ -220,28 +220,42 @@ body {
 .menu-toggle[aria-expanded="true"] .menu-toggle__bars i:nth-child(2) { opacity: 0; }
 .menu-toggle[aria-expanded="true"] .menu-toggle__bars i:nth-child(3) { transform: translateY(-5.6px) rotate(-45deg); }
 
-/* Slide-down menu panel */
+/* Slide-down menu panel. Open/close choreography lives in src/ui/header.js (GSAP). */
 .mobile-menu {
   position: absolute; left: 0; right: 0; top: 100%;
   background: linear-gradient(180deg, var(--color-ink-deep), var(--color-plum));
   border-bottom: 1px solid rgba(168, 198, 255, 0.18);
   box-shadow: 0 30px 60px -20px rgba(7, 9, 26, 0.7);
-  padding-block: 12px 28px;
-  transform-origin: top; animation: menu-in 0.45s var(--ease-soft);
+  padding-block: 8px 26px;
+  max-height: calc(100svh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain;
+  will-change: clip-path;
 }
-.mobile-menu nav { display: grid; }
+.mobile-menu nav { display: grid; justify-items: stretch; text-align: center; }
 .mobile-menu__link {
-  display: flex; align-items: baseline; gap: 16px; padding: 16px 0;
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 0;
   border-bottom: 1px solid rgba(168, 198, 255, 0.12);
-  font-weight: 800; font-size: clamp(1.4rem, 5vw, 2rem); letter-spacing: -0.02em;
-  color: var(--color-cream); text-decoration: none; transition: color 0.25s, padding 0.35s var(--ease-soft);
+  font-weight: 800; font-size: clamp(1.45rem, 5.4vw, 2.1rem); letter-spacing: -0.02em; line-height: 1.1;
+  color: var(--color-cream); text-decoration: none;
+  transition: color 0.3s var(--ease-soft), letter-spacing 0.45s var(--ease-soft);
 }
-.mobile-menu__link span { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; color: var(--color-lilac); }
-.mobile-menu__link:hover, .mobile-menu__link:focus-visible { color: #fff; padding-left: 8px; }
-@keyframes menu-in { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+.mobile-menu__link span { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.3em; color: var(--color-lilac); transition: color 0.3s; }
+.mobile-menu__link:hover, .mobile-menu__link:focus-visible { color: #fff; letter-spacing: 0; }
+.mobile-menu__link:hover span, .mobile-menu__link:focus-visible span { color: var(--color-magenta); }
+.mobile-menu__credit {
+  margin-top: 22px; text-align: center;
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(168, 198, 255, 0.7);
+}
+.mobile-menu__credit a { text-transform: none; letter-spacing: 0.04em; font-size: 0.82rem; color: var(--color-cream); text-decoration: none; background: linear-gradient(90deg, var(--color-magenta), var(--color-blue)) left bottom / 0% 1px no-repeat; padding-bottom: 2px; transition: background-size 0.45s var(--ease-soft), color 0.3s; }
+.mobile-menu__credit a:hover, .mobile-menu__credit a:focus-visible { color: #fff; background-size: 100% 1px; }
+/* Dimmed, blurred page behind the open menu */
+.menu-scrim {
+  position: fixed; inset: 0; z-index: 45;
+  background: rgba(7, 9, 26, 0.38);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
 @media (prefers-reduced-motion: reduce) {
   .site-header { transition: none; }
-  .mobile-menu { animation: none; }
+  .mobile-menu__link, .mobile-menu__credit a { transition: none; }
 }
 .wordmark {
   display: inline-flex; align-items: center; gap: 12px;
