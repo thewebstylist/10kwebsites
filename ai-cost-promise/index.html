@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Cost and the Promise of AI · Sterling Creations AI</title>
+  <meta name="description" content="An evidence-led portrait of artificial intelligence: its energy, water and carbon footprint on one side, its benefits to medicine, science and learning on the other. Every figure sourced." />
+  <meta name="theme-color" content="#F7F8FC" />
+  <meta property="og:title" content="The Cost and the Promise of AI" />
+  <meta property="og:description" content="What intelligence takes from the planet, and what it gives back. Every figure sourced." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap" rel="stylesheet" />
+  <script>
+    // Runs before paint: flag JS + motion preference so CSS can enhance safely.
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('js-motion');
+    })();
+  </script>
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="site-header" id="site-header">
+    <div class="container-x flex items-center justify-between gap-6">
+      <a class="wordmark" href="#top" aria-label="Sterling Creations AI, back to top">
+        <svg class="wordmark__mark" viewBox="0 0 24 24" aria-hidden="true">
+          <defs><linearGradient id="wm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E77FD0"/><stop offset="1" stop-color="#4DB3EE"/></linearGradient></defs>
+          <circle cx="12" cy="12" r="10.5" fill="none" stroke="url(#wm)" stroke-width="1.5"/>
+          <path d="M12 3.5v17" stroke="url(#wm)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="3" fill="url(#wm)"/>
+        </svg>
+        <span>Sterling Creations <span class="wordmark__ai">AI</span></span>
+      </a>
+      <nav aria-label="Sections" class="hidden md:flex items-center gap-7">
+        <a class="nav-link" href="#cost">The Cost</a>
+        <a class="nav-link" href="#promise">The Promise</a>
+        <a class="nav-link" href="#calculator">Your Footprint</a>
+        <a class="nav-link" href="#balance">Balance</a>
+        <a class="nav-link" href="#sources">Sources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__veil hero__veil--cost" aria-hidden="true"></div>
+      <div class="hero__veil hero__veil--promise" aria-hidden="true"></div>
+
+      <div class="scene hero__scene" data-scene="hero" aria-hidden="true">
+        <canvas></canvas>
+        <div class="scene-fallback fallback-hero"></div>
+      </div>
+
+      <div class="hero__content">
+        <p class="eyebrow hero-reveal">An evidence-led portrait · 2026</p>
+        <h1 id="hero-title" class="display hero__title mt-5">
+          <span class="line hero-reveal">The Cost</span>
+          <span class="line hero-reveal"><span class="font-light italic tracking-tight" style="font-weight:300">and</span> the Promise</span>
+          <span class="line hero-reveal gradient-text">of AI</span>
+        </h1>
+        <p class="tagline mt-5 mx-auto max-w-3xl hero-reveal">What intelligence takes from the planet, and what it gives back.</p>
+      </div>
+
+      <div class="hero__sides">
+        <div class="hero__side hero__side--cost hero-reveal" id="side-cost">
+          <p class="eyebrow eyebrow--cost">Part one</p>
+          <h2>The Cost</h2>
+          <p>Electricity, water and carbon behind every answer.</p>
+          <a href="#cost">Explore <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero__side hero__side--promise hero-reveal" id="side-promise">
+          <p class="eyebrow eyebrow--promise">Part two</p>
+          <h2>The Promise</h2>
+          <p>Medicine, climate science and knowledge, accelerated.</p>
+          <a href="#promise">Explore <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+
+      <div class="divider" id="divider" role="slider" tabindex="0"
+           aria-label="Shift the balance between the cost and the promise"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="Evenly balanced">
+        <span class="divider__line" aria-hidden="true"></span>
+        <span class="divider__handle" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 7l-5 5 5 5" stroke="#A3268A"/><path d="M15 7l5 5-5 5" stroke="#0A6AAE"/>
+          </svg>
+        </span>
+        <span class="divider__hint" aria-hidden="true">Drag to shift the balance</span>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+    </section>
+
+    <!-- ============================ LEDGER ============================ -->
+    <section class="section" id="ledger" aria-labelledby="ledger-title">
+      <div class="container-x">
+        <div class="chapter-head reveal">
+          <p class="eyebrow">Two ledgers, one technology</p>
+          <h2 id="ledger-title" class="h2 mt-4">Both columns are true.</h2>
+          <p class="tagline mt-5">AI is now large enough to show up in national grids, and capable enough to show up in Nobel citations. Here is the balance sheet, as the evidence stands in late 2026.</p>
+        </div>
+
+        <div class="ledger mt-16">
+          <div class="ledger__col ledger__col--cost">
+            <p class="eyebrow eyebrow--cost">What it takes</p>
+            <div class="ledger__item reveal">
+              <p class="num num--cost"><span data-count="415">415</span><small>TWh</small></p>
+              <span class="accent-rule accent-rule--cost"></span>
+              <p class="body-lg">Electricity used by data centres worldwide in 2024, about 1.5% of global demand.<a class="cite" data-cite="iea-energy-ai"></a></p>
+            </div>
+            <div class="ledger__item reveal">
+              <p class="num num--cost"><span data-count="560">560</span><small>bn litres</small></p>
+              <span class="accent-rule accent-rule--cost"></span>
+              <p class="body-lg">Estimated water used by data centres each year, directly for cooling and indirectly through power generation. <span class="chip chip--estimate">Estimate</span><a class="cite" data-cite="iea-water"></a></p>
+            </div>
+            <div class="ledger__item reveal">
+              <p class="num num--cost"><span data-count="180">180</span><small>Mt CO₂</small></p>
+              <span class="accent-rule accent-rule--cost"></span>
+              <p class="body-lg">Annual emissions from the electricity data centres consume: under 1% of global CO₂ today, but among the fastest-growing sources.<a class="cite" data-cite="iea-climate"></a></p>
+            </div>
+          </div>
+
+          <div class="ledger__col ledger__col--promise">
+            <p class="eyebrow eyebrow--promise">What it gives</p>
+            <div class="ledger__item reveal">
+              <p class="num num--promise"><span data-count="200">200</span><small>M+</small></p>
+              <span class="accent-rule accent-rule--promise"></span>
+              <p class="body-lg">Protein structures predicted by AlphaFold, covering nearly every protein known to science, free to every researcher.<a class="cite" data-cite="alphafold"></a></p>
+            </div>
+            <div class="ledger__item reveal">
+              <p class="num num--promise">+<span data-count="29">29</span><small>%</small></p>
+              <span class="accent-rule accent-rule--promise"></span>
+              <p class="body-lg">Higher breast-cancer detection with AI-supported screening in a randomised trial of over 100,000 women, with no rise in false positives.<a class="cite" data-cite="masai-2025"></a></p>
+            </div>
+            <div class="ledger__item reveal">
+              <p class="num num--promise"><span data-count="1400" data-format="comma">1,400</span><small>Mt CO₂</small></p>
+              <span class="accent-rule accent-rule--promise"></span>
+              <p class="body-lg">Emissions that existing AI tools could cut in 2035 if widely adopted across energy and industry. A conditional projection, not a forecast. <span class="chip chip--estimate">Conditional</span><a class="cite" data-cite="iea-climate"></a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PART ONE: COST ============================ -->
+    <div class="bg-cost" id="cost">
+      <section class="section pb-0" aria-labelledby="cost-title">
+        <div class="container-x chapter-head reveal">
+          <p class="eyebrow eyebrow--cost chapter-index">Part one</p>
+          <h2 id="cost-title" class="h2 mt-5">The Cost</h2>
+          <p class="tagline mt-5">AI runs on electricity, water and silicon. As usage scales, the bill is rising, and much of it is paid far from the screen.</p>
+        </div>
+      </section>
+
+      <!-- Energy: the data-centre city -->
+      <section class="section" aria-labelledby="energy-title">
+        <div class="container-x">
+          <div class="story" data-story="grid">
+            <div class="story__visual glass">
+              <div class="scene absolute inset-0 rounded-[32px]" data-scene="grid" aria-hidden="true">
+                <canvas></canvas>
+                <div class="scene-fallback fallback-orb-cost"></div>
+              </div>
+              <p class="visual-label eyebrow eyebrow--cost">Electricity · data centres</p>
+              <p class="visual-readout num--cost" aria-hidden="true" data-readout></p>
+              <div class="rail rail--cost" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="story__steps">
+              <h3 id="energy-title" class="sr-only">Electricity</h3>
+              <article class="story__step" data-level="0.28" data-readout="415 TWh">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--cost">Electricity · 2024</p>
+                  <p class="num num--cost mt-4"><span data-count="415">415</span><small>TWh</small></p>
+                  <span class="accent-rule accent-rule--cost"></span>
+                  <p class="body-lg">Global data-centre electricity use in 2024, about 1.5% of the world’s total. It has grown around 12% a year for the past five years.<a class="cite" data-cite="iea-energy-ai"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="0.48" data-readout="+17%">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--cost">Growth · 2025</p>
+                  <p class="num num--cost mt-4">+<span data-count="17">17</span><small>%</small></p>
+                  <span class="accent-rule accent-rule--cost"></span>
+                  <p class="body-lg">The jump in data-centre electricity use in a single year, even as grid connections and equipment supply tightened.<a class="cite" data-cite="iea-key-questions"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="0.74" data-readout="945 TWh">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--cost">Projection · 2030</p>
+                  <p class="num num--cost mt-4">~<span data-count="945">945</span><small>TWh</small></p>
+                  <span class="accent-rule accent-rule--cost"></span>
+                  <p class="body-lg">The IEA’s Base Case for 2030: more than double today, just under 3% of global electricity, and slightly more than Japan uses in a year. <span class="chip chip--estimate">Projection</span><a class="cite" data-cite="iea-energy-ai"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="1" data-readout="up to 12%">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--cost">Concentration · United States</p>
+                  <p class="num num--cost mt-4"><span data-count="4.4" data-decimals="1">4.4</span><small>% → 12%</small></p>
+                  <span class="accent-rule accent-rule--cost"></span>
+                  <p class="body-lg">Share of US electricity used by data centres in 2023 (176 TWh), and the top of the projected range for 2028. Local grids feel this first.<a class="cite" data-cite="lbnl-2024"></a><a class="cite" data-cite="doe-2024"></a></p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Water: the filling droplet -->
+      <section class="section pt-0" aria-labelledby="water-title">
+        <div class="container-x">
+          <div class="story story--mirror" data-story="water">
+            <div class="story__visual glass">
+              <div class="scene absolute inset-0 rounded-[32px]" data-scene="water" aria-hidden="true">
+                <canvas></canvas>
+                <div class="scene-fallback fallback-orb-cost"></div>
+              </div>
+              <p class="visual-label eyebrow eyebrow--cost">Water · cooling and power</p>
+              <p class="visual-readout num--cost" aria-hidden="true" data-readout></p>
+              <div class="rail rail--cost" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="story__steps">
+              <h3 id="water-title" class="sr-only">Water</h3>
+              <article class="story__step" data-level="0.3" data-readout="560 bn L">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--cost">Water · per year</p>
+                  <p class="num num--cost mt-4"><span data-count="560">560</span><small>bn litres</small></p>
+                  <span class="accent-rule accent-rule--cost"></span>
+                  <p class="body-lg">Estimated global data-centre water use each year. Most of it is not the cooling towers you can see, but the water consumed generating the electricity. <span class="chip chip--estimate">Estimate</span><a class="cite" data-cite="iea-water"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="0.55" data-readout="1.2 tn L">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--cost">Projection · 2030</p>
+                  <p class="num num--cost mt-4"><span data-count="1.2" data-decimals="1">1.2</span><small>tn litres</small></p>
+                  <span class="accent-rule accent-rule--cost"></span>
+                  <p class="body-lg">Where that figure could be by 2030. Researchers project AI alone could withdraw 4.2 to 6.6 billion cubic metres of water in 2027, more than four to six Denmarks. <span class="chip chip--estimate">Projection</span><a class="cite" data-cite="iea-water"></a><a class="cite" data-cite="ren-thirsty"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="0.78" data-readout="800 bn L">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--cost">Hidden share · United States, 2023</p>
+                  <p class="num num--cost mt-4"><span data-count="64">64</span><small>bn L direct</small></p>
+                  <span class="accent-rule accent-rule--cost"></span>
+                  <p class="body-lg">US data centres evaporated around 64 billion litres cooling their servers, and an estimated 800 billion more indirectly through the power plants that supply them.<a class="cite" data-cite="lbnl-2024"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="0.96" data-readout="+34%">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--cost">One company · 2025</p>
+                  <p class="num num--cost mt-4">+<span data-count="34">34</span><small>%</small></p>
+                  <span class="accent-rule accent-rule--cost"></span>
+                  <p class="body-lg">Rise in Google’s water consumption in one year, to about 10.9 billion gallons (41 billion litres), more than double its 2021 level, mostly from data centres. <span class="chip chip--company">Company-reported</span><a class="cite" data-cite="google-env-2026"></a></p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Carbon: rising bars -->
+      <section class="section pt-0" aria-labelledby="carbon-title">
+        <div class="container-x">
+          <div class="grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:items-center">
+            <div class="reveal">
+              <p class="eyebrow eyebrow--cost">Carbon</p>
+              <h3 id="carbon-title" class="h3 mt-4">Small share, steep slope.</h3>
+              <p class="body-lg mt-5">Data centres produce under 1% of global CO₂ today. The concern is the trajectory: indirect emissions are projected to grow by almost 80% this decade in the IEA’s central case, and 2.5 times in its high-adoption “Lift-Off” case.<a class="cite" data-cite="iea-climate"></a></p>
+              <p class="body-lg mt-5">It shows up in corporate ledgers too. Microsoft’s total emissions in its 2025 report were <strong class="text-ink">23.4% above</strong> its 2020 baseline, which it attributes to AI and cloud growth. <span class="chip chip--company">Company-reported</span><a class="cite" data-cite="msft-2025"></a></p>
+            </div>
+            <figure class="reveal">
+              <div class="bars-wrap glass">
+                <div class="scene absolute inset-0 rounded-[32px]" data-scene="carbon" aria-hidden="true">
+                  <canvas></canvas>
+                  <div class="scene-fallback fallback-orb-cost"></div>
+                </div>
+                <p class="visual-label eyebrow eyebrow--cost">Data-centre CO₂ · Mt per year</p>
+              </div>
+              <figcaption>
+                <div class="bars-labels" role="list">
+                  <div role="listitem"><p class="num num--cost"><span data-count="180">180</span></p><p class="caption mt-1">2024<br>today</p></div>
+                  <div role="listitem"><p class="num num--cost">~<span data-count="320">320</span></p><p class="caption mt-1">2030<br>Base Case peak</p></div>
+                  <div role="listitem"><p class="num num--cost">~<span data-count="300">300</span></p><p class="caption mt-1">2035<br>Base Case</p></div>
+                  <div role="listitem"><p class="num num--cost">~<span data-count="450">450</span></p><p class="caption mt-1">2035<br>Lift-Off (≈2.5×)</p></div>
+                </div>
+                <p class="caption mt-5">Indirect emissions from electricity use, excluding backup generation and hardware manufacturing. The 2035 Lift-Off value is derived from the IEA’s “2.5 times” growth figure.<a class="cite" data-cite="iea-climate"></a></p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- Per query -->
+      <section class="section pt-0" aria-labelledby="query-title">
+        <div class="container-x">
+          <div class="glass p-6 md:p-12 reveal">
+            <div class="grid gap-10 lg:grid-cols-[1fr_1.5fr]">
+              <div>
+                <p class="eyebrow eyebrow--cost">Per prompt</p>
+                <h3 id="query-title" class="h3 mt-4">One question, very different answers.</h3>
+                <p class="body-lg mt-5">Estimates of the energy behind a single text prompt have fallen roughly tenfold as measurement has improved. The best current figures sit close to a 2009 web search.</p>
+                <p class="body-lg mt-4">The catch is scale and type: billions of prompts add up, and long reasoning chains, images and video can use many times more than a short text answer.<a class="cite" data-cite="epoch-2025"></a></p>
+              </div>
+              <div>
+                <p class="caption mb-2">Energy per request, watt-hours</p>
+                <div class="qbars" id="qbars">
+                  <div class="qbar"><span class="text-sm font-semibold">Google web search <span class="caption block font-normal">2009 baseline <span class="chip chip--disputed">Dated</span></span></span><div class="qbar__track"><div class="qbar__fill qbar__fill--ref" style="--w:10.3%"></div></div><span class="qbar__val">0.30<a class="cite" data-cite="google-2009"></a></span></div>
+                  <div class="qbar"><span class="text-sm font-semibold">Gemini, median text prompt <span class="caption block font-normal">Google, 2025 <span class="chip chip--company">Company</span></span></span><div class="qbar__track"><div class="qbar__fill qbar__fill--cost" style="--w:8.3%"></div></div><span class="qbar__val">0.24<a class="cite" data-cite="google-gemini"></a></span></div>
+                  <div class="qbar"><span class="text-sm font-semibold">GPT-4o, typical query <span class="caption block font-normal">Epoch AI, 2025 <span class="chip chip--estimate">Estimate</span></span></span><div class="qbar__track"><div class="qbar__fill qbar__fill--cost" style="--w:10.3%"></div></div><span class="qbar__val">~0.30<a class="cite" data-cite="epoch-2025"></a></span></div>
+                  <div class="qbar"><span class="text-sm font-semibold">ChatGPT, average query <span class="caption block font-normal">OpenAI CEO, 2025 <span class="chip chip--company">Company</span></span></span><div class="qbar__track"><div class="qbar__fill qbar__fill--cost" style="--w:11.7%"></div></div><span class="qbar__val">0.34<a class="cite" data-cite="altman-2025"></a></span></div>
+                  <div class="qbar"><span class="text-sm font-semibold">ChatGPT request <span class="caption block font-normal">EPRI, 2024 <span class="chip chip--disputed">Superseded</span></span></span><div class="qbar__track"><div class="qbar__fill qbar__fill--cost" style="--w:100%"></div></div><span class="qbar__val">2.9<a class="cite" data-cite="epri-2024"></a></span></div>
+                </div>
+                <div class="mt-8 grid gap-4 sm:grid-cols-2">
+                  <div class="rounded-2xl bg-white/70 p-5 border border-line">
+                    <p class="caption">Water per prompt, low end</p>
+                    <p class="num num--cost text-4xl mt-2">0.26<small>mL</small></p>
+                    <p class="caption mt-2">Google’s median Gemini prompt, on-site cooling. Critics say it omits water used in power generation.<a class="cite" data-cite="google-gemini"></a></p>
+                  </div>
+                  <div class="rounded-2xl bg-white/70 p-5 border border-line">
+                    <p class="caption">Water per response, lifecycle</p>
+                    <p class="num num--cost text-4xl mt-2">~45<small>mL</small></p>
+                    <p class="caption mt-2">Mistral’s lifecycle study of a 400-token answer, including supply-chain water. Different scopes, so the gap is the story.<a class="cite" data-cite="mistral-lca"></a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================ TURN ============================ -->
+    <section class="turn section" aria-labelledby="turn-title">
+      <div class="container-x text-center">
+        <h2 id="turn-title" class="display turn__line"><span class="turn-word">And</span> <span class="turn-word gradient-text">yet.</span></h2>
+        <p class="tagline mt-8 mx-auto max-w-2xl reveal">The same machines that strain grids are reshaping how we find medicines, forecast storms, discover materials and learn.</p>
+      </div>
+    </section>
+
+    <!-- ============================ PART TWO: PROMISE ============================ -->
+    <div class="bg-promise" id="promise">
+      <section class="section pb-0" aria-labelledby="promise-title">
+        <div class="container-x chapter-head reveal">
+          <p class="eyebrow eyebrow--promise chapter-index">Part two</p>
+          <h2 id="promise-title" class="h2 mt-5">The Promise</h2>
+          <p class="tagline mt-5">Where AI earns its footprint: discoveries that would have taken decades, and help that reaches people who were waiting.</p>
+        </div>
+      </section>
+
+      <!-- Medicine: DNA helix -->
+      <section class="section" aria-labelledby="medicine-title">
+        <div class="container-x">
+          <div class="story story--mirror" data-story="helix">
+            <div class="story__visual glass">
+              <div class="scene absolute inset-0 rounded-[32px]" data-scene="helix" aria-hidden="true">
+                <canvas></canvas>
+                <div class="scene-fallback fallback-orb-promise"></div>
+              </div>
+              <p class="visual-label eyebrow eyebrow--promise">Medicine · structure to screening</p>
+              <p class="visual-readout num--promise" aria-hidden="true" data-readout></p>
+              <div class="rail rail--promise" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="story__steps">
+              <h3 id="medicine-title" class="sr-only">Medicine</h3>
+              <article class="story__step" data-level="0.25" data-readout="200M+">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--promise">Protein structures</p>
+                  <p class="num num--promise mt-4"><span data-count="200">200</span><small>M+</small></p>
+                  <span class="accent-rule accent-rule--promise"></span>
+                  <p class="body-lg">Structures predicted by AlphaFold, nearly every catalogued protein. Determining one experimentally can take years; the database is open to all, with DeepMind reporting over 3 million users in 190+ countries. <span class="chip chip--company">Usage company-reported</span><a class="cite" data-cite="alphafold"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="0.5" data-readout="Nobel 2024">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--promise">Recognition</p>
+                  <p class="num num--promise mt-4"><span data-count="2024" data-format="plain">2024</span></p>
+                  <span class="accent-rule accent-rule--promise"></span>
+                  <p class="body-lg">The Nobel Prize in Chemistry went to AI-driven protein structure prediction and computational protein design, a first for the field.<a class="cite" data-cite="nobel-2024"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="0.75" data-readout="18 months">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--promise">Drug discovery</p>
+                  <p class="num num--promise mt-4"><span data-count="18">18</span><small>months</small></p>
+                  <span class="accent-rule accent-rule--promise"></span>
+                  <p class="body-lg">From a new target to a drug candidate for lung fibrosis, with both found using generative AI. Phase IIa results in <em>Nature Medicine</em> (2025) showed it was safe and well tolerated; a Phase III trial began in 2026. Efficacy is not yet proven. <span class="chip chip--company">Timeline company-reported</span><a class="cite" data-cite="insilico-2025"></a></p>
+                </div>
+              </article>
+              <article class="story__step" data-level="1" data-readout="−44% workload">
+                <div class="story__step-body">
+                  <p class="eyebrow eyebrow--promise">Earlier detection</p>
+                  <p class="num num--promise mt-4">+<span data-count="29">29</span><small>% detection</small></p>
+                  <span class="accent-rule accent-rule--promise"></span>
+                  <p class="body-lg">In Sweden’s MASAI randomised trial, AI-supported mammography found 29% more cancers with no rise in false positives, cut radiologists’ reading workload by 44%, and led to about 12% fewer cancers surfacing between screenings.<a class="cite" data-cite="masai-2025"></a><a class="cite" data-cite="masai-2023"></a><a class="cite" data-cite="masai-2026"></a></p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Climate & science cards -->
+      <section class="section pt-0" aria-labelledby="science-title">
+        <div class="container-x">
+          <div class="max-w-2xl reveal">
+            <p class="eyebrow eyebrow--promise">Climate, energy and discovery</p>
+            <h3 id="science-title" class="h3 mt-4">Faster science, on the problems that matter most.</h3>
+          </div>
+          <div class="mt-12 grid gap-5 md:grid-cols-3" data-stagger>
+            <article class="glass card card--promise">
+              <p class="eyebrow">Weather forecasting</p>
+              <p class="num num--promise mt-5">&lt;<span data-count="1">1</span><small>minute</small></p>
+              <span class="accent-rule accent-rule--promise"></span>
+              <p class="text-[0.95rem] text-ink-2">For a 10-day global forecast on a single machine. GraphCast beat the leading conventional system on over 90% of 1,380 test targets, including cyclone tracks.<a class="cite" data-cite="graphcast"></a></p>
+            </article>
+            <article class="glass card card--promise">
+              <p class="eyebrow">Materials discovery</p>
+              <p class="num num--promise mt-5"><span data-count="380">380</span><small>k</small></p>
+              <span class="accent-rule accent-rule--promise"></span>
+              <p class="text-[0.95rem] text-ink-2">New stable crystals predicted by GNoME, out of 2.2 million candidates: candidates for better batteries, solar cells and chips. 736 had already been made independently in labs.<a class="cite" data-cite="gnome"></a></p>
+            </article>
+            <article class="glass card card--promise">
+              <p class="eyebrow">Energy systems</p>
+              <p class="num num--promise mt-5"><span data-count="3">3</span><small>to 4×</small></p>
+              <span class="accent-rule accent-rule--promise"></span>
+              <p class="text-[0.95rem] text-ink-2">How much larger the IEA’s potential AI-enabled emissions cuts in 2035 are than data centres’ own emissions. Only if adoption happens, which the IEA says currently lacks momentum. <span class="chip chip--estimate">Conditional</span><a class="cite" data-cite="iea-climate"></a></p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Constellation timeline -->
+    <section class="constellation bg-promise-flat" id="milestones" aria-labelledby="milestones-title">
+      <div class="scene constellation__scene" data-scene="constellation" aria-hidden="true">
+        <canvas></canvas>
+        <div class="scene-fallback fallback-orb-promise"></div>
+      </div>
+      <div class="constellation__head">
+        <p class="eyebrow eyebrow--promise">A constellation of milestones</p>
+        <h3 id="milestones-title" class="h3 mt-3">Fourteen years, from seeing to discovering.</h3>
+      </div>
+      <div class="constellation__ui">
+        <div class="glass milestone-card" data-interactive aria-live="polite">
+          <p class="eyebrow eyebrow--promise" data-ms-kicker>2012 · Perception</p>
+          <p class="milestone-year num--promise mt-3" data-ms-year>2012</p>
+          <p class="font-bold text-lg mt-2" data-ms-title>Machines learn to see</p>
+          <p class="text-[0.95rem] text-ink-2 mt-2" data-ms-body></p>
+          <div class="milestone-dots" role="group" aria-label="Choose a milestone" data-ms-dots></div>
+        </div>
+        <ol class="milestone-list glass p-6 gap-4 w-full max-w-3xl" data-ms-list aria-label="AI milestones"></ol>
+      </div>
+    </section>
+
+    <!-- People: accessibility, education, productivity -->
+    <section class="section bg-promise-flat pt-12" aria-labelledby="people-title">
+      <div class="container-x">
+        <div class="max-w-2xl reveal">
+          <p class="eyebrow eyebrow--promise">Access, learning and work</p>
+          <h3 id="people-title" class="h3 mt-4">The gains are largest where help was scarcest.</h3>
+        </div>
+        <div class="mt-12 grid gap-5 md:grid-cols-3" data-stagger>
+          <article class="glass card card--promise">
+            <p class="eyebrow">Accessibility</p>
+            <p class="num num--promise mt-5"><span data-count="750">750</span><small>k</small></p>
+            <span class="accent-rule accent-rule--promise"></span>
+            <p class="text-[0.95rem] text-ink-2">Blind and low-vision people in the Be My Eyes community, which now offers instant AI image descriptions alongside 8 million human volunteers. It can still misdescribe scenes. <span class="chip chip--company">Company-reported</span><a class="cite" data-cite="bemyeyes"></a></p>
+          </article>
+          <article class="glass card card--promise">
+            <p class="eyebrow">Education</p>
+            <p class="num num--promise mt-5"><span data-count="0.31" data-decimals="2">0.31</span><small>SD</small></p>
+            <span class="accent-rule accent-rule--promise"></span>
+            <p class="text-[0.95rem] text-ink-2">Learning gain from six weeks of teacher-guided AI tutoring in a World Bank randomised trial in Nigeria, a large effect for an after-school programme. Results elsewhere are mixed.<a class="cite" data-cite="worldbank-2025"></a></p>
+          </article>
+          <article class="glass card card--promise">
+            <p class="eyebrow">Productivity</p>
+            <p class="num num--promise mt-5">+<span data-count="34">34</span><small>%</small></p>
+            <span class="accent-rule accent-rule--promise"></span>
+            <p class="text-[0.95rem] text-ink-2">More customer issues resolved per hour by novice support agents using an AI assistant (14% on average), with little change for the most experienced.<a class="cite" data-cite="qje-2025"></a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CALCULATOR ============================ -->
+    <section class="section" id="calculator" aria-labelledby="calc-title" style="background: linear-gradient(180deg, var(--color-sky-50), #fff 30%, #fff 70%, var(--color-orchid-50));">
+      <div class="container-x">
+        <div class="chapter-head reveal">
+          <p class="eyebrow">Your footprint</p>
+          <h2 id="calc-title" class="h2 mt-4">A year of prompts.</h2>
+          <p class="tagline mt-5">A personal estimate of the electricity and water behind your text prompts. Choose the assumption: published figures vary more than tenfold.</p>
+        </div>
+
+        <div class="glass calc mt-14 reveal">
+          <div class="grid gap-10 lg:grid-cols-[1fr_1.25fr]">
+            <form class="space-y-8" id="calc-form" onsubmit="return false">
+              <div>
+                <label for="calc-range" class="eyebrow block">Prompts per day</label>
+                <div class="flex items-center gap-5 mt-4">
+                  <input id="calc-range" type="range" min="1" max="300" step="1" value="25" aria-describedby="calc-help" />
+                  <input id="calc-number" class="calc-number" type="number" min="1" max="5000" step="1" value="25" aria-label="Prompts per day, exact number" />
+                </div>
+                <p id="calc-help" class="caption mt-3">Text prompts only. Image, video and long reasoning tasks can use far more.</p>
+              </div>
+              <fieldset>
+                <legend class="eyebrow">Assumption</legend>
+                <div class="grid gap-3 mt-4" role="radiogroup" aria-label="Per-prompt assumption" id="calc-presets">
+                  <button type="button" class="preset" role="radio" aria-checked="false" data-wh="0.24" data-ml="0.26">
+                    <b>Measured median</b><span>0.24 Wh · 0.26 mL per prompt (Google, 2025)</span>
+                  </button>
+                  <button type="button" class="preset" role="radio" aria-checked="true" data-wh="0.34" data-ml="0.32">
+                    <b>Reported average</b><span>0.34 Wh · 0.32 mL per prompt (OpenAI, 2025)</span>
+                  </button>
+                  <button type="button" class="preset" role="radio" aria-checked="false" data-wh="2.9" data-ml="45">
+                    <b>Upper-end estimates</b><span>2.9 Wh (EPRI, 2024) · 45 mL lifecycle (Mistral, 2025)</span>
+                  </button>
+                </div>
+              </fieldset>
+            </form>
+
+            <div aria-live="polite" aria-atomic="true" id="calc-output">
+              <div class="grid gap-6 sm:grid-cols-2">
+                <div class="result">
+                  <p class="eyebrow eyebrow--cost">Electricity per year</p>
+                  <p class="num num--cost mt-3"><span data-calc="kwh">3.1</span><small>kWh</small></p>
+                  <div class="meter" aria-hidden="true"><i data-meter="kwh" style="background:linear-gradient(90deg,var(--color-orchid-200),var(--color-magenta))"></i></div>
+                </div>
+                <div class="result">
+                  <p class="eyebrow eyebrow--promise">Water per year</p>
+                  <p class="num num--promise mt-3"><span data-calc="litres">2.9</span><small>litres</small></p>
+                  <div class="meter" aria-hidden="true"><i data-meter="litres" style="background:linear-gradient(90deg,var(--color-sky-200),var(--color-blue))"></i></div>
+                </div>
+              </div>
+              <p class="caption mt-6">That is roughly the same as:</p>
+              <div class="grid gap-3 sm:grid-cols-3 mt-3">
+                <div class="compare-chip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#A3268A" stroke-width="1.6" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M12.5 8l-2 4h3l-2 4"/></svg>
+                  <div><b data-calc="phones">200</b><p class="caption">phone charges</p></div>
+                </div>
+                <div class="compare-chip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#A3268A" stroke-width="1.6" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>
+                  <div><b data-calc="bulb">310</b><p class="caption">hours of a 10 W LED</p></div>
+                </div>
+                <div class="compare-chip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#0A6AAE" stroke-width="1.6" aria-hidden="true"><path d="M6 3h12l-1.5 17a1.5 1.5 0 0 1-1.5 1.4H9a1.5 1.5 0 0 1-1.5-1.4z"/><path d="M6.6 9h10.8"/></svg>
+                  <div><b data-calc="glasses">12</b><p class="caption">glasses of water</p></div>
+                </div>
+              </div>
+              <p class="caption mt-6">Assumptions: one full smartphone charge ≈ 15 Wh; a glass ≈ 250 mL. Per-prompt figures come from different methods and scopes and are not directly comparable.<a class="cite" data-cite="google-gemini"></a><a class="cite" data-cite="altman-2025"></a><a class="cite" data-cite="epri-2024"></a><a class="cite" data-cite="mistral-lca"></a> Your individual share is small; the collective total, multiplied across billions of users and heavier tasks, is what moves grids.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ BALANCE ============================ -->
+    <section class="balance section" id="balance" aria-labelledby="balance-title">
+      <div class="merge merge--pink" aria-hidden="true"></div>
+      <div class="merge merge--blue" aria-hidden="true"></div>
+      <div class="container-x">
+        <div class="chapter-head">
+          <p class="eyebrow balance-reveal">Closing</p>
+          <h2 id="balance-title" class="h2 mt-4 balance-reveal">Finding the Balance</h2>
+          <p class="tagline mt-6 balance-reveal">The question is not whether to use AI, but how to make each answer worth its footprint.</p>
+        </div>
+
+        <div class="mt-14 grid gap-5 md:grid-cols-2" data-stagger>
+          <div class="glass p-7 md:p-10">
+            <p class="eyebrow eyebrow--cost">For individuals</p>
+            <div class="mt-4">
+              <div class="action"><span class="action__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#A3268A" stroke-width="1.7"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span><div><h4>Use a search engine for simple lookups</h4><p>Facts, opening hours and definitions rarely need a generative model.</p></div></div>
+              <div class="action"><span class="action__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#A3268A" stroke-width="1.7"><path d="M4 7h16M4 12h10M4 17h6"/></svg></span><div><h4>Ask once, ask well</h4><p>A clear, complete prompt beats five regenerations. Batch related questions together.</p></div></div>
+              <div class="action"><span class="action__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#A3268A" stroke-width="1.7"><rect x="3" y="7" width="7" height="10" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/></svg></span><div><h4>Right-size the model</h4><p>Save deep-reasoning and video modes for tasks that need them; smaller models handle most everyday work.</p></div></div>
+              <div class="action"><span class="action__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#A3268A" stroke-width="1.7"><path d="M12 3v9l5 3"/><circle cx="12" cy="12" r="9"/></svg></span><div><h4>Switch off what you don’t use</h4><p>Disable automatic AI summaries and suggestions you never read.</p></div></div>
+            </div>
+          </div>
+          <div class="glass p-7 md:p-10">
+            <p class="eyebrow eyebrow--promise">For companies</p>
+            <div class="mt-4">
+              <div class="action"><span class="action__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0A6AAE" stroke-width="1.7"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><div><h4>Measure and disclose per-query impact</h4><p>Publish energy, water and carbon per request with a clear method, as Google and Mistral began to in 2025.<a class="cite" data-cite="google-gemini"></a><a class="cite" data-cite="mistral-lca"></a></p></div></div>
+              <div class="action"><span class="action__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0A6AAE" stroke-width="1.7"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><div><h4>Chase efficiency relentlessly</h4><p>Google reports a 33× cut in energy per median prompt in one year through model, hardware and serving improvements.<a class="cite" data-cite="google-gemini"></a></p></div></div>
+              <div class="action"><span class="action__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0A6AAE" stroke-width="1.7"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><div><h4>Run on clean power, at the right time and place</h4><p>Match workloads to low-carbon hours and grids, and add new clean supply rather than only buying certificates.</p></div></div>
+              <div class="action"><span class="action__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0A6AAE" stroke-width="1.7"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></span><div><h4>Respect local water limits</h4><p>Choose low-water cooling in stressed regions and account for the larger, indirect water in electricity.<a class="cite" data-cite="lbnl-2024"></a></p></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-20 balance-reveal">
+          <p class="display text-[clamp(1.8rem,4.4vw,3.4rem)] max-w-4xl mx-auto">Every answer has a cost. <span class="gradient-text">The best ones repay it.</span></p>
+          <a class="btn mt-10" href="#top">Back to the beginning <span aria-hidden="true">↑</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SOURCES ============================ -->
+    <section class="section" id="sources" aria-labelledby="sources-title">
+      <div class="container-x grid gap-12 lg:grid-cols-[1fr_2fr]">
+        <div>
+          <p class="eyebrow">Method</p>
+          <h2 id="sources-title" class="h3 mt-4">Sources and notes</h2>
+          <p class="body-lg mt-5">Figures are current to November 2026. Where sources disagree we show the range and say why. Projections, company-reported figures and disputed numbers are labelled.</p>
+          <ul class="mt-6 space-y-2" aria-label="Label key">
+            <li><span class="chip chip--measured">Measured / peer-reviewed</span></li>
+            <li><span class="chip chip--estimate">Estimate or projection</span></li>
+            <li><span class="chip chip--company">Company-reported</span></li>
+            <li><span class="chip chip--disputed">Disputed or dated</span></li>
+          </ul>
+        </div>
+        <ol class="sources-list text-[0.92rem]" id="sources-list"></ol>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="site-footer">
+    <div class="container-x py-12 flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
+      <a class="wordmark" href="#top" aria-label="Sterling Creations AI, back to top">
+        <svg class="wordmark__mark" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10.5" fill="none" stroke="url(#wm)" stroke-width="1.5"/>
+          <path d="M12 3.5v17" stroke="url(#wm)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="3" fill="url(#wm)"/>
+        </svg>
+        <span>Sterling Creations <span class="wordmark__ai">AI</span></span>
+      </a>
+      <p class="caption">© 2026 Sterling Creations AI · An independent, evidence-led explainer. Not affiliated with any company cited.</p>
+    </div>
+  </footer>
+
+  <div class="cite-tip glass" id="cite-tip" role="tooltip" aria-hidden="true"></div>
+</body>
+</html>
