@@ -332,7 +332,7 @@
                 <p class="eyebrow eyebrow--cost">Per prompt</p>
                 <h3 id="query-title" class="h3 mt-4">One question, very different answers.</h3>
                 <p class="body-lg mt-5">Estimates of the energy behind a single text prompt have fallen roughly tenfold as measurement has improved. The best current figures sit close to a 2009 web search.</p>
-                <p class="body-lg mt-4">The catch is scale and type: billions of prompts add up, and long reasoning chains, images and video can use many times more than a short text answer.<a class="cite" data-cite="epoch-2025"></a></p>
+                <p class="body-lg mt-4">The catch is scale and type: billions of prompts add up, and long reasoning chains, images and video use far more. One 5-second Ai video can take as much electricity as hundreds of text prompts.<a class="cite" data-cite="epoch-2025"></a><a class="cite" data-cite="mit-tr-2025"></a></p>
               </div>
               <div>
                 <p class="caption mb-2">Energy per request, watt-hours</p>
@@ -520,34 +520,63 @@
       <div class="container-x">
         <div class="chapter-head reveal">
           <p class="eyebrow">Your footprint</p>
-          <h2 id="calc-title" class="h2 mt-4">A year of prompts.</h2>
-          <p class="tagline mt-5">A personal estimate of the electricity and water behind your text prompts. Choose the assumption: published figures vary more than tenfold.</p>
+          <h2 id="calc-title" class="h2 mt-4">Your year in Ai.</h2>
+          <p class="tagline mt-5">Estimate the electricity and water behind your text prompts, images and videos. Pick an assumption for each: published figures vary widely.</p>
         </div>
 
         <div class="glass calc mt-14 reveal">
-          <div class="grid gap-10 lg:grid-cols-[1fr_1.25fr]">
-            <form class="space-y-8" id="calc-form" onsubmit="return false">
-              <div>
-                <label for="calc-range" class="eyebrow block">Prompts per day</label>
-                <div class="flex items-center gap-5 mt-4">
-                  <input id="calc-range" type="range" min="1" max="300" step="1" value="25" aria-describedby="calc-help" />
-                  <input id="calc-number" class="calc-number" type="number" min="1" max="5000" step="1" value="25" aria-label="Prompts per day, exact number" />
+          <div class="grid gap-10 lg:grid-cols-[1.05fr_1fr]">
+            <form class="calc-groups" id="calc-form" onsubmit="return false">
+
+              <fieldset class="calc-group" data-group="text">
+                <legend class="calc-group__head">
+                  <span class="calc-group__icon calc-group__icon--text" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12.5h5"/></svg></span>
+                  <span>Text prompts <em>per day</em></span>
+                </legend>
+                <div class="flex items-center gap-4 mt-4">
+                  <input id="calc-text-range" type="range" min="0" max="300" step="1" value="25" aria-label="Text prompts per day" />
+                  <input id="calc-text-number" class="calc-number" type="number" min="0" max="5000" step="1" value="25" aria-label="Text prompts per day, exact number" />
                 </div>
-                <p id="calc-help" class="caption mt-3">Text prompts only. Image, video and long reasoning tasks can use far more.</p>
-              </div>
-              <fieldset>
-                <legend class="eyebrow">Assumption</legend>
-                <div class="grid gap-3 mt-4" role="radiogroup" aria-label="Per-prompt assumption" id="calc-presets">
-                  <button type="button" class="preset" role="radio" aria-checked="false" data-wh="0.24" data-ml="0.26">
-                    <b>Measured median</b><span>0.24 Wh · 0.009 fl oz per prompt (Google, 2025)</span>
-                  </button>
-                  <button type="button" class="preset" role="radio" aria-checked="true" data-wh="0.34" data-ml="0.32">
-                    <b>Reported average</b><span>0.34 Wh · 0.011 fl oz per prompt (OpenAI, 2025)</span>
-                  </button>
-                  <button type="button" class="preset" role="radio" aria-checked="false" data-wh="2.9" data-ml="45">
-                    <b>Upper-end estimates</b><span>2.9 Wh (EPRI, 2024) · 1.5 fl oz lifecycle (Mistral, 2025)</span>
-                  </button>
+                <div class="seg mt-4" role="radiogroup" aria-label="Energy per text prompt">
+                  <button type="button" class="seg__opt" role="radio" aria-checked="false" data-wh="0.24" data-ml="0.26" data-src="0.24 Wh and about five drops of water per prompt: Google’s measured median (2025)" data-cite="google-gemini">Median</button>
+                  <button type="button" class="seg__opt" role="radio" aria-checked="true" data-wh="0.34" data-ml="0.32" data-src="0.34 Wh and ~0.011 fl oz per prompt: OpenAI’s reported average (2025)" data-cite="altman-2025">Average</button>
+                  <button type="button" class="seg__opt" role="radio" aria-checked="false" data-wh="2.9" data-ml="45" data-src="2.9 Wh (EPRI, 2024) and ~1.5 fl oz lifecycle water (Mistral, 2025): upper-end estimates" data-cite="epri-2024">Upper end</button>
                 </div>
+                <p class="caption mt-2" data-source></p>
+              </fieldset>
+
+              <fieldset class="calc-group" data-group="images">
+                <legend class="calc-group__head">
+                  <span class="calc-group__icon calc-group__icon--image" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg></span>
+                  <span>Images <em>per day</em></span>
+                </legend>
+                <div class="flex items-center gap-4 mt-4">
+                  <input id="calc-images-range" type="range" min="0" max="200" step="1" value="5" aria-label="Images generated per day" />
+                  <input id="calc-images-number" class="calc-number" type="number" min="0" max="2000" step="1" value="5" aria-label="Images per day, exact number" />
+                </div>
+                <div class="seg mt-4" role="radiogroup" aria-label="Energy per image">
+                  <button type="button" class="seg__opt" role="radio" aria-checked="true" data-wh="0.63" data-src="0.63 Wh per 1024 px image from a leading open model, measured by MIT Technology Review (2025)" data-cite="mit-tr-2025">Standard</button>
+                  <button type="button" class="seg__opt" role="radio" aria-checked="false" data-wh="1.22" data-src="1.22 Wh per image with twice the diffusion steps for higher quality (MIT Technology Review, 2025)" data-cite="mit-tr-2025">High quality</button>
+                  <button type="button" class="seg__opt" role="radio" aria-checked="false" data-wh="2.9" data-src="2.9 Wh per image: average across the open models tested by Luccioni et al. (2024)" data-cite="luccioni-2024">Model average</button>
+                </div>
+                <p class="caption mt-2" data-source></p>
+              </fieldset>
+
+              <fieldset class="calc-group" data-group="videos">
+                <legend class="calc-group__head">
+                  <span class="calc-group__icon calc-group__icon--video" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="13" height="14" rx="2.5"/><path d="M16 10l5-3v10l-5-3z"/></svg></span>
+                  <span>Videos <em>per day, ~5-second clips</em></span>
+                </legend>
+                <div class="flex items-center gap-4 mt-4">
+                  <input id="calc-videos-range" type="range" min="0" max="50" step="1" value="1" aria-label="Video clips generated per day" />
+                  <input id="calc-videos-number" class="calc-number" type="number" min="0" max="500" step="1" value="1" aria-label="Video clips per day, exact number" />
+                </div>
+                <div class="seg mt-4" role="radiogroup" aria-label="Energy per video clip">
+                  <button type="button" class="seg__opt" role="radio" aria-checked="false" data-wh="22.8" data-src="22.8 Wh per ~5-second 480p clip from a smaller open model (Hugging Face, 2025)" data-cite="hf-video-2025">Lighter model</button>
+                  <button type="button" class="seg__opt" role="radio" aria-checked="true" data-wh="109.5" data-src="109.5 Wh per ~5-second 480p clip from a larger open model (Hugging Face, 2025)" data-cite="hf-video-2025">Larger model</button>
+                  <button type="button" class="seg__opt" role="radio" aria-checked="false" data-wh="944" data-src="~944 Wh per 5-second clip from a newer, higher-quality open model (MIT Technology Review, 2025)" data-cite="mit-tr-2025">High end</button>
+                </div>
+                <p class="caption mt-2" data-source></p>
               </fieldset>
             </form>
 
@@ -555,31 +584,45 @@
               <div class="grid gap-6 sm:grid-cols-2">
                 <div class="result">
                   <p class="eyebrow eyebrow--cost">Electricity per year</p>
-                  <p class="num num--cost mt-3"><span data-calc="kwh">3.1</span><small>kWh</small></p>
+                  <p class="num num--cost mt-3"><span data-calc="kwh">44</span><small>kWh</small></p>
                   <div class="meter" aria-hidden="true"><i data-meter="kwh" style="background:linear-gradient(90deg,var(--color-orchid-200),var(--color-magenta))"></i></div>
                 </div>
                 <div class="result">
                   <p class="eyebrow eyebrow--promise">Water per year</p>
-                  <p class="num num--promise mt-3"><span data-calc="gallons">0.77</span><small>gallons</small></p>
+                  <p class="num num--promise mt-3"><span data-calc="gallons">54</span><small>gallons</small></p>
                   <div class="meter" aria-hidden="true"><i data-meter="gallons" style="background:linear-gradient(90deg,var(--color-sky-200),var(--color-blue))"></i></div>
                 </div>
               </div>
+
+              <div class="mix mt-8">
+                <p class="caption">Where your electricity goes</p>
+                <div class="mix__bar mt-2" aria-hidden="true">
+                  <i class="mix__seg mix__seg--text" data-mix="text"></i><i class="mix__seg mix__seg--images" data-mix="images"></i><i class="mix__seg mix__seg--videos" data-mix="videos"></i>
+                </div>
+                <ul class="mix__legend mt-3">
+                  <li><span class="dot dot--text"></span>Text <b data-share="text">7%</b></li>
+                  <li><span class="dot dot--images"></span>Images <b data-share="images">3%</b></li>
+                  <li><span class="dot dot--videos"></span>Video <b data-share="videos">90%</b></li>
+                </ul>
+                <p class="mix__insight mt-4" data-insight>One video clip uses about as much electricity as 320 text prompts.</p>
+              </div>
+
               <p class="caption mt-6">That is roughly the same as:</p>
               <div class="grid gap-3 sm:grid-cols-3 mt-3">
                 <div class="compare-chip">
                   <svg viewBox="0 0 24 24" fill="none" stroke="#A3268A" stroke-width="1.6" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M12.5 8l-2 4h3l-2 4"/></svg>
-                  <div><b data-calc="phones">200</b><p class="caption">phone charges</p></div>
+                  <div><b data-calc="phones">2,950</b><p class="caption">phone charges</p></div>
                 </div>
                 <div class="compare-chip">
                   <svg viewBox="0 0 24 24" fill="none" stroke="#A3268A" stroke-width="1.6" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>
-                  <div><b data-calc="bulb">310</b><p class="caption">hours of a 10 W LED</p></div>
+                  <div><b data-calc="bulb">4,422</b><p class="caption">hours of a 10 W LED</p></div>
                 </div>
                 <div class="compare-chip">
                   <svg viewBox="0 0 24 24" fill="none" stroke="#0A6AAE" stroke-width="1.6" aria-hidden="true"><path d="M6 3h12l-1.5 17a1.5 1.5 0 0 1-1.5 1.4H9a1.5 1.5 0 0 1-1.5-1.4z"/><path d="M6.6 9h10.8"/></svg>
-                  <div><b data-calc="glasses">12</b><p class="caption">8 oz glasses of water</p></div>
+                  <div><b data-calc="glasses">864</b><p class="caption">8 oz glasses of water</p></div>
                 </div>
               </div>
-              <p class="caption mt-6">Assumptions: one full smartphone charge ≈ 15 Wh; a glass = 8 fl oz. Per-prompt figures come from different methods and scopes and are not directly comparable.<a class="cite" data-cite="google-gemini"></a><a class="cite" data-cite="altman-2025"></a><a class="cite" data-cite="epri-2024"></a><a class="cite" data-cite="mistral-lca"></a> Your individual share is small; the collective total, multiplied across billions of users and heavier tasks, is what moves grids.</p>
+              <p class="caption mt-6">Assumptions: one full smartphone charge ≈ 15 Wh; a glass = 8 fl oz. Image and video figures were measured on open models running on data-center GPUs; commercial tools do not publish theirs, and video energy grows roughly with the square of clip length and resolution, so a clip twice as long uses about four times as much.<a class="cite" data-cite="hf-video-2025"></a> Water for images and video is estimated at about 1.3 gallons per kWh, the US data-center average for cooling plus power generation.<a class="cite" data-cite="lbnl-2024"></a> Figures come from different methods and scopes and are not directly comparable.<a class="cite" data-cite="google-gemini"></a><a class="cite" data-cite="altman-2025"></a><a class="cite" data-cite="epri-2024"></a><a class="cite" data-cite="mistral-lca"></a><a class="cite" data-cite="mit-tr-2025"></a><a class="cite" data-cite="luccioni-2024"></a></p>
             </div>
           </div>
         </div>
