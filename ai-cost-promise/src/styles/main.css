@@ -202,6 +202,47 @@ body {
   opacity: 0.55;
 }
 .site-header.is-scrolled { box-shadow: 0 14px 36px -16px rgba(7, 9, 26, 0.75); }
+/* Hide on scroll down, glide back in on scroll up (driven by src/ui/header.js) */
+.site-header { transition: transform 0.5s var(--ease-soft), box-shadow 0.4s var(--ease-soft); will-change: transform; }
+.site-header.is-hidden { transform: translateY(calc(-100% - 40px)); }
+
+/* Menu button (light bars on the dark bar) */
+.menu-toggle {
+  display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid rgba(168, 198, 255, 0.28); background: rgba(255, 255, 255, 0.03);
+  color: var(--color-cream); cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.35s var(--ease-soft);
+}
+.menu-toggle:hover { border-color: rgba(255, 255, 255, 0.6); box-shadow: -4px 0 14px -4px rgba(255, 59, 212, 0.6), 4px 0 14px -4px rgba(5, 153, 242, 0.6); }
+.menu-toggle__bars { display: grid; gap: 4px; width: 18px; }
+.menu-toggle__bars i { display: block; height: 1.6px; border-radius: 2px; background: currentColor; transition: transform 0.35s var(--ease-soft), opacity 0.2s; }
+.menu-toggle[aria-expanded="true"] .menu-toggle__bars i:nth-child(1) { transform: translateY(5.6px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-toggle__bars i:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] .menu-toggle__bars i:nth-child(3) { transform: translateY(-5.6px) rotate(-45deg); }
+
+/* Slide-down menu panel */
+.mobile-menu {
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: linear-gradient(180deg, var(--color-ink-deep), var(--color-plum));
+  border-bottom: 1px solid rgba(168, 198, 255, 0.18);
+  box-shadow: 0 30px 60px -20px rgba(7, 9, 26, 0.7);
+  padding-block: 12px 28px;
+  transform-origin: top; animation: menu-in 0.45s var(--ease-soft);
+}
+.mobile-menu nav { display: grid; }
+.mobile-menu__link {
+  display: flex; align-items: baseline; gap: 16px; padding: 16px 0;
+  border-bottom: 1px solid rgba(168, 198, 255, 0.12);
+  font-weight: 800; font-size: clamp(1.4rem, 5vw, 2rem); letter-spacing: -0.02em;
+  color: var(--color-cream); text-decoration: none; transition: color 0.25s, padding 0.35s var(--ease-soft);
+}
+.mobile-menu__link span { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; color: var(--color-lilac); }
+.mobile-menu__link:hover, .mobile-menu__link:focus-visible { color: #fff; padding-left: 8px; }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: none; }
+  .mobile-menu { animation: none; }
+}
 .wordmark {
   display: inline-flex; align-items: center; gap: 12px;
   font-weight: 600; font-size: 0.74rem; letter-spacing: 0.24em; text-transform: uppercase;
@@ -255,7 +296,8 @@ body {
   box-shadow: -4px 0 14px -4px rgba(255, 59, 212, 0.6), 4px 0 14px -4px rgba(5, 153, 242, 0.6);
 }
 @media (max-width: 899px) { .social { width: 36px; height: 36px; } .socials { gap: 8px; } }
-@media (max-width: 420px) { .site-header .wordmark > span { font-size: 0.64rem; letter-spacing: 0.18em; } }
+/* Narrow phones: the logo (which carries the name) stands alone so the icons and menu fit */
+@media (max-width: 560px) { .site-header .wordmark > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
 @media (prefers-reduced-motion: reduce) { .social:hover { transform: none; } }
 
 /* ---------- Hero ---------- */
