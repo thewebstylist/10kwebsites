@@ -198,8 +198,10 @@ body {
   text-decoration: none;
 }
 .wordmark__mark { width: 22px; height: 22px; flex: none; }
+/* Brand rule: "Ai" always keeps its lowercase i, even inside all-caps labels. */
+.wordmark__ai, .ai-mark { text-transform: none; }
 .wordmark__ai {
-  font-weight: 900; letter-spacing: 0.12em;
+  font-weight: 900; letter-spacing: 0.06em;
   background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .nav-link {

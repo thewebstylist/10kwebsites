@@ -1,6 +1,11 @@
 # The Cost and the Promise of AI
 
-A single-page, evidence-led portrait of AI by **Sterling Creations AI** (light theme, softened).
+A single-page, evidence-led portrait of Ai by **Sterling Creations Ai** (light theme, softened).
+
+**House style:** the brand always writes **Ai** with a lowercase i (trademark), including inside
+all-caps labels (wrap it in `.ai-mark` there). Other organizations' names and publication titles keep their
+own spelling (OpenAI, Mistral AI, "Energy and AI"). The audience is in the US: use gallons, fluid ounces
+and US spelling; convert metric source figures and note the conversion in `src/data/sources.js`.
 One half shows the environmental cost (electricity, water, carbon, per-prompt footprint);
 the other shows the benefits (medicine, climate and materials science, access, learning, work).
 Every figure is cited, with estimates, company-reported and disputed figures labelled.

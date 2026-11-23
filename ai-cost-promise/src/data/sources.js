@@ -9,7 +9,7 @@
  *
  * `status` flags how much weight a figure can bear:
  *   'measured'  peer-reviewed or official measured/statistical data
- *   'estimate'  modelled estimate or projection
+ *   'estimate'  modeled estimate or projection
  *   'company'   company-reported, not independently verified
  *   'disputed'  contested or superseded figure, shown for context
  */
@@ -20,7 +20,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai',
     status: 'estimate',
-    note: 'Data centres used ~415 TWh in 2024 (~1.5% of global electricity), growing ~12%/yr over five years. Base Case projects ~945 TWh by 2030.',
+    note: 'Data centers used ~415 TWh in 2024 (~1.5% of global electricity), growing ~12%/yr over five years. Base Case projects ~945 TWh by 2030.',
   },
   'iea-key-questions': {
     title: 'Key Questions on Energy and AI',
@@ -28,7 +28,7 @@ export const SOURCES = {
     year: 2026,
     url: 'https://www.iea.org/reports/key-questions-on-energy-and-ai',
     status: 'estimate',
-    note: 'Data centre electricity use rose ~17% in 2025; the central projection stays close to the 2025 report (roughly doubling by 2030).',
+    note: 'Data center electricity use rose ~17% in 2025; the central projection stays close to the 2025 report (roughly doubling by 2030).',
   },
   'iea-climate': {
     title: 'Energy and AI: AI and climate change',
@@ -36,7 +36,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://www.iea.org/reports/energy-and-ai/ai-and-climate-change',
     status: 'estimate',
-    note: 'Data centres: ~180 Mt CO2 today (indirect, from electricity). Base Case peaks ~320 Mt around 2030, ~300 Mt by 2035; Lift-Off Case grows ~2.5x. Widespread adoption of existing AI applications could cut ~1,400 Mt CO2 in 2035, but the IEA notes there is currently no momentum ensuring that adoption.',
+    note: 'Data centers: ~180 Mt CO2 today (indirect, from electricity). Base Case peaks ~320 Mt around 2030, ~300 Mt by 2035; Lift-Off Case grows ~2.5x. Widespread adoption of existing Ai applications could cut ~1,400 Mt CO2 in 2035, but the IEA notes there is currently no momentum ensuring that adoption.',
   },
   'iea-water': {
     title: 'Energy and AI (water estimates), as summarised by MSCI',
@@ -44,7 +44,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://www.msci.com/research-and-insights/blog-post/when-ai-meets-water-scarcity-data-centers-in-a-thirsty-world',
     status: 'estimate',
-    note: 'IEA estimate: global data-centre water use is roughly 560 billion litres per year, potentially rising to ~1.2 trillion litres by 2030. Cited from MSCI’s summary of the IEA (Dec 2025), not the primary table.',
+    note: 'IEA estimate: global data-center water use is roughly 148 billion gallons a year, potentially rising to ~320 billion gallons by 2030. Cited from MSCI’s summary of the IEA (Dec 2025), not the primary table. Converted to gallons from the source’s metric figures.',
   },
   'lbnl-2024': {
     title: '2024 United States Data Center Energy Usage Report',
@@ -52,7 +52,7 @@ export const SOURCES = {
     year: 2024,
     url: 'https://eta-publications.lbl.gov/publications/2024-lbnl-data-center-energy-usage-report',
     status: 'estimate',
-    note: 'US data centres used ~176 TWh in 2023 (~4.4% of US electricity); 325–580 TWh projected by 2028 (~6.7–12%). Direct cooling water ~17 billion gallons (~64 billion litres) in 2023; ~211 billion gallons (~800 billion litres) indirect via power generation. LBNL notes limited industry transparency.',
+    note: 'US data centers used ~176 TWh in 2023 (~4.4% of US electricity); 325–580 TWh projected by 2028 (~6.7–12%). Direct cooling water ~17 billion gallons in 2023; ~211 billion gallons indirect via power generation. LBNL notes limited industry transparency.',
   },
   'doe-2024': {
     title: 'DOE Releases New Report Evaluating Increase in Electricity Demand from Data Centers',
@@ -60,7 +60,7 @@ export const SOURCES = {
     year: 2024,
     url: 'https://www.energy.gov/articles/doe-releases-new-report-evaluating-increase-electricity-demand-data-centers',
     status: 'estimate',
-    note: 'Data centres projected to consume ~6.7% to 12% of total US electricity by 2028.',
+    note: 'Data centers projected to consume ~6.7% to 12% of total US electricity by 2028.',
   },
   'google-env-2026': {
     title: 'Google 2026 Environmental Report (as reported by Axios)',
@@ -68,7 +68,7 @@ export const SOURCES = {
     year: 2026,
     url: 'https://www.axios.com/2026/06/30/google-ai-boom-emissions-power-use',
     status: 'company',
-    note: 'Google’s water consumption rose ~34% in 2025 to ~10.9 billion gallons (~41 billion litres), more than double 2021, mostly from data centres. Primary report: sustainability.google.',
+    note: 'Google’s water consumption rose ~34% in 2025 to ~10.9 billion gallons, more than double 2021, mostly from data centers. Primary report: sustainability.google.',
   },
   'msft-2025': {
     title: '2025 Environmental Sustainability Report',
@@ -76,7 +76,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://blogs.microsoft.com/on-the-issues/2025/05/29/environmental-sustainability-report/',
     status: 'company',
-    note: 'Total Scope 1–3 emissions up 23.4% vs the 2020 baseline (FY24), attributed to AI and cloud expansion. Press coverage of the 2026 report (Tom’s Hardware, Jul 2026) puts the figure markedly higher; not verified here against the primary report.',
+    note: 'Total Scope 1–3 emissions up 23.4% vs the 2020 baseline (FY24), attributed to Ai and cloud expansion. Press coverage of the 2026 report (Tom’s Hardware, Jul 2026) puts the figure markedly higher; not verified here against the primary report.',
   },
   'google-gemini': {
     title: 'Measuring the environmental impact of delivering AI at Google scale',
@@ -84,7 +84,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://arxiv.org/abs/2508.15734',
     status: 'company',
-    note: 'Median Gemini Apps text prompt (May 2025): 0.24 Wh, 0.03 gCO2e, 0.26 mL water. Energy per median prompt fell 33x in 12 months. Not independently verified; critics argue the water figure omits off-site water.',
+    note: 'Median Gemini Apps text prompt (May 2025): 0.24 Wh, 0.03 gCO2e and ~0.009 fl oz (about five drops) of water, converted from the paper’s metric figure. Energy per median prompt fell 33x in 12 months. Not independently verified; critics argue the water figure omits off-site water.',
   },
   'altman-2025': {
     title: 'The Gentle Singularity',
@@ -92,7 +92,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://blog.samaltman.com/the-gentle-singularity',
     status: 'company',
-    note: 'Average ChatGPT query: ~0.34 Wh and ~0.000085 gallons (~0.32 mL) of water. No methodology published; predates GPT-5.',
+    note: 'Average ChatGPT query: ~0.34 Wh and ~0.000085 gallons (~0.011 fl oz, about 1/15 teaspoon) of water. No methodology published; predates GPT-5.',
   },
   'epoch-2025': {
     title: 'How much energy does ChatGPT use?',
@@ -124,7 +124,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://arxiv.org/abs/2304.03271',
     status: 'estimate',
-    note: 'Projects global AI water withdrawal of 4.2–6.6 billion m³ in 2027 (of which ~0.38–0.60 billion m³ consumed), more than the annual withdrawal of 4–6 Denmarks.',
+    note: 'Projects global Ai water withdrawal of ~1.1–1.7 trillion gallons in 2027 (converted from cubic meters), of which ~100–160 billion gallons is consumed; more than the annual withdrawal of 4–6 Denmarks.',
   },
   'mistral-lca': {
     title: 'Our contribution to a global environmental standard for AI',
@@ -132,7 +132,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai',
     status: 'estimate',
-    note: 'Lifecycle analysis of Mistral Large 2. Marginal impact of a 400-token response: 1.14 gCO2e and ~45 mL of water. Mistral calls it a first, rough estimate.',
+    note: 'Lifecycle analysis of Mistral Large 2. Marginal impact of a 400-token response: 1.14 gCO2e and ~1.5 fl oz of water (converted from the study’s metric figure). Mistral calls it a first, rough estimate.',
   },
   alphafold: {
     title: 'AlphaFold',
@@ -140,7 +140,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://deepmind.google/science/alphafold/',
     status: 'company',
-    note: 'Over 200 million predicted protein structures, nearly all catalogued proteins. DeepMind cites 3M+ users in 190+ countries (another DeepMind page says 2M+ researchers).',
+    note: 'Over 200 million predicted protein structures, nearly all cataloged proteins. DeepMind cites 3M+ users in 190+ countries (another DeepMind page says 2M+ researchers).',
   },
   'nobel-2024': {
     title: 'The Nobel Prize in Chemistry 2024',
@@ -156,7 +156,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://www.ajmc.com/view/ai-derived-therapy-for-ipf-shows-potential-in-phase-2a-trial',
     status: 'company',
-    note: 'Rentosertib, with target and molecule found using generative AI, was safe and well tolerated in a 71-patient Phase IIa trial. The 18-month discovery timeline is company-reported. A Phase III trial began in 2026.',
+    note: 'Rentosertib, with target and molecule found using generative Ai, was safe and well tolerated in a 71-patient Phase IIa trial. The 18-month discovery timeline is company-reported. A Phase III trial began in 2026.',
   },
   'masai-2023': {
     title: 'MASAI: AI-supported mammography screening, interim safety analysis',
@@ -172,7 +172,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://pubmed.ncbi.nlm.nih.gov/39904652/',
     status: 'measured',
-    note: '29% increase in cancer detection rate with no increase in false positives. Single country, single AI system and device.',
+    note: '29% increase in cancer detection rate with no increase in false positives. Single country, single Ai system and device.',
   },
   'masai-2026': {
     title: 'MASAI full results (The Lancet, 2026)',
@@ -180,7 +180,7 @@ export const SOURCES = {
     year: 2026,
     url: 'https://www.ajmc.com/view/ai-supported-mammography-caught-more-cancers-during-screening',
     status: 'measured',
-    note: 'AI-supported screening reduced interval cancers (diagnosed between screenings) by ~12%, with fewer aggressive interval cancers. At least one human radiologist still reads every screen.',
+    note: 'Ai-supported screening reduced interval cancers (diagnosed between screenings) by ~12%, with fewer aggressive interval cancers. At least one human radiologist still reads every screen.',
   },
   graphcast: {
     title: 'Learning skillful medium-range global weather forecasting (GraphCast)',
@@ -196,7 +196,7 @@ export const SOURCES = {
     year: 2023,
     url: 'https://www.nature.com/articles/s41586-023-06735-9',
     status: 'measured',
-    note: '2.2 million new crystal structures predicted, ~380,000 of them stable. 736 were independently realised in labs at time of publication.',
+    note: '2.2 million new crystal structures predicted, ~380,000 of them stable. 736 were independently realized in labs at time of publication.',
   },
   'worldbank-2025': {
     title: 'From Chalkboards to Chatbots: Evaluating the Impact of Generative AI on Learning Outcomes in Nigeria',
@@ -204,7 +204,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://openknowledge.worldbank.org/entities/publication/15e1ff08-15ae-4f7a-b2a8-d146e6c113ee/full',
     status: 'measured',
-    note: 'Randomised trial: six weeks of teacher-guided after-school AI tutoring raised scores by ~0.31 standard deviations. Results vary: a trial in Türkiye found no exam advantage without guardrails.',
+    note: 'Randomised trial: six weeks of teacher-guided after-school Ai tutoring raised scores by ~0.31 standard deviations. Results vary: a trial in Türkiye found no exam advantage without guardrails.',
   },
   'qje-2025': {
     title: 'Generative AI at Work',
@@ -212,7 +212,7 @@ export const SOURCES = {
     year: 2025,
     url: 'https://www.nber.org/papers/w31161',
     status: 'measured',
-    note: 'AI assistant for 5,000+ customer-support agents: ~14% more issues resolved per hour on average, ~34% for novice and low-skilled workers, little effect for the most experienced.',
+    note: 'Ai assistant for 5,000+ customer-support agents: ~14% more issues resolved per hour on average, ~34% for novice and low-skilled workers, little effect for the most experienced.',
   },
   bemyeyes: {
     title: 'Be My AI',
@@ -228,7 +228,7 @@ export const SOURCES = {
     year: 2012,
     url: 'https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html',
     status: 'measured',
-    note: 'The deep-learning breakthrough in image recognition that started the modern AI era.',
+    note: 'The deep-learning breakthrough in image recognition that started the modern Ai era.',
   },
   alphago: {
     title: 'Mastering the game of Go with deep neural networks and tree search',
@@ -252,7 +252,7 @@ export const SOURCES = {
     year: 2022,
     url: 'https://openai.com/index/chatgpt/',
     status: 'measured',
-    note: 'Public release in November 2022 brought generative AI to hundreds of millions of people.',
+    note: 'Public release in November 2022 brought generative Ai to hundreds of millions of people.',
   },
 };
 
