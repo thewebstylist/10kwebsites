@@ -41,3 +41,7 @@ These apply to every site, page, video and document made for the brand.
   directly on it (no badge). Header text in Cream #F2F6FF, nav links in Lilac #A8C6FF turning
   white on hover. This holds even when the rest of the page uses the light theme. The logo
   artwork itself is never recolored.
+- The dark header carries light outline icons linking to the brand's socials:
+  Instagram https://www.instagram.com/sterlingcreationsai and
+  TikTok https://www.tiktok.com/@sterlingcreationsai (Lilac, turning white with a
+  magenta/blue glow on hover; they open in a new tab).
